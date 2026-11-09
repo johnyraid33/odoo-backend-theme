@@ -124,6 +124,44 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
 | `models/` | settings, `ir.http.color_scheme`, user preference, bundle customisation |
 | `tests/` | settings, injection guard, scheme selection |
 
+## Accessibility
+
+- Buttons and links meet WCAG AA (4.5:1) for any accent. `models/colors.py`
+  derives, when the settings are saved, a button fill and its text colour
+  (white when the picked colour is dark enough, or a shade at most 25%
+  deeper, otherwise dark text) and link colours for light and dark cards.
+  libsass has no luminance function, so these are written into
+  `user_variables.scss`; the settings preview runs the same steps in JS.
+- `python3 dev/contrast.py` checks body, secondary, sidebar, navigation,
+  button, link, selected-row, focus-ring and badge colours for every palette,
+  preset accent and scheme (440 pairs, all passing); `--accent '#hex'` checks
+  a custom colour, `--markdown` prints the table.
+- The shell is keyboard-driven: arrow keys in the sidebar, the app switcher,
+  the launcher, the accent swatches and the option cards; visible focus
+  rings; `aria-current`, `aria-expanded`, `aria-pressed` and radio-group roles.
+
+## Tests
+
+- Python (`tests/`): settings to bundles, injection guard, uninstall,
+  colour scheme per user and cookie, user self-service of the appearance
+  fields, session values, accent derivation and its sync with the SCSS.
+- Hoot (`static/tests/`, run by `--test-tags /rex_backend_theme`): sidebar
+  groups, active item, folding, pins, rail, launcher, phone drawer, the
+  settings widgets and the JS derivation against the Python one.
+- Odoo's own unit tests measure the stock layout in pixels (list column
+  widths, calendar slots, text case), so the theme's SCSS is removed from
+  `web.assets_unit_tests_setup`; its JavaScript stays in and is tested.
+  The styled backend is covered by the tours.
+- `dev/run_tests.sh theme20 /rex_backend_theme,/web,...` runs them in the
+  Chromium image. Do not pass `-u` with other modules' tags: Odoo then runs
+  only the updated module's tests.
+
+## Translations
+
+`i18n/rex_backend_theme.pot` with Russian and Ukrainian. Regenerate the
+template with `odoo i18n export -d DB -o rex_backend_theme.pot rex_backend_theme`.
+Geist includes Cyrillic.
+
 ## Dev tools
 
 | Script | Use |
@@ -134,3 +172,4 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
 | `dev/bundle_css.py BASE DB OUT [--dark]` | download the compiled CSS, to diff builds |
 | `dev/check_icons.py FONT [names]` | list or check Material Symbols ligatures in Odoo's subset |
 | `dev/run_tests.sh DB TAGS` | Odoo tests and tours in the Chromium image (`dev/Dockerfile.test`) |
+| `dev/contrast.py [--accent HEX] [--markdown]` | WCAG contrast report of the tokens |

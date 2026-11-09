@@ -1,7 +1,14 @@
 from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import HttpCase, TransactionCase, new_test_user, tagged
 
-from ..models.backend_theme import BUNDLES, USER_VARIABLES
+import re
+
+from odoo.tools.misc import file_open
+
+from ..models.backend_theme import (
+    BUNDLES, DEFAULTS, NEUTRAL_SCALES, USER_VARIABLES, render_user_variables,
+)
+from ..models.colors import accent_variants, contrast
 
 
 @tagged('post_install', '-at_install')
@@ -144,3 +151,51 @@ class TestThemeSession(HttpCase):
         self.authenticate('admin', 'admin')
         info = self.make_jsonrpc_request('/web/session/get_session_info')
         self.assertEqual(info['rex_backend_theme']['density'], 'comfortable')
+
+
+@tagged('post_install', '-at_install')
+class TestAccentDerivation(TransactionCase):
+
+    def test_static_defaults_match_the_derivation(self):
+        with file_open('rex_backend_theme/static/src/scss/user_variables.scss') as f:
+            static = ''.join(line for line in f if line.startswith('$'))
+        self.assertEqual(static, render_user_variables(DEFAULTS))
+
+    def test_python_palettes_match_the_scss(self):
+        with file_open('rex_backend_theme/static/src/scss/tokens.scss') as f:
+            text = f.read()
+        block = text[text.index('$rx-neutrals: ('):text.index(');', text.index('$rx-neutrals: ('))]
+        scss = {
+            name: {int(k): v for k, v in re.findall(r'(\d+): (#[0-9a-f]{6})', body)}
+            for name, body in re.findall(r'(\w+): \(([^)]*)\)', block) if name != 'neutrals'
+        }
+        self.assertEqual(scss, NEUTRAL_SCALES)
+
+    def test_variants_meet_aa(self):
+        for accent in ('#6366f1', '#d97706', '#0d9488', '#ffff00', '#000000', '#a3e635', '#ffffff'):
+            for neutral, scale in NEUTRAL_SCALES.items():
+                v = accent_variants(accent, scale)
+                self.assertGreaterEqual(contrast(v['primary'], v['primary_foreground']), 4.5, (accent, neutral))
+                self.assertGreaterEqual(contrast(v['primary_text'], scale[50]), 4.5, (accent, neutral))
+                self.assertGreaterEqual(contrast(v['primary_text_dark'], scale[900]), 4.5, (accent, neutral))
+
+    def test_accessible_accent_is_kept(self):
+        v = accent_variants('#2563eb', NEUTRAL_SCALES['zinc'])
+        self.assertEqual(v['primary'], '#2563eb')
+        self.assertEqual(v['primary_text'], '#2563eb')
+
+    def test_saved_file_carries_the_variants(self):
+        self.env['res.config.settings'].create({'rx_accent_color': '#d97706'}).execute()
+        asset = self.env['ir.asset'].with_context(active_test=False).search([('target', '=', USER_VARIABLES)], limit=1)
+        content = self.env['ir.attachment'].search([('url', '=', asset.path)]).raw.decode()
+        variants = accent_variants('#d97706', NEUTRAL_SCALES['zinc'])
+        self.assertIn('$rx-user-primary: %s;' % variants['primary'], content)
+        self.assertIn('$rx-user-primary-text-dark: %s;' % variants['primary_text_dark'], content)
+
+    def test_refresh_rewrites_an_old_customisation(self):
+        self.env['res.config.settings'].create({'rx_accent_color': '#d97706'}).execute()
+        asset = self.env['ir.asset'].with_context(active_test=False).search([('target', '=', USER_VARIABLES)], limit=1)
+        attachment = self.env['ir.attachment'].search([('url', '=', asset.path)])
+        attachment.raw = b'$rx-user-accent: #d97706;\n'
+        self.env['rex.backend.theme']._refresh_user_variables()
+        self.assertIn('$rx-user-primary:', attachment.raw.decode())

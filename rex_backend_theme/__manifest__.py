@@ -1,6 +1,6 @@
 {
     'name': 'Rex Backend Theme',
-    'version': '20.0.0.3.0',
+    'version': '20.0.0.4.0',
     'category': 'Themes/Backend',
     'summary': 'A calm, neutral backend in the shadcn/ui style: sidebar navigation, '
                'light and dark schemes, configurable accent, palette and radius',
@@ -12,6 +12,7 @@
         'views/webclient_templates.xml',
         'views/res_config_settings_views.xml',
         'views/res_users_views.xml',
+        'data/rex_backend_theme_data.xml',
     ],
     'assets': {
         # Token files go before Odoo's own variables so every `!default` of web
@@ -58,6 +59,16 @@
             'rex_backend_theme/static/src/scss/tokens.scss',
             'rex_backend_theme/static/src/scss/fonts.scss',
             'rex_backend_theme/static/src/login/login.scss',
+        ],
+        # Unit tests: Odoo's own tests measure the stock layout in pixels
+        # (column widths, calendar slots, text case), so they run without the
+        # theme's styles; its JavaScript stays and is tested. Tours check the
+        # styled backend in a real browser.
+        'web.assets_unit_tests_setup': [
+            ('remove', 'rex_backend_theme/static/src/**/*.scss'),
+        ],
+        'web.assets_unit_tests': [
+            'rex_backend_theme/static/tests/**/*',
         ],
         # Dark scheme: the same tokens, compiled with $rx-dark: true.
         'web.assets_web_dark': [

@@ -34,6 +34,9 @@ export const NEUTRALS = {
                600: "#525252", 700: "#404040", 800: "#262626", 900: "#171717", 950: "#0a0a0a" },
 };
 
+// $rx-muted-light in tokens.scss
+export const MUTED_LIGHT = { zinc: "#6e6d79", slate: "#617187", stone: "#766f6a", neutral: "#707070" };
+
 // (sm, md, lg, xl) in px, as $rx-radii
 export const RADII = {
     none: [0, 0, 0, 0],
@@ -61,11 +64,6 @@ export function mix(a, b, weight) {
     return toHex(ra.map((c, i) => c * weight + rb[i] * (1 - weight)));
 }
 
-function yiq(hex) {
-    const [r, g, b] = toRgb(hex);
-    return (r * 299 + g * 587 + b * 114) / 1000;
-}
-
 function luminance(hex) {
     const channel = (c) => {
         c /= 255;
@@ -75,10 +73,55 @@ function luminance(hex) {
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
+/** The largest channel difference of two colours, 0..255. */
+export function channelDistance(a, b) {
+    const [ra, rb] = [toRgb(a), toRgb(b)];
+    return Math.max(...ra.map((c, i) => Math.abs(c - rb[i])));
+}
+
 /** WCAG contrast ratio of two colours, 1..21. */
 export function contrast(a, b) {
     const [la, lb] = [luminance(a), luminance(b)].sort((x, y) => y - x);
     return (la + 0.05) / (lb + 0.05);
+}
+
+const AA = 4.5;
+const MAX_FILL_SHADE = 0.25;
+
+/** Mixes `toward` into `color` until it reaches `target` on `against`: [colour, weight]. */
+function shadeUntil(color, toward, against, target = AA) {
+    let weight = 0;
+    let result = color;
+    while (contrast(result, against) < target && weight < 1) {
+        weight = Math.round((weight + 0.01) * 100) / 100;
+        result = mix(toward, color, weight);
+    }
+    return [result, weight];
+}
+
+/**
+ * Accent variants meeting WCAG AA, as models/colors.py computes them when
+ * the settings are saved: the button fill and its text, link colours.
+ */
+export function accentVariants(accent, neutral) {
+    const n = NEUTRALS[neutral] || NEUTRALS.zinc;
+    accent = HEX_RE.test(accent || "") ? accent.toLowerCase() : DEFAULT_ACCENT;
+    let fill = accent;
+    let onFill = "#ffffff";
+    if (contrast("#ffffff", accent) < AA) {
+        const [darker, weight] = shadeUntil(accent, "#000000", "#ffffff");
+        if (weight <= MAX_FILL_SHADE || contrast(n[950], accent) < AA) {
+            fill = darker;
+        } else {
+            onFill = n[950];
+        }
+    }
+    return {
+        primary: fill,
+        primaryForeground: onFill,
+        primaryText: shadeUntil(accent, "#000000", n[50])[0],
+        primaryTextDark: shadeUntil(mix("#ffffff", accent, 0.35), "#ffffff", n[900])[0],
+    };
 }
 
 /**
@@ -89,22 +132,23 @@ export function previewTokens({ accent, neutral, radius, dark }) {
     const n = NEUTRALS[neutral] || NEUTRALS.zinc;
     const r = RADII[radius] || RADII.md;
     accent = HEX_RE.test(accent || "") ? accent.toLowerCase() : DEFAULT_ACCENT;
+    const v = accentVariants(accent, neutral);
     const background = dark ? n[900] : "#ffffff";
     return {
         "--pv-page": dark ? n[950] : n[100],
         "--pv-surface": dark ? mix(n[900], n[950], 0.45) : n[50],
         "--pv-background": background,
         "--pv-foreground": dark ? n[50] : n[950],
-        "--pv-muted": dark ? n[400] : n[500],
+        "--pv-muted": dark ? n[400] : MUTED_LIGHT[neutral] || n[500],
         "--pv-border": dark ? mix(n[700], n[800], 0.3) : n[200],
         "--pv-hover": dark ? mix(n[800], n[900], 0.6) : n[100],
         "--pv-strong": dark ? n[50] : n[950],
         "--pv-strong-foreground": dark ? n[950] : "#ffffff",
-        "--pv-primary": accent,
-        "--pv-primary-foreground": yiq(accent) > 170 ? n[950] : "#ffffff",
-        "--pv-primary-text": dark ? mix("#ffffff", accent, 0.35) : accent,
+        "--pv-primary": v.primary,
+        "--pv-primary-foreground": v.primaryForeground,
+        "--pv-primary-text": dark ? v.primaryTextDark : v.primaryText,
         "--pv-primary-subtle": mix(accent, background, dark ? 0.22 : 0.1),
-        "--pv-ring": dark ? mix("#000000", accent, 0.25) : mix("#ffffff", accent, 0.45),
+        "--pv-ring": dark ? mix(v.primaryTextDark, background, 0.6) : mix("#ffffff", v.primaryText, 0.45),
         "--pv-radius": `${r[1]}px`,
         "--pv-radius-sm": `${r[0]}px`,
         "--pv-radius-panel": `${radius === "none" ? 0 : r[3]}px`,

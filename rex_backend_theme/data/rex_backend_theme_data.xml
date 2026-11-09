@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- On every update: a saved customisation is rendered again, so new
+         derived variables reach databases customised with an older version. -->
+    <function model="rex.backend.theme" name="_refresh_user_variables"/>
+</odoo>

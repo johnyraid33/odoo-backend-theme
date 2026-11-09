@@ -7,8 +7,14 @@
 // recompiles the bundles once, so every colour Odoo derives from the accent
 // (hover, focus, subtle backgrounds, contrast text) is computed exactly.
 //
-// Keep the variable names in sync with models/res_config_settings.py.
+// The primary* variables are derived from the accent so that buttons and
+// links meet WCAG AA (models/colors.py). This file holds the defaults and a
+// test checks it matches models/backend_theme.py:render_user_variables().
 
 $rx-user-accent: #6366f1;
 $rx-user-neutral: zinc;
 $rx-user-radius: md;
+$rx-user-primary: #6265ef;
+$rx-user-primary-foreground: #ffffff;
+$rx-user-primary-text: #5f62e7;
+$rx-user-primary-text-dark: #9a9cf6;

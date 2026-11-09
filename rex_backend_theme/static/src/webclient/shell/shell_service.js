@@ -104,10 +104,14 @@ export const shellService = {
             }
         });
 
-        // control+b is command+b on macOS; ignored while typing in a field.
+        // control+b is command+b on macOS; ignored while typing in a field
+        // (it is bold in HTML fields).
         hotkey.add("control+b", () => shell.toggleRail());
+        // The launcher also opens from a field: Odoo focuses the search box
+        // of every view it opens, as for the command palette (control+k).
         hotkey.add("alt+h", () => (state.launcherOpen ? shell.closeLauncher() : shell.openLauncher()), {
             global: true,
+            bypassEditableProtection: true,
         });
 
         return shell;

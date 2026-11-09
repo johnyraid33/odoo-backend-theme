@@ -1,0 +1,589 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rex_backend_theme
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0-20261102\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-09 16:34+0000\n"
+"PO-Revision-Date: 2026-11-09 16:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Language: ru\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: rex_backend_theme
+#: model:ir.module.module,summary:base.module_rex_backend_theme
+msgid ""
+"A calm, neutral backend in the shadcn/ui style: sidebar navigation, light "
+"and dark schemes, configurable accent, palette and radius"
+msgstr "Спокойный нейтральный бэкенд в стиле shadcn/ui: боковое меню, светлая и тёмная схемы, настраиваемые акцент, палитра и скругления"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_config_settings__rx_accent_color
+msgid "Accent Colour"
+msgstr "Цвет акцента"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/accent_field.js:0
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid "Accent colour"
+msgstr "Цвет акцента"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/sidebar/sidebar.js:0
+msgid "All apps"
+msgstr "Все приложения"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Amber"
+msgstr "Янтарный"
+
+#. module: rex_backend_theme
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.view_users_form_simple_modif
+msgid "Appearance"
+msgstr "Оформление"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/sidebar/sidebar.xml:0
+msgid "Application menu"
+msgstr "Меню приложения"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/launcher/launcher.js:0
+msgid "Apps"
+msgstr "Приложения"
+
+#. module: rex_backend_theme
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid "Backend Theme"
+msgstr "Тема интерфейса"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Blue"
+msgstr "Синий"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/accent_field.js:0
+msgid "Buttons get dark text: white would be hard to read on this colour."
+msgstr "На кнопках будет тёмный текст: белый на этом цвете читается плохо."
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/accent_field.js:0
+msgid "Buttons use a slightly deeper shade so white text stays readable."
+msgstr "Кнопки получат чуть более глубокий оттенок, чтобы белый текст оставался читаемым."
+
+#. module: rex_backend_theme
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid "Buttons, inputs, cards and the main panel."
+msgstr "Кнопки, поля ввода, карточки и основная панель."
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/launcher/launcher.js:0
+msgid "Close"
+msgstr "Закрыть"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/sidebar/sidebar.js:0
+msgid "Close menu"
+msgstr "Закрыть меню"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users__rx_color_scheme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users_settings__rx_color_scheme
+msgid "Colour Scheme"
+msgstr "Цветовая схема"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_density__comfortable
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users__rx_density__comfortable
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users_settings__rx_density__comfortable
+msgid "Comfortable"
+msgstr "Свободная"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,help:rex_backend_theme.field_res_users_settings__rx_sidebar_pins
+msgid "Comma-separated ir.ui.menu ids pinned to the top of the sidebar."
+msgstr "Идентификаторы ir.ui.menu через запятую, закреплённые вверху бокового меню."
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_density__compact
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users__rx_density__compact
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users_settings__rx_density__compact
+msgid "Compact"
+msgstr "Компактная"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_config_settings__rx_sidebar_logo
+msgid "Company Logo in the Sidebar"
+msgstr "Логотип компании в боковом меню"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users__rx_density__default
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users_settings__rx_density__default
+msgid "Company default"
+msgstr "Как у компании"
+
+#. module: rex_backend_theme
+#: model:ir.model,name:rex_backend_theme.model_res_config_settings
+msgid "Config Settings"
+msgstr "Настройки конфигурации"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_config_settings__rx_radius
+msgid "Corner Radius"
+msgstr "Скругление углов"
+
+#. module: rex_backend_theme
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid "Corner radius"
+msgstr "Скругление углов"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/accent_field.js:0
+msgid "Custom"
+msgstr "Свой"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/accent_field.js:0
+msgid "Custom colour"
+msgstr "Свой цвет"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+msgid "Customers"
+msgstr "Клиенты"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/core/color_scheme.js:0
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users__rx_color_scheme__dark
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users_settings__rx_color_scheme__dark
+msgid "Dark"
+msgstr "Тёмная"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,help:rex_backend_theme.field_res_config_settings__rx_density
+msgid ""
+"Default spacing of lists, forms and the sidebar. Users can override it in "
+"their preferences."
+msgstr "Отступы списков, форм и бокового меню по умолчанию. Пользователи могут изменить их в своих настройках."
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_config_settings__rx_density
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users__rx_density
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users_settings__rx_density
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid "Density"
+msgstr "Плотность"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_ir_http__display_name
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users__display_name
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users_settings__display_name
+#: model:ir.model.fields,field_description:rex_backend_theme.field_rex_backend_theme__display_name
+msgid "Display Name"
+msgstr "Отображаемое имя"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+msgid "Draft"
+msgstr "Черновик"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Emerald"
+msgstr "Изумрудный"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/launcher/launcher.xml:0
+msgid "Esc"
+msgstr "Esc"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users__rx_sidebar_mode__expanded
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users_settings__rx_sidebar_mode__expanded
+msgid "Expanded"
+msgstr "Развёрнутое"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Graphite"
+msgstr "Графит"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_neutral__neutral
+msgid "Gray"
+msgstr "Серый"
+
+#. module: rex_backend_theme
+#: model:ir.model,name:rex_backend_theme.model_ir_http
+msgid "HTTP Routing"
+msgstr "HTTP-маршрутизация"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/accent_field.js:0
+msgid "Hex value"
+msgstr "Значение hex"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_ir_http__id
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_config_settings__id
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users__id
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users_settings__id
+#: model:ir.model.fields,field_description:rex_backend_theme.field_rex_backend_theme__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users__rx_sidebar_mode__rail
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users_settings__rx_sidebar_mode__rail
+msgid "Icons only"
+msgstr "Только иконки"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Indigo"
+msgstr "Индиго"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_radius__lg
+msgid "Large"
+msgstr "Большое"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/core/color_scheme.js:0
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users__rx_color_scheme__light
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users_settings__rx_color_scheme__light
+msgid "Light"
+msgstr "Светлая"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_radius__md
+msgid "Medium"
+msgstr "Среднее"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_config_settings__rx_neutral
+msgid "Neutral Palette"
+msgstr "Нейтральная палитра"
+
+#. module: rex_backend_theme
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid "Neutral palette"
+msgstr "Нейтральная палитра"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+msgid "New"
+msgstr "Создать"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/launcher/launcher.js:0
+msgid "No app matches your search."
+msgstr "Нет приложений по этому запросу."
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/topbar/navbar_patch.js:0
+msgid "Open menu"
+msgstr "Открыть меню"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/option_cards_field.js:0
+msgid "Option cards"
+msgstr "Карточки вариантов"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Orange"
+msgstr "Оранжевый"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+msgid "Orders"
+msgstr "Заказы"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/sidebar/sidebar.js:0
+msgid "Pin to the top"
+msgstr "Закрепить вверху"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Pink"
+msgstr "Розовый"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/sidebar/sidebar.js:0
+msgid "Pinned"
+msgstr "Закреплённые"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users_settings__rx_sidebar_pins
+msgid "Pinned Menus"
+msgstr "Закреплённые пункты"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/option_cards_field.js:0
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#. module: rex_backend_theme
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid "Primary buttons, focus rings and selected states."
+msgstr "Основные кнопки, рамка фокуса и выбранные элементы."
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,help:rex_backend_theme.field_res_config_settings__rx_accent_color
+msgid "Primary buttons, links in focus, selected states."
+msgstr "Основные кнопки, ссылки в фокусе, выбранные элементы."
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+msgid "Products"
+msgstr "Товары"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+msgid "Quotations"
+msgstr "Предложения"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/launcher/launcher.js:0
+#: code:addons/rex_backend_theme/static/src/webclient/shell/recent_commands.js:0
+msgid "Recently opened"
+msgstr "Недавно открытые"
+
+#. module: rex_backend_theme
+#: model:ir.model,name:rex_backend_theme.model_rex_backend_theme
+#: model:ir.module.module,shortdesc:base.module_rex_backend_theme
+msgid "Rex Backend Theme"
+msgstr "Rex Backend Theme"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Rose"
+msgstr "Розовато-красный"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+msgid "Sales"
+msgstr "Продажи"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/launcher/launcher.js:0
+#: code:addons/rex_backend_theme/static/src/webclient/sidebar/sidebar.js:0
+msgid "Search apps…"
+msgstr "Поиск приложений…"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/topbar/navbar_patch.js:0
+msgid "Search or jump to…"
+msgstr "Поиск или переход…"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+msgid "Search…"
+msgstr "Поиск…"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_preview.js:0
+msgid "Sent"
+msgstr "Отправлено"
+
+#. module: rex_backend_theme
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid ""
+"Shows the current company's logo at the top of the sidebar. The logo is set "
+"on the company."
+msgstr "Показывает логотип текущей компании вверху бокового меню. Логотип задаётся в карточке компании."
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users__rx_sidebar_mode
+#: model:ir.model.fields,field_description:rex_backend_theme.field_res_users_settings__rx_sidebar_mode
+msgid "Sidebar"
+msgstr "Боковое меню"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Sky"
+msgstr "Небесный"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_neutral__slate
+msgid "Slate"
+msgstr "Сланцевый"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_radius__sm
+msgid "Small"
+msgstr "Малое"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,help:rex_backend_theme.field_res_users__rx_density
+msgid "Spacing of lists, forms and the sidebar."
+msgstr "Отступы списков, форм и бокового меню."
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,help:rex_backend_theme.field_res_users_settings__rx_density
+msgid ""
+"Spacing of lists, forms and the sidebar. Company default follows the general"
+" settings."
+msgstr "Отступы списков, форм и бокового меню. «Как у компании» следует общим настройкам."
+
+#. module: rex_backend_theme
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid ""
+"Spacing of lists, forms and the sidebar. Each user can change it in My "
+"Preferences."
+msgstr "Отступы списков, форм и бокового меню. Каждый пользователь может изменить их в своих настройках."
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_radius__none
+msgid "Square"
+msgstr "Без скругления"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_neutral__stone
+msgid "Stone"
+msgstr "Каменный"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/core/color_scheme.js:0
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users__rx_color_scheme__system
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_users_settings__rx_color_scheme__system
+msgid "System"
+msgstr "Как в системе"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,help:rex_backend_theme.field_res_users__rx_color_scheme
+#: model:ir.model.fields,help:rex_backend_theme.field_res_users_settings__rx_color_scheme
+msgid "System follows the light or dark setting of the device."
+msgstr "«Как в системе» следует светлому или тёмному режиму устройства."
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Teal"
+msgstr "Бирюзовый"
+
+#. module: rex_backend_theme
+#. odoo-python
+#: code:addons/rex_backend_theme/models/backend_theme.py:0
+msgid "The accent colour must be a hex colour such as #6366f1."
+msgstr "Цвет акцента должен быть в формате hex, например #6366f1."
+
+#. module: rex_backend_theme
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid ""
+"The choices below in the light and dark schemes. Saving applies them for "
+"everyone and recompiles the backend styles once."
+msgstr "Выбранные ниже значения в светлой и тёмной схемах. Сохранение применит их для всех и один раз пересоберёт стили интерфейса."
+
+#. module: rex_backend_theme
+#: model:ir.model.fields,help:rex_backend_theme.field_res_config_settings__rx_neutral
+#: model_terms:ir.ui.view,arch_db:rex_backend_theme.res_config_settings_view_form
+msgid "The gray scale of backgrounds, borders and secondary text."
+msgstr "Оттенки серого для фонов, рамок и второстепенного текста."
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/core/color_scheme.xml:0
+msgid "Theme"
+msgstr "Тема"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/topbar/navbar_patch.js:0
+msgid "Toggle sidebar"
+msgstr "Показать или скрыть боковое меню"
+
+#. module: rex_backend_theme
+#. odoo-python
+#: code:addons/rex_backend_theme/models/backend_theme.py:0
+msgid "Unknown corner radius: %s"
+msgstr "Неизвестное скругление: %s"
+
+#. module: rex_backend_theme
+#. odoo-python
+#: code:addons/rex_backend_theme/models/backend_theme.py:0
+msgid "Unknown neutral palette: %s"
+msgstr "Неизвестная палитра: %s"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/webclient/sidebar/sidebar.js:0
+msgid "Unpin"
+msgstr "Открепить"
+
+#. module: rex_backend_theme
+#: model:ir.model,name:rex_backend_theme.model_res_users
+msgid "User"
+msgstr "Пользователь"
+
+#. module: rex_backend_theme
+#: model:ir.model,name:rex_backend_theme.model_res_users_settings
+msgid "User Settings"
+msgstr "Настройки пользователя"
+
+#. module: rex_backend_theme
+#. odoo-javascript
+#: code:addons/rex_backend_theme/static/src/settings/theme_values.js:0
+msgid "Violet"
+msgstr "Фиолетовый"
+
+#. module: rex_backend_theme
+#: model:ir.model.fields.selection,name:rex_backend_theme.selection__res_config_settings__rx_neutral__zinc
+msgid "Zinc"
+msgstr "Цинковый"

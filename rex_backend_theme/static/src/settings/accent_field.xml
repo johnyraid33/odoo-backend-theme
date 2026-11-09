@@ -38,9 +38,9 @@
                        t-on-change="(ev) => this.onHexChange(ev)"/>
                 <span class="text-muted" t-out="this.valueName"/>
             </div>
-            <div t-if="this.warning" class="rx-accent-warning">
-                <i class="oi" data-icon="warning" aria-hidden="true"/>
-                <span t-out="this.warning"/>
+            <div t-if="this.adjustment" class="rx-accent-note">
+                <span class="rx-accent-dot" t-att-style="'--swatch: ' + this.adjustment.color"/>
+                <span t-out="this.adjustment.text"/>
             </div>
         </div>
     </t>

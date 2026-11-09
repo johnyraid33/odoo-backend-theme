@@ -82,14 +82,21 @@
     }
 }
 
-.rx-accent-warning {
+.rx-accent-note {
     display: flex;
-    gap: 6px;
-    align-items: flex-start;
-    max-width: 420px;
+    gap: 8px;
+    align-items: center;
+    max-width: 440px;
     font-size: 12.5px;
-    color: if($rx-dark, mix(#fff, $rx-warning, 20%), mix(#000, $rx-warning, 35%));
-    .oi { font-size: 16px; }
+    color: $rx-muted-foreground;
+
+    .rx-accent-dot {
+        flex: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+        background: var(--swatch);
+    }
 }
 
 // ---------------------------------------------------------------- option cards

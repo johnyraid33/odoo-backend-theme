@@ -14,6 +14,13 @@ $rx-dark: false !default;
 $rx-user-accent: #6366f1 !default;
 $rx-user-neutral: zinc !default;
 $rx-user-radius: md !default;
+// Accent variants that meet WCAG AA, computed by models/colors.py when the
+// settings are saved (libsass has no luminance function). Defaults: indigo
+// on zinc.
+$rx-user-primary: #6265ef !default;
+$rx-user-primary-foreground: #ffffff !default;
+$rx-user-primary-text: #5f62e7 !default;
+$rx-user-primary-text-dark: #9a9cf6 !default;
 
 // ---------------------------------------------------------------- neutral scales
 $rx-neutrals: (
@@ -27,6 +34,9 @@ $rx-neutrals: (
     neutral: (50: #fafafa, 100: #f5f5f5, 200: #e5e5e5, 300: #d4d4d4, 400: #a3a3a3, 500: #737373,
               600: #525252, 700: #404040, 800: #262626, 900: #171717, 950: #0a0a0a),
 );
+// secondary text in the light scheme: step 500 darkened just enough for
+// 4.5:1 on the window background (dev/contrast.py)
+$rx-muted-light: (zinc: #6e6d79, slate: #617187, stone: #766f6a, neutral: #707070);
 $-rx-scale: map-get($rx-neutrals, $rx-user-neutral);
 @if not $-rx-scale {
     $-rx-scale: map-get($rx-neutrals, zinc);
@@ -62,7 +72,7 @@ $rx-foreground: if($rx-dark, rx-n(50), rx-n(950));
 $rx-surface: if($rx-dark, mix(rx-n(900), rx-n(950), 45%), rx-n(50)); // the main panel
 $rx-page: if($rx-dark, rx-n(950), rx-n(100));                   // window background and sidebar
 $rx-muted: $rx-gray-100;
-$rx-muted-foreground: if($rx-dark, rx-n(400), rx-n(500));
+$rx-muted-foreground: if($rx-dark, rx-n(400), map-get($rx-muted-light, $rx-user-neutral) or rx-n(500));
 $rx-border: if($rx-dark, mix(rx-n(700), rx-n(800), 30%), rx-n(200));
 $rx-input: if($rx-dark, mix(rx-n(700), rx-n(800), 55%), rx-n(200));
 $rx-accent: if($rx-dark, mix(rx-n(800), rx-n(900), 60%), rx-n(100)); // hover backgrounds
@@ -70,12 +80,15 @@ $rx-strong: if($rx-dark, rx-n(50), rx-n(950));                  // active naviga
 $rx-strong-foreground: if($rx-dark, rx-n(950), #fff);
 
 // ---------------------------------------------------------------- accent
-$rx-primary: $rx-user-accent;
+// $rx-primary fills buttons and checked controls; $rx-primary-text colours
+// links and accent text. Both differ from the picked colour only as much as
+// AA contrast requires.
+$rx-primary: $rx-user-primary;
 $rx-primary-hover: if($rx-dark, mix(#fff, $rx-primary, 12%), mix(#000, $rx-primary, 10%));
-$rx-primary-foreground: rx-on($rx-primary);
-$rx-primary-subtle: mix($rx-primary, $rx-background, if($rx-dark, 22%, 10%));
-$rx-primary-text: if($rx-dark, mix(#fff, $rx-primary, 35%), $rx-primary);
-$rx-ring: if($rx-dark, mix(#000, $rx-primary, 25%), mix(#fff, $rx-primary, 45%));
+$rx-primary-foreground: $rx-user-primary-foreground;
+$rx-primary-subtle: mix($rx-user-accent, $rx-background, if($rx-dark, 22%, 10%));
+$rx-primary-text: if($rx-dark, $rx-user-primary-text-dark, $rx-user-primary-text);
+$rx-ring: if($rx-dark, mix($rx-user-primary-text-dark, $rx-background, 60%), mix(#fff, $rx-user-primary-text, 45%));
 
 // ---------------------------------------------------------------- status colours
 $rx-success: #16a34a;
@@ -88,7 +101,8 @@ $rx-danger: #ef4444;
     @if $rx-dark {
         @return (mix($color, $rx-background, 20%), mix(#fff, $color, 40%));
     }
-    @return (mix($color, #fff, 12%), mix(#000, $color, 28%));
+    // yellow needs more ink than the other statuses for 4.5:1
+    @return (mix($color, #fff, 12%), mix(#000, $color, if($color == $rx-warning, 40%, 28%)));
 }
 
 // ---------------------------------------------------------------- shadows

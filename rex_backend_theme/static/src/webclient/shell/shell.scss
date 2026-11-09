@@ -146,6 +146,15 @@ kbd {
         object-fit: contain;
         object-position: left center;
     }
+    // logos are drawn for a light background: give them one in the dark scheme
+    @if $rx-dark {
+        img {
+            max-height: 34px;
+            padding: 4px 8px;
+            border-radius: $rx-radius-md;
+            background-color: #fff;
+        }
+    }
 }
 
 .rx-sidebar-head {

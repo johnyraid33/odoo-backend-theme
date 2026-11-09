@@ -2,7 +2,7 @@ import { Component, useProps } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
-import { ACCENT_PRESETS, DEFAULT_ACCENT, HEX_RE, contrast } from "./theme_values";
+import { ACCENT_PRESETS, DEFAULT_ACCENT, HEX_RE, accentVariants, channelDistance } from "./theme_values";
 
 /**
  * Accent colour: preset swatches, a custom colour and its hex value, with a
@@ -28,15 +28,21 @@ export class AccentField extends Component {
         return this.preset?.name || _t("Custom");
     }
 
-    get warning() {
-        // 3:1 is the WCAG minimum for buttons, focus rings and large text
-        if (contrast(this.value, "#ffffff") < 3) {
-            return _t("This colour is light: buttons get dark text and links may be hard to read on white.");
+    /** What the theme changes so the colour meets WCAG AA, if anything. */
+    get adjustment() {
+        const neutral = this.props.record.data.rx_neutral;
+        const variants = accentVariants(this.value, neutral);
+        // a shift of a few units is invisible; it is not worth a remark
+        if (channelDistance(variants.primary, this.value) >= 8) {
+            return {
+                color: variants.primary,
+                text: _t("Buttons use a slightly deeper shade so white text stays readable."),
+            };
         }
-        if (contrast(this.value, "#17161c") < 3) {
-            return _t("This colour is dark: it may be hard to see in the dark scheme.");
+        if (variants.primaryForeground !== "#ffffff") {
+            return { color: variants.primary, text: _t("Buttons get dark text: white would be hard to read on this colour.") };
         }
-        return "";
+        return null;
     }
 
     get labels() {
