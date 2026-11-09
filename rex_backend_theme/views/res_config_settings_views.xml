@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.rex_backend_theme</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='companies']" position="after">
+                <div id="rex_backend_theme">
+                    <block title="Backend Theme" name="rex_backend_theme_container" groups="base.group_system">
+                        <setting id="rx_accent_setting" string="Accent colour"
+                                 help="Primary buttons, focus rings and selected states. Saving recompiles the backend styles once.">
+                            <field name="rx_accent_color" widget="color" class="o_rx_accent_field"/>
+                        </setting>
+                        <setting id="rx_neutral_setting" string="Neutral palette"
+                                 help="The gray scale of backgrounds, borders and secondary text.">
+                            <field name="rx_neutral" widget="radio" options="{'horizontal': true}"/>
+                        </setting>
+                        <setting id="rx_radius_setting" string="Corner radius"
+                                 help="Buttons, inputs, cards and the main panel.">
+                            <field name="rx_radius" widget="radio" options="{'horizontal': true}"/>
+                        </setting>
+                    </block>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

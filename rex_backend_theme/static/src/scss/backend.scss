@@ -1,0 +1,383 @@
+// Rex Backend Theme: component layer.
+//
+// Only styles, no template changes: every rule targets classes the stock web
+// client already renders, so an Odoo update can at worst make a rule a no-op.
+
+.o_web_client {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01" 0;
+}
+
+// ------------------------------------------------------------------ navbar
+.o_main_navbar {
+    border-bottom: 1px solid $rx-border;
+    box-shadow: none;
+
+    .o_menu_brand {
+        font-weight: 600;
+        letter-spacing: -.01em;
+    }
+    .o_menu_sections .o_nav_entry,
+    .o_menu_sections .dropdown-toggle {
+        font-weight: 500;
+    }
+    .o_menu_systray .badge {
+        font-weight: 600;
+        border-radius: 999px;
+    }
+}
+
+// ------------------------------------------------------------------ buttons
+.btn {
+    font-weight: 500;
+    letter-spacing: -.005em;
+    transition: background-color .15s, border-color .15s, color .15s, box-shadow .15s;
+}
+.btn-primary, .btn-secondary, .btn-outline-secondary {
+    box-shadow: $rx-shadow-xs;
+}
+.btn-link {
+    font-weight: 500;
+    &:hover { text-decoration: underline; text-underline-offset: 4px; }
+}
+.btn-group > .btn-secondary + .btn-secondary,
+.o_cp_switch_buttons .btn + .btn {
+    margin-left: -1px;
+}
+.o_cp_switch_buttons .btn.active {
+    background-color: $rx-accent;
+    color: $rx-foreground;
+    box-shadow: none;
+}
+
+// ------------------------------------------------------------------ links
+a, .btn-link, .o_form_uri {
+    text-underline-offset: 4px;
+}
+.o_field_widget .o_form_uri,
+.o_field_many2one a {
+    font-weight: 500;
+}
+
+// ------------------------------------------------------------------ inputs
+.o_input:focus, .form-control:focus, .form-select:focus {
+    box-shadow: none;
+}
+.form-control, .form-select {
+    border-color: $rx-input;
+    box-shadow: $rx-shadow-xs;
+    &:focus { border-color: $rx-ring; box-shadow: 0 0 0 3px rgba($rx-ring, .5); }
+}
+.form-check-input {
+    border-radius: $rx-radius-sm * .75;
+    &:checked { background-color: $rx-primary; border-color: $rx-primary; }
+}
+.form-switch .form-check-input { border-radius: 2em; }
+
+// ------------------------------------------------------------------ control panel and search
+.o_control_panel {
+    border-bottom-color: $rx-border;
+
+    .o_breadcrumb .active, .o_last_breadcrumb_item {
+        font-weight: 600;
+        letter-spacing: -.01em;
+    }
+}
+// one bordered box: the input and the filter toggler of the input-group
+.o_cp_searchview.input-group {
+    border-radius: $rx-radius-md !important;
+    box-shadow: $rx-shadow-xs;
+
+    > .o_searchview {
+        border: 1px solid $rx-input !important;
+        border-radius: $rx-radius-md 0 0 $rx-radius-md !important;
+        box-shadow: none;
+        &:only-child { border-radius: $rx-radius-md !important; }
+    }
+    > .o_searchview_dropdown_toggler {
+        border: 1px solid $rx-input !important;
+        border-left: 0 !important;
+        border-radius: 0 $rx-radius-md $rx-radius-md 0 !important;
+        box-shadow: none;
+        background-color: $rx-background;
+        &:hover { background-color: $rx-accent; }
+    }
+    &:focus-within {
+        box-shadow: 0 0 0 3px rgba($rx-ring, .5);
+        > .o_searchview, > .o_searchview_dropdown_toggler { border-color: $rx-ring !important; }
+    }
+}
+.o_searchview {
+    background-color: $rx-background;
+
+    .o_searchview_facet {
+        border-radius: $rx-radius-sm;
+        background-color: $rx-muted;
+
+        .o_searchview_facet_label {
+            background-color: transparent !important;
+            color: $rx-muted-foreground !important;
+        }
+        .o_facet_values {
+            color: $rx-foreground;
+            font-weight: 500;
+        }
+    }
+}
+
+// ------------------------------------------------------------------ dropdowns
+.dropdown-menu, .o-dropdown--menu {
+    padding: 4px;
+    border-color: $rx-border;
+    border-radius: $rx-radius-md;
+    box-shadow: $rx-shadow-md;
+
+    .dropdown-item, .o-dropdown-item {
+        border-radius: $rx-radius-sm;
+    }
+    .dropdown-header {
+        color: $rx-muted-foreground;
+        font-size: .75rem;
+        font-weight: 500;
+    }
+    .dropdown-divider {
+        margin: 4px -4px;
+        border-color: $rx-border;
+    }
+}
+
+// ------------------------------------------------------------------ badges and tags
+.badge {
+    font-weight: 500;
+    border-radius: $rx-radius-sm;
+    letter-spacing: 0;
+}
+@each $-name, $-color in (success: $rx-success, info: $rx-info, warning: $rx-warning, danger: $rx-danger) {
+    $-soft: rx-soft($-color);
+    .badge.text-bg-#{$-name}, .badge.bg-#{$-name} {
+        background-color: nth($-soft, 1) !important;
+        color: nth($-soft, 2) !important;
+    }
+}
+.badge.text-bg-primary, .badge.bg-primary {
+    background-color: $rx-primary !important;
+    color: $rx-primary-foreground !important;
+}
+@each $-name in (secondary, light, 100, 200, 300) {
+    .badge.text-bg-#{$-name}, .badge.bg-#{$-name} {
+        background-color: $rx-muted !important;
+        color: if($-name == secondary or $-name == light, $rx-foreground, $rx-gray-700) !important;
+    }
+}
+.o_tag {
+    border-radius: $rx-radius-sm;
+    font-weight: 500;
+}
+
+// ------------------------------------------------------------------ list view
+.o_list_renderer .o_list_table {
+    thead th {
+        color: $rx-muted-foreground;
+        font-weight: 500;
+        border-bottom-color: $rx-border;
+    }
+    tbody > tr > td {
+        border-color: $rx-border;
+    }
+    tfoot {
+        color: $rx-foreground;
+    }
+    .o_group_header {
+        background-color: $rx-surface;
+        font-weight: 500;
+    }
+}
+
+// ------------------------------------------------------------------ form view
+.o_form_view {
+    .o_form_sheet_bg {
+        background-color: $rx-surface;
+    }
+    .o_form_sheet {
+        border: 1px solid $rx-border !important;
+        border-radius: $rx-radius-xl;
+        box-shadow: $rx-shadow-xs;
+    }
+    .oe_title h1, .oe_title .o_field_char {
+        letter-spacing: -.025em;
+    }
+    .oe_title h1, .oe_title h1 input, .oe_title h1 textarea {
+        font-weight: 600;
+    }
+    .o_form_label, .o_td_label .o_form_label {
+        color: $rx-foreground;
+        font-weight: 500;
+    }
+    .o_horizontal_separator, .o_group .o_horizontal_separator {
+        color: $rx-muted-foreground;
+        font-size: .75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+        border-bottom-color: $rx-border;
+    }
+    // stat buttons
+    .oe_button_box .oe_stat_button, .o-form-buttonbox .oe_stat_button {
+        border-radius: $rx-radius-md;
+    }
+}
+
+// notebook: shadcn "line" tabs
+.o_notebook .o_notebook_headers .nav-tabs, .nav-tabs {
+    border-bottom: 1px solid $rx-border;
+
+    .nav-link {
+        border: 0;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        color: $rx-muted-foreground;
+        font-weight: 500;
+        background: transparent;
+        margin-bottom: -1px;
+
+        &:hover { color: $rx-foreground; }
+        &.active {
+            color: $rx-foreground;
+            border-bottom-color: $rx-foreground;
+            background: transparent;
+        }
+    }
+}
+
+// statusbar: segmented control instead of arrows
+.o_field_statusbar > .o_statusbar_status {
+    @include media-breakpoint-up(md) {
+        --o-statusbar-padding: 3px;
+        --o-statusbar-radius: #{$rx-radius-sm};
+        background: $rx-muted;
+        border-color: transparent;
+        border-radius: $rx-radius-md;
+        gap: 2px;
+
+        .o_arrow_button:not(.d-none) {
+            clip-path: none;
+            margin-left: 0;
+            padding: 3px 12px;
+            --btn-border-radius: #{$rx-radius-sm};
+            border-radius: $rx-radius-sm !important;
+            --btn-color: #{$rx-muted-foreground};
+            --btn-hover-color: #{$rx-foreground};
+            --btn-hover-bg: transparent;
+            --btn-active-bg: transparent;
+            box-shadow: none;
+            font-weight: 500;
+
+            &.o_arrow_button_current {
+                --btn-disabled-bg: #{$rx-background};
+                --btn-disabled-color: #{$rx-foreground};
+                --btn-disabled-opacity: 1;
+                background-color: $rx-background;
+                color: $rx-foreground;
+                opacity: 1;
+                box-shadow: $rx-shadow-sm;
+            }
+        }
+    }
+}
+
+// chatter
+.o-mail-Chatter {
+    .o-mail-Message-author, .o-mail-Message strong {
+        font-weight: 600;
+    }
+}
+
+// ------------------------------------------------------------------ kanban
+.o_kanban_renderer {
+    .o_kanban_record:not(.o_kanban_ghost):not(.o-kanban-button-new) {
+        border: 1px solid $rx-border;
+        border-radius: $rx-radius-lg;
+        box-shadow: $rx-shadow-xs;
+        transition: box-shadow .15s, border-color .15s;
+
+        &:hover {
+            border-color: $rx-gray-300;
+            box-shadow: $rx-shadow-sm;
+        }
+    }
+    &.o_kanban_grouped .o_kanban_record:not(.o_kanban_ghost) {
+        margin-bottom: 8px;
+    }
+    .o_kanban_header_title, .o_column_title {
+        font-weight: 600;
+    }
+}
+
+// ------------------------------------------------------------------ dialogs
+.modal-content {
+    border: 1px solid $rx-border;
+    box-shadow: $rx-shadow-lg;
+    overflow: hidden;
+
+    .modal-header {
+        border-bottom: 0;
+        padding-bottom: 4px;
+        .modal-title { font-weight: 600; letter-spacing: -.01em; }
+    }
+    .modal-footer {
+        border-top: 0;
+        padding-top: 4px;
+    }
+}
+
+// ------------------------------------------------------------------ notifications
+.o_notification {
+    border: 1px solid $rx-border;
+    border-radius: $rx-radius-md;
+    box-shadow: $rx-shadow-lg;
+}
+
+// ------------------------------------------------------------------ dashboard cards (sale, purchase...)
+// .o_web_client prefix: the apps' own *.dark.scss set these on .o_dashboard_card
+.o_web_client, .o_web_client .o_dashboard_card {
+    @each $-c in (purple, cyan, orange, red) {
+        --DashboardCard__#{$-c}-bg-color: #{$rx-background};
+        --DashboardCard__#{$-c}-bg-color--active: #{$rx-accent};
+        --DashboardCard__#{$-c}-color: #{$rx-foreground};
+        --DashboardCard__#{$-c}-color--active: #{$rx-foreground};
+    }
+}
+.o_dashboard_card {
+    border: 1px solid $rx-border !important;
+    border-radius: $rx-radius-lg !important;
+    box-shadow: $rx-shadow-xs;
+    font-weight: 400;
+    color: $rx-muted-foreground;
+
+    .o_dashboard_card_data { font-weight: 600 !important; letter-spacing: -.02em; }
+    &.active { color: $rx-foreground; }
+}
+
+// ------------------------------------------------------------------ settings
+.o_web_client {
+    --settings__title-bg: transparent;
+    --settings__tab-bg: #{$rx-surface};
+    --settings__tab-bg--active: #{$rx-accent};
+}
+.o_setting_container .settings > .app_settings_block h2 {
+    font-weight: 600;
+    letter-spacing: -.01em;
+    border-bottom: 1px solid $rx-border;
+}
+.o_setting_container .settings_tab .selected {
+    box-shadow: inset 2px 0 0 $rx-foreground;
+}
+.o_settings_container .o_setting_box, .o_setting_box {
+    .o_form_label { font-weight: 500; }
+}
+.o_base_settings .settings_tab .tab.selected,
+.o_setting_container .settings_tab .tab.selected {
+    background-color: $rx-accent;
+    color: $rx-foreground;
+}

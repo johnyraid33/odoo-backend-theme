@@ -1,0 +1,28 @@
+// Segmented control (shadcn "ToggleGroup"), used by the theme switcher.
+.rx-segmented {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    border-radius: $rx-radius-md;
+    background-color: $rx-muted;
+}
+.rx-segmented-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 24px;
+    border: 0;
+    border-radius: $rx-radius-sm;
+    background: transparent;
+    color: $rx-muted-foreground;
+    font-size: 16px;
+
+    &:hover { color: $rx-foreground; }
+    &.active {
+        background-color: $rx-background;
+        color: $rx-foreground;
+        box-shadow: $rx-shadow-sm;
+    }
+    &:focus-visible { outline: 2px solid $rx-ring; outline-offset: 1px; }
+}

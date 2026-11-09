@@ -1,0 +1,123 @@
+// Rex Backend Theme: design tokens.
+//
+// Bundle order (all placed before web/static/src/scss/primary_variables.scss):
+//   user_variables.scss   values from the settings
+//   dark.scss             dark bundles only, sets $rx-dark
+//   tokens.scss           this file: palette and semantic tokens
+//   primary_variables.scss  Odoo and Bootstrap variables mapped to the tokens
+//
+// Components use the semantic tokens ($rx-background, $rx-border...) or the
+// $rx-gray-* scale. The gray scale is inverted in the dark scheme, so a rule
+// written once reads correctly in both.
+
+$rx-dark: false !default;
+$rx-user-accent: #6366f1 !default;
+$rx-user-neutral: zinc !default;
+$rx-user-radius: md !default;
+
+// ---------------------------------------------------------------- neutral scales
+$rx-neutrals: (
+    // cool gray with a hint of violet (the CloseCRM look)
+    zinc: (50: #f9f9fb, 100: #f2f2f4, 200: #e4e4e9, 300: #d2d2d9, 400: #a6a6b0, 500: #7f7d8b,
+           600: #5d5b68, 700: #403f49, 800: #27262e, 900: #17161c, 950: #0b0b0f),
+    slate: (50: #f8fafc, 100: #f1f5f9, 200: #e2e8f0, 300: #cbd5e1, 400: #94a3b8, 500: #64748b,
+            600: #475569, 700: #334155, 800: #1e293b, 900: #0f172a, 950: #020617),
+    stone: (50: #fafaf9, 100: #f5f5f4, 200: #e7e5e4, 300: #d6d3d1, 400: #a8a29e, 500: #78716c,
+            600: #57534e, 700: #44403c, 800: #292524, 900: #1c1917, 950: #0c0a09),
+    neutral: (50: #fafafa, 100: #f5f5f5, 200: #e5e5e5, 300: #d4d4d4, 400: #a3a3a3, 500: #737373,
+              600: #525252, 700: #404040, 800: #262626, 900: #171717, 950: #0a0a0a),
+);
+$-rx-scale: map-get($rx-neutrals, $rx-user-neutral);
+@if not $-rx-scale {
+    $-rx-scale: map-get($rx-neutrals, zinc);
+}
+
+@function rx-n($step) {
+    @return map-get($-rx-scale, $step);
+}
+
+// Text colour readable on $color: dark ink on light colours, white otherwise.
+@function rx-on($color) {
+    $-yiq: (red($color) * 299 + green($color) * 587 + blue($color) * 114) / 1000;
+    @return if($-yiq > 170, rx-n(950), #fff);
+}
+
+// ---------------------------------------------------------------- gray scale
+// Light: the scale as is. Dark: inverted, 50 sits next to the card background.
+$rx-gray-50: if($rx-dark, rx-n(900), rx-n(50));
+$rx-gray-100: if($rx-dark, mix(rx-n(800), rx-n(900), 50%), rx-n(100));
+$rx-gray-200: if($rx-dark, rx-n(800), rx-n(200));
+$rx-gray-300: if($rx-dark, mix(rx-n(700), rx-n(800), 50%), rx-n(300));
+$rx-gray-400: if($rx-dark, rx-n(600), rx-n(400));
+$rx-gray-500: if($rx-dark, rx-n(500), rx-n(500));
+$rx-gray-600: if($rx-dark, rx-n(400), rx-n(600));
+$rx-gray-700: if($rx-dark, rx-n(300), rx-n(700));
+$rx-gray-800: if($rx-dark, rx-n(200), rx-n(800));
+$rx-gray-900: if($rx-dark, rx-n(100), rx-n(900));
+$rx-gray-950: if($rx-dark, rx-n(50), rx-n(950));
+
+// ---------------------------------------------------------------- semantic tokens
+$rx-background: if($rx-dark, rx-n(900), #fff);                  // cards, sheets, tables, inputs
+$rx-foreground: if($rx-dark, rx-n(50), rx-n(950));
+$rx-surface: if($rx-dark, mix(rx-n(900), rx-n(950), 45%), rx-n(50)); // the main panel
+$rx-page: if($rx-dark, rx-n(950), rx-n(100));                   // window background and sidebar
+$rx-muted: $rx-gray-100;
+$rx-muted-foreground: if($rx-dark, rx-n(400), rx-n(500));
+$rx-border: if($rx-dark, mix(rx-n(700), rx-n(800), 30%), rx-n(200));
+$rx-input: if($rx-dark, mix(rx-n(700), rx-n(800), 55%), rx-n(200));
+$rx-accent: if($rx-dark, mix(rx-n(800), rx-n(900), 60%), rx-n(100)); // hover backgrounds
+$rx-strong: if($rx-dark, rx-n(50), rx-n(950));                  // active navigation
+$rx-strong-foreground: if($rx-dark, rx-n(950), #fff);
+
+// ---------------------------------------------------------------- accent
+$rx-primary: $rx-user-accent;
+$rx-primary-hover: if($rx-dark, mix(#fff, $rx-primary, 12%), mix(#000, $rx-primary, 10%));
+$rx-primary-foreground: rx-on($rx-primary);
+$rx-primary-subtle: mix($rx-primary, $rx-background, if($rx-dark, 22%, 10%));
+$rx-primary-text: if($rx-dark, mix(#fff, $rx-primary, 35%), $rx-primary);
+$rx-ring: if($rx-dark, mix(#000, $rx-primary, 25%), mix(#fff, $rx-primary, 45%));
+
+// ---------------------------------------------------------------- status colours
+$rx-success: #16a34a;
+$rx-info: #3b82f6;
+$rx-warning: #f59e0b;
+$rx-danger: #ef4444;
+
+// Soft badge colours: (background, text) per status.
+@function rx-soft($color) {
+    @if $rx-dark {
+        @return (mix($color, $rx-background, 20%), mix(#fff, $color, 40%));
+    }
+    @return (mix($color, #fff, 12%), mix(#000, $color, 28%));
+}
+
+// ---------------------------------------------------------------- shadows
+$rx-shadow-color: #000;
+$-rx-shadow-k: if($rx-dark, 3, 1);
+$rx-shadow-xs: 0 1px 2px 0 rgba($rx-shadow-color, .04 * $-rx-shadow-k);
+$rx-shadow-sm: 0 1px 3px 0 rgba($rx-shadow-color, .08 * $-rx-shadow-k), 0 1px 2px -1px rgba($rx-shadow-color, .06 * $-rx-shadow-k);
+$rx-shadow-md: 0 4px 12px -2px rgba($rx-shadow-color, .08 * $-rx-shadow-k), 0 2px 4px -2px rgba($rx-shadow-color, .06 * $-rx-shadow-k);
+$rx-shadow-lg: 0 16px 32px -8px rgba($rx-shadow-color, .14 * $-rx-shadow-k), 0 4px 8px -4px rgba($rx-shadow-color, .08 * $-rx-shadow-k);
+
+// ---------------------------------------------------------------- radius
+// (sm, md, lg, xl) per setting; md is the shadcn default (--radius .625rem).
+$rx-radii: (
+    none: (0, 0, 0, 0),
+    sm: (.25rem, .3125rem, .375rem, .5rem),
+    md: (.375rem, .5rem, .625rem, .875rem),
+    lg: (.5rem, .75rem, 1rem, 1.25rem),
+);
+$-rx-radius: map-get($rx-radii, $rx-user-radius);
+@if not $-rx-radius {
+    $-rx-radius: map-get($rx-radii, md);
+}
+$rx-radius-sm: nth($-rx-radius, 1);
+$rx-radius-md: nth($-rx-radius, 2);
+$rx-radius-lg: nth($-rx-radius, 3);
+$rx-radius-xl: nth($-rx-radius, 4);
+// the inset panel and kanban columns
+$rx-radius-panel: if($rx-user-radius == none, 0, $rx-radius-xl);
+
+// ---------------------------------------------------------------- layout
+$rx-sidebar-width: 236px;
+$rx-gap: 8px;

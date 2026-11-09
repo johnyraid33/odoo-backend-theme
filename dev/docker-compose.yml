@@ -1,0 +1,30 @@
+# Local stand for rex_backend_theme: Odoo 20 with demo data on http://127.0.0.1:8180
+name: rex-backend-theme-dev
+
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
+    volumes:
+      - pg:/var/lib/postgresql/data
+
+  odoo:
+    image: odoo:${ODOO_VERSION:-20.0}
+    depends_on: [db]
+    command: ["--dev=xml,reload", "--db-filter=^theme"]
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: odoo
+    volumes:
+      - ..:/mnt/extra-addons:ro
+      - filestore:/var/lib/odoo
+    ports:
+      - "127.0.0.1:${ODOO_PORT:-8180}:8069"
+
+volumes:
+  pg:
+  filestore:

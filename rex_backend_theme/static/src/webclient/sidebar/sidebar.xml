@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="rex_backend_theme.Sidebar">
+        <aside class="rx-sidebar d-print-none" aria-label="Application menu">
+            <!-- App switcher -->
+            <Dropdown position="'bottom-start'" menuClass="'rx-apps-menu'">
+                <button class="rx-app-switcher" title="Switch application">
+                    <img t-if="this.currentApp?.webIconData" class="rx-app-icon" t-att-src="this.currentApp.webIconData" alt=""/>
+                    <span class="rx-app-name" t-out="this.currentApp?.name or 'Odoo'"/>
+                    <i class="oi ms-auto rx-chevron" data-icon="expand_more" aria-hidden="true"/>
+                </button>
+                <t t-set-slot="content">
+                    <t t-foreach="this.apps" t-as="app" t-key="app.id">
+                        <DropdownItem
+                            class="{ 'rx-app-item': true, active: this.currentApp === app }"
+                            onSelected="() => this.openApp(app)"
+                            attrs="{ href: this.href(app), 'data-menu-xmlid': app.xmlid }">
+                            <img t-if="app.webIconData" class="rx-app-icon" t-att-src="app.webIconData" alt=""/>
+                            <span t-out="app.name"/>
+                        </DropdownItem>
+                    </t>
+                </t>
+            </Dropdown>
+
+            <!-- Current app menu -->
+            <nav class="rx-nav">
+                <t t-foreach="this.sections" t-as="section" t-key="section.id">
+                    <t t-if="section.childrenTree.length">
+                        <div class="rx-group" t-att-class="{ 'rx-collapsed': this.isCollapsed(section) }">
+                            <button class="rx-group-label" t-on-click="() => this.toggle(section)" t-att-data-menu-xmlid="section.xmlid">
+                                <span t-out="section.name"/>
+                                <i class="oi ms-auto rx-chevron" data-icon="expand_more" aria-hidden="true"/>
+                            </button>
+                            <div t-if="!this.isCollapsed(section)" class="rx-group-items">
+                                <t t-foreach="section.childrenTree" t-as="item" t-key="item.id">
+                                    <t t-call="rex_backend_theme.Sidebar.Item" item="item" depth="0"/>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <t t-call="rex_backend_theme.Sidebar.Item" item="section" depth="0"/>
+                    </t>
+                </t>
+            </nav>
+
+            <!-- Current user -->
+            <div class="rx-user">
+                <img class="rx-user-avatar" t-att-src="this.avatarUrl" alt=""/>
+                <div class="rx-user-text">
+                    <div class="rx-user-name" t-out="this.user.name"/>
+                    <div class="rx-user-meta" t-out="this.user.activeCompany?.name or this.user.login"/>
+                </div>
+            </div>
+        </aside>
+    </t>
+
+    <t t-name="rex_backend_theme.Sidebar.Item">
+        <t t-if="item.childrenTree.length">
+            <div class="rx-subheader" t-out="item.name"/>
+            <t t-foreach="item.childrenTree" t-as="child" t-key="child.id">
+                <t t-call="rex_backend_theme.Sidebar.Item" item="child" depth="depth + 1"/>
+            </t>
+        </t>
+        <a t-else=""
+           class="rx-item"
+           t-att-class="{ active: item.id === this.state.activeId, 'rx-nested': depth gt 0 }"
+           t-att-href="this.href(item)"
+           t-att-data-menu-xmlid="item.xmlid"
+           t-on-click="(ev) => this.onItemClick(ev, item)">
+            <i class="oi rx-item-icon" t-att-data-icon="this.icon(item)" aria-hidden="true"/>
+            <span class="text-truncate" t-out="item.name"/>
+        </a>
+    </t>
+
+    <t t-inherit="web.NavBar" t-inherit-mode="extension">
+        <xpath expr="//nav[hasclass('o_main_navbar')]" position="before">
+            <RexSidebar t-if="!this.ui.isSmall"/>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Keep the color_scheme cookie in line with the user's preference before
+        any style or script loads: the server picks the light or dark bundles
+        from it ("system" mode) and Odoo's own JS reads it (charts, code editor).
+        When the device setting disagrees with what the server rendered, reload
+        once; the session flag prevents a loop if the server cannot follow.
+    -->
+    <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap">
+        <xpath expr="//t[@t-set='head']/script[1]" position="after">
+            <script type="text/javascript">
+                {
+                    const settings = odoo.__session_info__.user_settings || {};
+                    const preference = settings.rx_color_scheme || "light";
+                    const rendered = "<t t-out="color_scheme"/>";
+                    const wanted = preference === "system"
+                        ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+                        : preference;
+                    document.cookie = `color_scheme=${wanted}; path=/; max-age=31536000; SameSite=Lax`;
+                    const flag = "rex_backend_theme.scheme_reload";
+                    if (wanted !== rendered &amp;&amp; !sessionStorage.getItem(flag)) {
+                        sessionStorage.setItem(flag, "1");
+                        location.reload();
+                    } else {
+                        sessionStorage.removeItem(flag);
+                    }
+                }
+            </script>
+        </xpath>
+    </template>
+</odoo>

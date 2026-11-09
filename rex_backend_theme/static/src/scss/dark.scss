@@ -1,0 +1,7 @@
+// Rex Backend Theme: dark colour scheme switch.
+//
+// Added only to the dark bundles (web.assets_web_dark and
+// web.assets_backend_lazy_dark), right before tokens.scss: the same token
+// file then produces the dark palette.
+
+$rx-dark: true;

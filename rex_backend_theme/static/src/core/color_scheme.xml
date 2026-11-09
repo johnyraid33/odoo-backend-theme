@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="rex_backend_theme.ColorSchemeSwitcher">
+        <div class="rx-scheme-switcher d-flex align-items-center justify-content-between gap-3 px-3 py-1">
+            <span class="text-muted small">Theme</span>
+            <div class="rx-segmented" role="radiogroup" aria-label="Theme">
+                <t t-foreach="this.options" t-as="option" t-key="option.value">
+                    <button type="button" role="radio"
+                            class="rx-segmented-item"
+                            t-att-class="{ active: this.state.current === option.value }"
+                            t-att-aria-checked="this.state.current === option.value ? 'true' : 'false'"
+                            t-att-title="option.label" t-att-aria-label="option.label"
+                            t-att-data-scheme="option.value"
+                            t-on-click="(ev) => this.select(option.value, ev)">
+                        <i class="oi" t-att-data-icon="option.icon"/>
+                    </button>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

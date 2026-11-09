@@ -1,0 +1,159 @@
+// Rex Backend Theme: Odoo and Bootstrap variables mapped to the design tokens.
+//
+// Placed before web/static/src/scss/primary_variables.scss in the backend
+// bundles only, after tokens.scss, so every Odoo `!default` below is
+// overridden for the web client and nothing changes on the website or portal.
+
+$o-webclient-color-scheme: if($rx-dark, dark, bright);
+
+// ---------------------------------------------------------------- Odoo
+$o-system-fonts: ("Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+$o-headings-font-family: ("Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+$o-font-family-monospace: ("Geist Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+
+$o-white: $rx-background;
+$o-black: $rx-foreground;
+
+$o-gray-100: $rx-gray-100;
+$o-gray-200: $rx-gray-200;
+$o-gray-300: $rx-gray-300;
+$o-gray-400: $rx-gray-400;
+$o-gray-500: $rx-gray-500;
+$o-gray-600: $rx-gray-600;
+$o-gray-700: $rx-gray-700;
+$o-gray-800: $rx-gray-800;
+$o-gray-900: $rx-gray-900;
+
+$o-community-color: $rx-primary;
+$o-enterprise-color: $rx-primary;
+$o-enterprise-action-color: $rx-primary;
+$o-brand-odoo: $rx-strong;
+$o-brand-primary: $rx-primary;
+$o-brand-secondary: $rx-gray-500;
+$o-action: $rx-primary;
+
+$o-success: $rx-success;
+$o-info: $rx-info;
+$o-warning: $rx-warning;
+$o-danger: $rx-danger;
+$o-theme-text-colors: (
+    "success": nth(rx-soft($rx-success), 2),
+    "info": nth(rx-soft($rx-info), 2),
+    "warning": nth(rx-soft($rx-warning), 2),
+    "danger": nth(rx-soft($rx-danger), 2),
+);
+
+$o-main-text-color: $rx-foreground;
+$o-main-color-muted: $rx-muted-foreground;
+$o-main-headings-color: $rx-foreground;
+$o-main-link-color: $rx-foreground;
+
+$o-component-active-color: $rx-foreground;
+$o-component-active-bg: $rx-accent;
+$o-component-active-border: $rx-gray-400;
+
+$o-border-color: $rx-border;
+$o-view-background-color: $rx-background;
+$o-form-check-input-border-color: $rx-gray-300;
+$o-input-border-required: $rx-gray-400;
+$o-list-footer-font-weight: 600;
+
+$o-border-radius: $rx-radius-md;
+$o-border-radius-sm: $rx-radius-sm;
+$o-border-radius-lg: $rx-radius-lg;
+$o-border-radius-xl: $rx-radius-xl;
+
+$o-dropdown-vpadding: 5px;
+
+$o-btns-bs-override: (
+    "primary": (
+        background: $rx-primary,
+        border: $rx-primary,
+        color: $rx-primary-foreground,
+        hover-background: $rx-primary-hover,
+        hover-border: $rx-primary-hover,
+        hover-color: $rx-primary-foreground,
+        active-background: $rx-primary-hover,
+        active-border: $rx-primary-hover,
+        active-color: $rx-primary-foreground,
+        disabled-background: $rx-primary,
+        disabled-border: $rx-primary,
+        disabled-color: $rx-primary-foreground,
+    ),
+    // shadcn "outline"
+    "secondary": (
+        background: $rx-background,
+        border: $rx-input,
+        color: $rx-foreground,
+        hover-background: $rx-accent,
+        hover-border: $rx-input,
+        hover-color: $rx-foreground,
+        active-background: $rx-accent,
+        active-border: $rx-gray-300,
+        active-color: $rx-foreground,
+        disabled-background: $rx-background,
+        disabled-border: $rx-input,
+        disabled-color: $rx-foreground,
+    ),
+    // shadcn "ghost"
+    "light": (
+        background: transparent,
+        border: transparent,
+        color: $rx-foreground,
+        hover-background: $rx-accent,
+        hover-border: $rx-accent,
+        hover-color: $rx-foreground,
+        active-background: $rx-accent,
+        active-border: $rx-accent,
+        active-color: $rx-foreground,
+        disabled-background: transparent,
+        disabled-border: transparent,
+        disabled-color: $rx-foreground,
+    ),
+);
+$o-btns-bs-outline-override: (
+    "secondary": (
+        background: transparent,
+        border: $rx-input,
+        color: $rx-foreground,
+        hover-background: $rx-accent,
+        hover-border: $rx-input,
+        hover-color: $rx-foreground,
+        active-background: $rx-accent,
+        active-border: $rx-gray-300,
+        active-color: $rx-foreground,
+        disabled-background: transparent,
+        disabled-border: $rx-input,
+        disabled-color: $rx-foreground,
+    ),
+);
+
+// Navbar: white bar with a hairline, like a shadcn app header
+$o-navbar-height: 48px;
+$o-navbar-background: $rx-surface;
+$o-navbar-entry-color: $rx-gray-600;
+$o-navbar-entry-color--hover: $rx-foreground;
+$o-navbar-entry-bg--hover: $rx-accent;
+$o-navbar-entry-border-radius: $rx-radius-md;
+$o-navbar-brand-color: $rx-foreground;
+$o-navbar-badge-bg: $rx-strong;
+$o-navbar-badge-color: $rx-strong-foreground;
+$o-navbar-badge-text-shadow: none;
+
+$o-kanban-background: $rx-surface;
+$o-control-panel-background-color: $rx-surface;
+
+// Tag and badge palette (o_tag_color_N): Odoo ships light pastels only. In the
+// dark scheme derive a deep background and a light text from each border hue.
+@if $rx-dark {
+    $-rx-tag-hues: #8f8f8f, #d76a58, #cc7724, #c09910, #179dc5, #b271c6,
+                   #af8563, #17a49d, #5d8ee4, #d06792, #4ca65a, #8f7ede;
+    $-rx-tag-bg: ();
+    $-rx-tag-fg: ();
+    @each $-hue in $-rx-tag-hues {
+        $-rx-tag-bg: append($-rx-tag-bg, mix($-hue, $rx-background, 24%), comma);
+        $-rx-tag-fg: append($-rx-tag-fg, mix(#fff, $-hue, 45%), comma);
+    }
+    $o-colors-bg-subtle: $-rx-tag-bg !global;
+    $o-colors-text-emphasis: $-rx-tag-fg !global;
+}

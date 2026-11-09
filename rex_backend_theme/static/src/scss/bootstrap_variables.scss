@@ -1,0 +1,56 @@
+// Rex Backend Theme: Bootstrap variables, placed before Odoo's bootstrap_overridden.scss.
+
+$focus-ring-width: 3px;
+$focus-ring-color: rgba($rx-ring, .5);
+$focus-ring-box-shadow: 0 0 0 3px rgba($rx-ring, .5);
+$input-focus-border-color: $rx-ring;
+$input-focus-box-shadow: 0 0 0 3px rgba($rx-ring, .5);
+$btn-focus-box-shadow: 0 0 0 3px rgba($rx-ring, .5);
+$form-check-input-focus-box-shadow: 0 0 0 3px rgba($rx-ring, .5);
+
+$font-weight-bold: 600;
+$headings-font-weight: 600;
+$table-th-font-weight: 500;
+$table-hover-bg-factor: .025;
+$table-active-bg-factor: .04;
+
+$dropdown-link-hover-bg: $rx-accent;
+$dropdown-link-active-bg: $rx-accent;
+$dropdown-link-active-color: $rx-foreground;
+$dropdown-border-radius: $rx-radius-md;
+$dropdown-padding-x: .25rem;
+$dropdown-padding-y: .25rem;
+$dropdown-box-shadow: $rx-shadow-md;
+$dropdown-divider-margin-y: .25rem;
+
+$modal-content-border-radius: $rx-radius-xl;
+$modal-content-border-color: $rx-border;
+$modal-content-box-shadow-xs: $rx-shadow-lg;
+$modal-content-box-shadow-sm-up: $rx-shadow-lg;
+$modal-header-border-color: $rx-border;
+$modal-footer-border-color: $rx-border;
+$modal-backdrop-bg: #000;
+$modal-backdrop-opacity: .5;
+
+$popover-border-radius: $rx-radius-md;
+$popover-box-shadow: $rx-shadow-md;
+$tooltip-bg: $rx-primary;
+$tooltip-color: $rx-primary-foreground;
+$tooltip-border-radius: $rx-radius-md;
+
+$badge-font-weight: 500;
+$badge-border-radius: $rx-radius-sm;
+
+$card-border-radius: $rx-radius-xl;
+$card-border-color: $rx-border;
+$card-box-shadow: $rx-shadow-xs;
+
+$nav-tabs-border-color: $rx-border;
+$nav-tabs-link-active-color: $rx-foreground;
+$nav-tabs-link-active-border-color: transparent transparent $rx-foreground;
+$nav-pills-link-active-bg: $rx-primary;
+$nav-pills-border-radius: $rx-radius-md;
+
+$input-placeholder-color: $rx-muted-foreground;
+$form-switch-focus-color: $rx-ring;
+$badge-padding-x: .6em;
