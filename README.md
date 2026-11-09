@@ -70,13 +70,26 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
 
 ## Theme values and colour schemes
 
-- **Settings > General Settings > Backend Theme**: accent colour, neutral palette
-  (zinc, slate, stone, neutral) and corner radius. Saving stores a copy of
+- **Settings > General Settings > Backend Theme** (administrators): a preview
+  of the backend in light and dark that follows the edits before saving;
+  accent colour (eleven presets, a custom colour or a hex value, with a
+  contrast warning), neutral palette (zinc, slate, stone, gray), corner
+  radius, default density and the company logo in the sidebar.
+- Compiled values (accent, palette, radius): saving stores a copy of
   `user_variables.scss` as an attachment and replaces the file in the backend
   bundles through an `ir.asset` "replace" record (the website builder's
   mechanism), so Odoo recompiles once and every derived colour is exact.
   Back to the defaults, the customisation is removed; the uninstall hook
   removes it too, otherwise the bundles would point at a missing module.
+- Runtime values (density, sidebar logo) are configuration parameters sent
+  in `session_info` (`rex_backend_theme`); no recompilation. Density is the
+  `data-rx-density` attribute on `<html>`, set by the head script before
+  the first paint; compact tightens lists, the page header, forms, kanban
+  cards and the sidebar (`static/src/core/density.scss`).
+- **My Preferences > Appearance** (every internal user): colour scheme,
+  density (company default, comfortable, compact) and sidebar mode. The
+  fields on `res.users` are `user_writeable` and stored in
+  `res.users.settings`, so a user changes only their own.
 - **User menu > Theme**: light, dark or system, stored in `res.users.settings`.
   The dark styles are Odoo's `web.assets_web_dark` bundle compiled with
   `$rx-dark: true`; switching swaps the stylesheet in place, no reload.
@@ -96,6 +109,8 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
 | `static/src/scss/backend.scss` | component layer on top of the stock classes |
 | `static/src/scss/layout.scss` | list and kanban columns as cards |
 | `static/src/core/color_scheme.*` | scheme service, live stylesheet swap, user menu switcher |
+| `static/src/core/density.scss` | compact density |
+| `static/src/settings/` | accent field, option cards, live preview (settings and preferences) |
 | `static/src/webclient/shell/` | shell state service, grid layout, palette recents |
 | `static/src/webclient/sidebar/` | sidebar component |
 | `static/src/webclient/topbar/` | NavBar patch: toggle and search |

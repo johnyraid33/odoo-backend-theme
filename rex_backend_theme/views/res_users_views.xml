@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- My Preferences: an Appearance tab for the user's own theme choices -->
+    <record id="view_users_form_simple_modif" model="ir.ui.view">
+        <field name="name">res.users.preferences.form.inherit.rex_backend_theme</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='preferences_page']" position="after">
+                <page string="Appearance" name="rx_appearance" invisible="not rx_color_scheme">
+                    <group class="rx-appearance">
+                        <field name="rx_color_scheme" widget="rx_option_cards" options="{'preview': 'scheme'}" readonly="0"/>
+                        <field name="rx_density" widget="rx_option_cards" options="{'preview': 'density'}" readonly="0"/>
+                        <field name="rx_sidebar_mode" widget="rx_option_cards" options="{'preview': 'sidebar'}" readonly="0"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -8,17 +8,29 @@
             <xpath expr="//div[@id='companies']" position="after">
                 <div id="rex_backend_theme">
                     <block title="Backend Theme" name="rex_backend_theme_container" groups="base.group_system">
+                        <setting id="rx_preview_setting" class="col-lg-12" string="Preview"
+                                 help="The choices below in the light and dark schemes. Saving applies them for everyone and recompiles the backend styles once.">
+                            <widget name="rx_theme_preview"/>
+                        </setting>
                         <setting id="rx_accent_setting" string="Accent colour"
-                                 help="Primary buttons, focus rings and selected states. Saving recompiles the backend styles once.">
-                            <field name="rx_accent_color" widget="color" class="o_rx_accent_field"/>
+                                 help="Primary buttons, focus rings and selected states.">
+                            <field name="rx_accent_color" widget="rx_accent"/>
                         </setting>
                         <setting id="rx_neutral_setting" string="Neutral palette"
                                  help="The gray scale of backgrounds, borders and secondary text.">
-                            <field name="rx_neutral" widget="radio" options="{'horizontal': true}"/>
+                            <field name="rx_neutral" widget="rx_option_cards" options="{'preview': 'neutral'}"/>
                         </setting>
                         <setting id="rx_radius_setting" string="Corner radius"
                                  help="Buttons, inputs, cards and the main panel.">
-                            <field name="rx_radius" widget="radio" options="{'horizontal': true}"/>
+                            <field name="rx_radius" widget="rx_option_cards" options="{'preview': 'radius'}"/>
+                        </setting>
+                        <setting id="rx_density_setting" string="Density"
+                                 help="Spacing of lists, forms and the sidebar. Each user can change it in My Preferences.">
+                            <field name="rx_density" widget="rx_option_cards" options="{'preview': 'density'}"/>
+                        </setting>
+                        <setting id="rx_sidebar_logo_setting"
+                                 help="Shows the current company's logo at the top of the sidebar. The logo is set on the company.">
+                            <field name="rx_sidebar_logo"/>
                         </setting>
                     </block>
                 </div>

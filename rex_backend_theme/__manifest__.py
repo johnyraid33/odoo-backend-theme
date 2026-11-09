@@ -1,6 +1,6 @@
 {
     'name': 'Rex Backend Theme',
-    'version': '20.0.0.2.0',
+    'version': '20.0.0.3.0',
     'category': 'Themes/Backend',
     'summary': 'A calm, neutral backend in the shadcn/ui style: sidebar navigation, '
                'light and dark schemes, configurable accent, palette and radius',
@@ -11,6 +11,7 @@
     'data': [
         'views/webclient_templates.xml',
         'views/res_config_settings_views.xml',
+        'views/res_users_views.xml',
     ],
     'assets': {
         # Token files go before Odoo's own variables so every `!default` of web
@@ -33,6 +34,7 @@
             'rex_backend_theme/static/src/core/**/*',
             'rex_backend_theme/static/src/webclient/**/*',
             'rex_backend_theme/static/src/views/**/*',
+            'rex_backend_theme/static/src/settings/**/*',
             # graph JS patches the lazily loaded GraphRenderer
             ('remove', 'rex_backend_theme/static/src/views/graph/**/*'),
         ],

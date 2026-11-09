@@ -133,6 +133,21 @@ kbd {
     .rx-label { transition: opacity .12s; }
 }
 
+.rx-sidebar-brand {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 6px;
+    margin-bottom: 6px;
+
+    img {
+        max-width: 100%;
+        max-height: 30px;
+        object-fit: contain;
+        object-position: left center;
+    }
+}
+
 .rx-sidebar-head {
     display: flex;
     align-items: center;

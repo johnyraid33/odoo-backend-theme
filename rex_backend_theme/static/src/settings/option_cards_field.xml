@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="rex_backend_theme.OptionCardsField">
+        <div class="rx-option-cards" role="radiogroup" t-att-aria-label="this.props.label"
+             t-att-data-preview="this.props.preview" t-on-keydown="(ev) => this.onKeydown(ev)">
+            <t t-foreach="this.items" t-as="item" t-key="item[0]">
+                <t t-set="checked" t-value="item[0] === this.value"/>
+                <button type="button" class="rx-option-card" role="radio"
+                        t-att-class="{ 'rx-checked': checked }"
+                        t-att-data-value="item[0]"
+                        t-att-aria-checked="checked ? 'true' : 'false'"
+                        t-att-tabindex="this.tabIndex(item[0])"
+                        t-att-disabled="this.props.readonly"
+                        t-on-click="() => this.select(item[0])">
+                    <span class="rx-option-visual" aria-hidden="true" t-att-data-key="item[0]">
+                        <t t-if="this.props.preview === 'neutral'">
+                            <t t-foreach="this.neutralSteps(item[0])" t-as="color" t-key="color">
+                                <span class="rx-ov-step" t-att-style="'background: ' + color"/>
+                            </t>
+                        </t>
+                        <t t-elif="this.props.preview === 'radius'">
+                            <span class="rx-ov-corner" t-att-style="'border-top-left-radius: ' + this.radiusOf(item[0])"/>
+                        </t>
+                        <t t-elif="this.props.preview === 'density'">
+                            <i t-if="item[0] === 'default'" class="oi rx-ov-icon" data-icon="business"/>
+                            <t t-else="">
+                                <span class="rx-ov-row"/><span class="rx-ov-row"/><span class="rx-ov-row"/>
+                                <span class="rx-ov-row"/>
+                            </t>
+                        </t>
+                        <t t-elif="this.props.preview === 'scheme'">
+                            <span class="rx-ov-window">
+                                <span class="rx-ov-bar"/><span class="rx-ov-line"/><span class="rx-ov-line rx-ov-short"/>
+                            </span>
+                        </t>
+                        <t t-elif="this.props.preview === 'sidebar'">
+                            <span class="rx-ov-side"><span/><span/><span/></span>
+                            <span class="rx-ov-main"><span/><span/></span>
+                        </t>
+                    </span>
+                    <span class="rx-option-label">
+                        <i t-if="checked" class="oi" data-icon="check_circle" aria-hidden="true"/>
+                        <t t-out="item[1]"/>
+                    </span>
+                </button>
+            </t>
+        </div>
+    </t>
+
+</templates>

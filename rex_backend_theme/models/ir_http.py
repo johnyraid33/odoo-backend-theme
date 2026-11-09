@@ -1,6 +1,8 @@
 from odoo import models
 from odoo.http import request
 
+from .backend_theme import DEFAULT_DENSITY, DENSITIES
+
 
 class IrHttp(models.AbstractModel):
     _inherit = 'ir.http'
@@ -20,3 +22,23 @@ class IrHttp(models.AbstractModel):
         if preference == 'system':
             return 'dark' if request.cookies.get('color_scheme') == 'dark' else 'light'
         return preference or scheme
+
+    def session_info(self):
+        info = super().session_info()
+        user = self.env.user
+        if user._is_internal():
+            info['rex_backend_theme'] = self._rx_theme_session_info()
+        return info
+
+    def _rx_theme_session_info(self):
+        """Company-wide runtime values (the user's own ones are in user_settings)."""
+        params = self.env['ir.config_parameter'].sudo()
+        density = params.get_str('rex_backend_theme.density')
+        logo = params.get_bool('rex_backend_theme.sidebar_logo')
+        companies = self.env.user.company_ids.with_context(bin_size=True) if logo else []
+        return {
+            'density': density if density in dict(DENSITIES) else DEFAULT_DENSITY,
+            'sidebar_logo': logo,
+            # only companies that have a logo: Odoo would serve its own otherwise
+            'logo_company_ids': [company.id for company in companies if company.logo],
+        }

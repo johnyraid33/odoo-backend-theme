@@ -6,6 +6,9 @@
              t-on-click="() => this.shell.closeDrawer()"/>
         <aside class="rx-sidebar d-print-none" t-att-class="this.rootClass" aria-label="Application menu"
                t-att-aria-hidden="this.isDrawer and !this.shell.state.drawerOpen ? 'true' : 'false'">
+            <div t-if="this.companyLogo" class="rx-sidebar-brand rx-label">
+                <img t-att-src="this.companyLogo.url" t-att-alt="this.companyLogo.name"/>
+            </div>
             <!-- App switcher -->
             <!-- o_navbar_apps_menu / o_app: the selectors tours and other modules use to reach an app -->
             <div class="rx-sidebar-head o_navbar_apps_menu">

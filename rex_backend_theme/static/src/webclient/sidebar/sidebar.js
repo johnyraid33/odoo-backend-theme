@@ -7,6 +7,7 @@ import { _t } from "@web/core/l10n/translation";
 import { SIZES } from "@web/core/ui/ui_utils";
 import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
+import { session } from "@web/session";
 import { WebClient } from "@web/webclient/webclient";
 import { iconFor } from "../icons";
 
@@ -88,6 +89,16 @@ export class RexSidebar extends Component {
         return this.shell.state.pins
             .map((id) => this.menuService.getMenu(id))
             .filter((menu) => menu && (menu.actionID || menu.actionPath));
+    }
+
+    /** The current company's logo, when the settings ask for it and it has one. */
+    get companyLogo() {
+        const theme = session.rex_backend_theme;
+        const company = this.user.activeCompany;
+        if (!theme?.sidebar_logo || !company || !theme.logo_company_ids.includes(company.id)) {
+            return null;
+        }
+        return { url: `/web/image/res.company/${company.id}/logo`, name: company.name };
     }
 
     get avatarUrl() {

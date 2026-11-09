@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="rex_backend_theme.ThemePreview">
+        <div class="rx-preview" t-att-data-density="this.density" aria-hidden="true">
+            <t t-foreach="this.schemes()" t-as="scheme" t-key="scheme.key">
+                <figure class="rx-pv" t-att-class="'rx-pv-' + scheme.key" t-att-style="scheme.style">
+                    <div class="rx-pv-window">
+                        <div class="rx-pv-sidebar">
+                            <div class="rx-pv-app">
+                                <span class="rx-pv-app-icon"/>
+                                <t t-out="this.text.app"/>
+                            </div>
+                            <t t-foreach="this.text.menu" t-as="label" t-key="label">
+                                <div class="rx-pv-item" t-att-class="{ 'rx-pv-active': label === this.text.title }">
+                                    <span class="rx-pv-dot"/>
+                                    <t t-out="label"/>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="rx-pv-panel">
+                            <div class="rx-pv-header">
+                                <span class="rx-pv-title" t-out="this.text.title"/>
+                                <span class="rx-pv-btn" t-out="this.text.new"/>
+                            </div>
+                            <div class="rx-pv-toolbar">
+                                <span class="rx-pv-tabs"><span class="rx-pv-tab-on"/><span/><span/></span>
+                                <span class="rx-pv-search" t-out="this.text.search"/>
+                                <span class="rx-pv-switch"/>
+                            </div>
+                            <div class="rx-pv-card">
+                                <t t-foreach="this.text.rows" t-as="row" t-key="row.ref">
+                                    <div class="rx-pv-row" t-att-class="{ 'rx-pv-selected': row.ref === 'S00041' }">
+                                        <span class="rx-pv-check"/>
+                                        <span class="rx-pv-ref" t-out="row.ref"/>
+                                        <span class="rx-pv-name" t-out="row.name"/>
+                                        <span class="rx-pv-badge" t-att-class="{ 'rx-pv-badge-on': row.status === this.text.rows[0].status }"
+                                              t-out="row.status"/>
+                                        <span class="rx-pv-amount" t-out="row.amount"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <figcaption t-out="scheme.label"/>
+                </figure>
+            </t>
+        </div>
+    </t>
+
+</templates>

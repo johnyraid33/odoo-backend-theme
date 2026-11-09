@@ -6,12 +6,19 @@
         from it ("system" mode) and Odoo's own JS reads it (charts, code editor).
         When the device setting disagrees with what the server rendered, reload
         once; the session flag prevents a loop if the server cannot follow.
+        The density attribute is set here too, so the first paint already has it.
     -->
     <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap">
         <xpath expr="//t[@t-set='head']/script[1]" position="after">
             <script type="text/javascript">
                 {
-                    const settings = odoo.__session_info__.user_settings || {};
+                    const info = odoo.__session_info__;
+                    const settings = info.user_settings || {};
+                    const company = info.rex_backend_theme || {};
+                    const density = settings.rx_density &amp;&amp; settings.rx_density !== "default"
+                        ? settings.rx_density
+                        : company.density || "comfortable";
+                    document.documentElement.dataset.rxDensity = density;
                     const preference = settings.rx_color_scheme || "light";
                     const rendered = "<t t-out="color_scheme"/>";
                     const wanted = preference === "system"

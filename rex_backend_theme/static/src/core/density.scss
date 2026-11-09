@@ -1,0 +1,76 @@
+// Rex Backend Theme: compact density.
+//
+// <html data-rx-density="compact|comfortable"> is set before the first paint
+// (views/webclient_templates.xml) from the user's preference, or the company
+// default from the settings. Comfortable is the theme as designed; compact
+// tightens the places where people scan many rows: lists, the page header,
+// forms, kanban cards and the sidebar.
+
+html[data-rx-density="compact"] {
+    // ------------------------------------------------ lists
+    .o_list_renderer .o_list_table {
+        font-size: 13px;
+
+        thead th {
+            height: 32px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+        > tbody > tr > td {
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+    }
+
+    // ------------------------------------------------ page header
+    @include media-breakpoint-up(lg) {
+        .o_control_panel {
+            gap: 8px !important;
+            padding: 10px 16px 8px !important;
+        }
+        .o_control_panel_main {
+            gap: 8px 0 !important;
+        }
+    }
+    .o_control_panel .btn:not(.o_switch_view) {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+    .o_control_panel .o_searchview {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    // ------------------------------------------------ content cards
+    @include media-breakpoint-up(md) {
+        .o_list_view .o_content > .o_list_renderer,
+        .o_list_view .o_content .o_list_renderer.o_renderer {
+            margin: 2px 12px 12px;
+        }
+    }
+    .o_kanban_renderer.o_kanban_grouped {
+        gap: 8px;
+        padding: 2px 12px 12px;
+    }
+    .o_kanban_renderer:not(.o_kanban_grouped) {
+        padding: 2px 12px 12px;
+    }
+    .o_kanban_renderer .o_kanban_record {
+        --Card-padding-v: 6px;
+        --Card-padding-h: 8px;
+    }
+
+    // ------------------------------------------------ forms
+    .o_form_view {
+        --fieldWidget-margin-bottom: 2px;
+        --formView-sheet-padding-y: 12px;
+        .oe_button_box .oe_stat_button {
+            height: 40px;
+        }
+    }
+
+    // ------------------------------------------------ sidebar
+    .rx-item { height: 28px; }
+    .rx-group-label { height: 24px; }
+    .rx-app-switcher { height: 36px; }
+}

@@ -1,5 +1,5 @@
-from odoo.exceptions import ValidationError
-from odoo.tests import HttpCase, TransactionCase, tagged
+from odoo.exceptions import AccessError, ValidationError
+from odoo.tests import HttpCase, TransactionCase, new_test_user, tagged
 
 from ..models.backend_theme import BUNDLES, USER_VARIABLES
 
@@ -38,6 +38,13 @@ class TestThemeSettings(TransactionCase):
                 self._save(rx_accent_color=accent)
         after = self.env['ir.attachment'].search([('url', 'like', USER_VARIABLES)]).mapped('checksum')
         self.assertEqual(before, after)
+
+    def test_runtime_values_do_not_recompile(self):
+        self._save(rx_density='compact', rx_sidebar_logo=True)
+        params = self.env['ir.config_parameter']
+        self.assertEqual(params.get_str('rex_backend_theme.density'), 'compact')
+        self.assertTrue(params.get_bool('rex_backend_theme.sidebar_logo'))
+        self.assertFalse(self._custom_assets())
 
     def test_uninstall_cleanup(self):
         self._save(rx_accent_color='#e11d48')
@@ -81,3 +88,59 @@ class TestColorScheme(HttpCase):
             'kwargs': {'new_settings': {'rx_color_scheme': 'dark'}},
         })
         self.assertEqual(result['rx_color_scheme'], 'dark')
+
+
+@tagged('post_install', '-at_install')
+class TestUserAppearance(TransactionCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.alice = new_test_user(cls.env, 'rx_alice', groups='base.group_user')
+        cls.bob = new_test_user(cls.env, 'rx_bob', groups='base.group_user')
+
+    def test_defaults(self):
+        self.assertEqual(self.alice.rx_color_scheme, 'light')
+        self.assertEqual(self.alice.rx_sidebar_mode, 'expanded')
+        self.assertEqual(self.alice.rx_density, 'default')
+
+    def test_user_changes_own_appearance(self):
+        alice = self.alice.with_user(self.alice)
+        alice.write({'rx_color_scheme': 'system', 'rx_density': 'compact', 'rx_sidebar_mode': 'rail'})
+        settings = self.alice.res_users_settings_id
+        self.assertEqual(settings.rx_color_scheme, 'system')
+        self.assertEqual(settings.rx_density, 'compact')
+        self.assertEqual(settings.rx_sidebar_mode, 'rail')
+        self.assertEqual(self.alice.rx_density, 'compact')
+
+    def test_user_cannot_change_someone_else(self):
+        with self.assertRaises(AccessError):
+            self.bob.with_user(self.alice).write({'rx_density': 'compact'})
+        self.assertEqual(self.bob.res_users_settings_id.rx_density, 'default')
+
+    def test_portal_users_have_no_appearance(self):
+        portal = new_test_user(self.env, 'rx_portal', groups='base.group_portal')
+        self.assertFalse(portal.rx_color_scheme)
+
+
+@tagged('post_install', '-at_install')
+class TestThemeSession(HttpCase):
+
+    def test_session_info_carries_company_values(self):
+        params = self.env['ir.config_parameter']
+        params.set_str('rex_backend_theme.density', 'compact')
+        params.set_bool('rex_backend_theme.sidebar_logo', True)
+        company = self.env.ref('base.user_admin').company_id
+        self.authenticate('admin', 'admin')
+        info = self.make_jsonrpc_request('/web/session/get_session_info')
+        theme = info['rex_backend_theme']
+        self.assertEqual(theme['density'], 'compact')
+        self.assertTrue(theme['sidebar_logo'])
+        self.assertEqual(company.id in theme['logo_company_ids'], bool(company.logo))
+        self.assertIn('rx_density', info['user_settings'])
+
+    def test_unknown_density_falls_back(self):
+        self.env['ir.config_parameter'].set_str('rex_backend_theme.density', 'huge')
+        self.authenticate('admin', 'admin')
+        info = self.make_jsonrpc_request('/web/session/get_session_info')
+        self.assertEqual(info['rex_backend_theme']['density'], 'comfortable')

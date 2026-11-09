@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="rex_backend_theme.AccentField">
+        <div class="rx-accent-field">
+            <div class="rx-swatches" role="radiogroup" t-att-aria-label="this.labels.group"
+                 t-on-keydown="(ev) => this.onKeydown(ev)">
+                <t t-foreach="this.presets" t-as="preset" t-key="preset.color">
+                    <t t-set="checked" t-value="preset.color === this.value"/>
+                    <button type="button" class="rx-swatch" role="radio"
+                            t-att-class="{ 'rx-checked': checked }"
+                            t-att-style="'--swatch: ' + preset.color"
+                            t-att-data-color="preset.color"
+                            t-att-title="preset.name" t-att-aria-label="preset.name"
+                            t-att-aria-checked="checked ? 'true' : 'false'"
+                            t-att-tabindex="this.tabIndex(preset)"
+                            t-att-disabled="this.props.readonly"
+                            t-on-click="() => this.select(preset.color)">
+                        <i t-if="checked" class="oi" data-icon="check" aria-hidden="true"/>
+                    </button>
+                </t>
+                <label class="rx-swatch rx-swatch-custom" role="radio"
+                       t-att-class="{ 'rx-checked': !this.preset }"
+                       t-att-style="!this.preset ? '--swatch: ' + this.value : ''"
+                       t-att-title="this.labels.custom" t-att-aria-label="this.labels.custom"
+                       t-att-aria-checked="!this.preset ? 'true' : 'false'">
+                    <input type="color" t-att-value="this.value" t-att-disabled="this.props.readonly"
+                           t-att-tabindex="!this.preset ? 0 : -1"
+                           t-on-change="(ev) => this.select(ev.target.value)"/>
+                    <i class="oi" t-att-data-icon="this.preset ? 'colorize' : 'check'" aria-hidden="true"/>
+                </label>
+            </div>
+            <div class="rx-accent-value">
+                <span class="rx-accent-dot" t-att-style="'--swatch: ' + this.value"/>
+                <input type="text" class="o_input rx-accent-hex" maxlength="7" spellcheck="false"
+                       t-att-aria-label="this.labels.hex" t-att-value="this.value"
+                       t-att-readonly="this.props.readonly"
+                       t-on-change="(ev) => this.onHexChange(ev)"/>
+                <span class="text-muted" t-out="this.valueName"/>
+            </div>
+            <div t-if="this.warning" class="rx-accent-warning">
+                <i class="oi" data-icon="warning" aria-hidden="true"/>
+                <span t-out="this.warning"/>
+            </div>
+        </div>
+    </t>
+
+</templates>

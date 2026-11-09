@@ -1,0 +1,427 @@
+// Rex Backend Theme: settings widgets (accent swatches, option cards, preview).
+
+// Odoo shrinks field widgets in a setting; these take the whole pane
+.o_field_widget.o_field_rx_accent,
+.o_field_widget.o_field_rx_option_cards {
+    display: block;
+    width: 100% !important;
+}
+
+// ---------------------------------------------------------------- accent
+.rx-accent-field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rx-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.rx-swatch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--swatch);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    // a dark swatch stays visible on the dark scheme
+    box-shadow: inset 0 0 0 1px rgba($rx-foreground, .18);
+    transition: transform .12s ease, box-shadow .12s ease;
+
+    &:hover { transform: scale(1.08); }
+    &:focus-visible { outline: 2px solid $rx-ring; outline-offset: 2px; }
+    &.rx-checked {
+        box-shadow: 0 0 0 2px $rx-background, 0 0 0 4px var(--swatch);
+    }
+    &:disabled { cursor: default; transform: none; }
+}
+
+.rx-swatch-custom {
+    background: conic-gradient(#ef4444, #f59e0b, #22c55e, #06b6d4, #6366f1, #d946ef, #ef4444);
+    &.rx-checked { background: var(--swatch); }
+    &:focus-within { outline: 2px solid $rx-ring; outline-offset: 2px; }
+
+    input[type="color"] {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .oi { pointer-events: none; text-shadow: 0 0 2px rgba(#000, .35); }
+}
+
+.rx-accent-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .rx-accent-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+        background: var(--swatch);
+        box-shadow: inset 0 0 0 1px rgba(#000, .12);
+    }
+    .rx-accent-hex {
+        width: 92px;
+        font-family: $font-family-monospace;
+        font-size: 13px;
+        text-transform: lowercase;
+    }
+}
+
+.rx-accent-warning {
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    max-width: 420px;
+    font-size: 12.5px;
+    color: if($rx-dark, mix(#fff, $rx-warning, 20%), mix(#000, $rx-warning, 35%));
+    .oi { font-size: 16px; }
+}
+
+// ---------------------------------------------------------------- option cards
+.rx-option-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.rx-option-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    width: 96px;
+    padding: 5px;
+    border: 1px solid $rx-border;
+    border-radius: $rx-radius-lg;
+    background: $rx-background;
+    color: $rx-foreground;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .12s ease, box-shadow .12s ease;
+
+    &:hover { border-color: $rx-gray-300; }
+    &:focus-visible { outline: 2px solid $rx-ring; outline-offset: 2px; }
+    &.rx-checked {
+        border-color: $rx-primary;
+        box-shadow: 0 0 0 1px $rx-primary;
+    }
+    &:disabled { cursor: default; opacity: .7; }
+}
+
+.rx-option-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 18px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+
+    .oi { color: $rx-primary-text; font-size: 14px; }
+}
+
+.rx-option-visual {
+    position: relative;
+    display: flex;
+    height: 44px;
+    overflow: hidden;
+    border-radius: $rx-radius-md;
+    background: $rx-muted;
+}
+
+// neutral: the gray scale
+[data-preview="neutral"] .rx-option-visual { gap: 0; }
+.rx-ov-step { flex: 1 1 0; }
+
+// radius: one corner
+.rx-ov-corner {
+    position: absolute;
+    left: 18px;
+    top: 12px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid $rx-gray-500;
+    border-right: 0;
+    border-bottom: 0;
+    background: $rx-background;
+}
+
+// density: rows
+[data-preview="density"] .rx-option-visual {
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 12px;
+
+    &[data-key="compact"] { gap: 3px; }
+    &[data-key="comfortable"] .rx-ov-row:nth-child(4) { display: none; }
+}
+.rx-ov-row {
+    height: 4px;
+    border-radius: 2px;
+    background: $rx-gray-400;
+    &:first-child { width: 70%; }
+}
+.rx-ov-icon {
+    margin: auto;
+    font-size: 22px;
+    color: $rx-muted-foreground;
+}
+
+// scheme: a small window
+[data-preview="scheme"] .rx-option-visual {
+    padding: 8px 0 0 10px;
+
+    &[data-key="light"] { background: #e9e9ee; --ov-bg: #fff; --ov-ink: #d4d4dc; }
+    &[data-key="dark"] { background: #0b0b0f; --ov-bg: #1d1c23; --ov-ink: #3a3944; }
+    &[data-key="system"] {
+        background: linear-gradient(135deg, #e9e9ee 50%, #0b0b0f 50%);
+        --ov-bg: linear-gradient(135deg, #fff 50%, #1d1c23 50%);
+        --ov-ink: #8a8a96;
+    }
+}
+.rx-ov-window {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    padding: 7px 8px;
+    border-top-left-radius: 6px;
+    background: var(--ov-bg);
+    box-shadow: 0 1px 3px rgba(#000, .15);
+}
+.rx-ov-bar { width: 22px; height: 5px; border-radius: 3px; background: $rx-primary; }
+.rx-ov-line { height: 4px; border-radius: 2px; background: var(--ov-ink); }
+.rx-ov-short { width: 60%; }
+
+// sidebar: expanded or rail
+[data-preview="sidebar"] .rx-option-visual { gap: 4px; padding: 5px; }
+.rx-ov-side {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 34px;
+    padding: 4px;
+    border-radius: 4px;
+    > span { height: 4px; border-radius: 2px; background: $rx-gray-400; }
+    > span:first-child { background: $rx-gray-700; }
+}
+[data-key="rail"] .rx-ov-side { width: 12px; padding: 4px 3px; }
+.rx-ov-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    padding: 5px;
+    border-radius: 4px;
+    background: $rx-background;
+    box-shadow: $rx-shadow-xs;
+    > span { height: 4px; border-radius: 2px; background: $rx-gray-300; }
+    > span:last-child { width: 60%; }
+}
+
+// ---------------------------------------------------------------- preview
+.rx-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    max-width: 920px;
+    margin-top: 4px;
+    user-select: none;
+
+    --pv-row: 30px;
+    --pv-item: 22px;
+    &[data-density="compact"] {
+        --pv-row: 24px;
+        --pv-item: 19px;
+    }
+}
+
+.rx-pv {
+    margin: 0;
+
+    figcaption {
+        margin-top: 6px;
+        font-size: 12px;
+        color: $rx-muted-foreground;
+    }
+}
+
+.rx-pv-window {
+    display: flex;
+    gap: 6px;
+    height: 216px;
+    padding: 6px 6px 6px 0;
+    overflow: hidden;
+    border: 1px solid $rx-border;
+    border-radius: 12px;
+    background: var(--pv-page);
+    color: var(--pv-foreground);
+    font-size: 10.5px;
+    line-height: 1.2;
+}
+
+.rx-pv-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 96px;
+    flex: none;
+    padding: 2px 6px;
+}
+.rx-pv-app {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 24px;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+.rx-pv-app-icon {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    background: var(--pv-primary);
+}
+.rx-pv-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: var(--pv-item);
+    padding: 0 6px;
+    border-radius: var(--pv-radius);
+    color: var(--pv-muted);
+
+    &.rx-pv-active {
+        background: var(--pv-strong);
+        color: var(--pv-strong-foreground);
+    }
+}
+.rx-pv-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    border: 1.5px solid currentColor;
+    opacity: .8;
+}
+
+.rx-pv-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+    padding: 10px 10px 0;
+    border: 1px solid var(--pv-border);
+    border-radius: var(--pv-radius-panel);
+    background: var(--pv-surface);
+}
+.rx-pv-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.rx-pv-title { font-size: 13px; font-weight: 600; }
+.rx-pv-btn {
+    padding: 4px 9px;
+    border-radius: var(--pv-radius);
+    background: var(--pv-primary);
+    color: var(--pv-primary-foreground);
+    font-weight: 500;
+}
+.rx-pv-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.rx-pv-tabs {
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+    border-radius: var(--pv-radius);
+    background: var(--pv-hover);
+    > span { width: 14px; height: 12px; border-radius: var(--pv-radius-sm); }
+    > .rx-pv-tab-on { background: var(--pv-background); box-shadow: 0 1px 2px rgba(#000, .12); }
+}
+.rx-pv-search {
+    flex: 1;
+    padding: 3px 7px;
+    border: 1px solid var(--pv-primary);
+    border-radius: var(--pv-radius);
+    background: var(--pv-background);
+    color: var(--pv-muted);
+    box-shadow: 0 0 0 2px var(--pv-ring);
+}
+.rx-pv-switch {
+    position: relative;
+    width: 22px;
+    height: 12px;
+    border-radius: 6px;
+    background: var(--pv-primary);
+    &::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--pv-primary-foreground);
+    }
+}
+.rx-pv-card {
+    flex: 1;
+    overflow: hidden;
+    border: 1px solid var(--pv-border);
+    border-bottom: 0;
+    border-radius: var(--pv-radius-panel) var(--pv-radius-panel) 0 0;
+    background: var(--pv-background);
+}
+.rx-pv-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: var(--pv-row);
+    padding: 0 8px;
+    border-bottom: 1px solid var(--pv-border);
+    white-space: nowrap;
+
+    &.rx-pv-selected { background: var(--pv-primary-subtle); }
+}
+.rx-pv-check {
+    width: 9px;
+    height: 9px;
+    flex: none;
+    border: 1px solid var(--pv-muted);
+    border-radius: 2px;
+    .rx-pv-selected & { border-color: var(--pv-primary); background: var(--pv-primary); }
+}
+.rx-pv-ref { color: var(--pv-muted); }
+.rx-pv-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.rx-pv-badge {
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--pv-hover);
+    color: var(--pv-muted);
+    font-size: 9.5px;
+    &.rx-pv-badge-on { background: var(--pv-primary-subtle); color: var(--pv-primary-text); }
+}
+.rx-pv-amount { font-variant-numeric: tabular-nums; }
+
+// the preview spans the whole settings row
+#rx_preview_setting .o_setting_right_pane { width: 100%; }
