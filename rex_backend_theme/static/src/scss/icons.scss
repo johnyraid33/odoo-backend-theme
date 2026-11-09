@@ -1,0 +1,39 @@
+// Material Symbols icons for Odoo 19, which ships Font Awesome and its own
+// UI icons instead. Same subset and the same `data-icon` ligature markup as
+// Odoo 20's `.oi`, so the templates and the icon map are shared:
+//   <i class="rx-icon" data-icon="shopping_cart"/>
+// License: ../fonts/MaterialSymbols-LICENSE.txt (Apache 2.0).
+
+@font-face {
+    font-family: "Rex Material Symbols";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("/rex_backend_theme/static/src/fonts/MaterialSymbols-subset.woff2") format("woff2"),
+         url("/rex_backend_theme/static/src/fonts/MaterialSymbols-subset.woff") format("woff");
+}
+
+.rx-icon {
+    display: inline-block;
+    font-family: "Rex Material Symbols" !important;
+    font-style: normal;
+    font-size: var(--oi-font-size, 1em);
+    font-weight: 400 !important;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    /*rtl:ignore*/
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &::before {
+        display: inline-block;
+        content: attr(data-icon);
+        // geometric precision lets WebKit apply the ligatures
+        text-rendering: geometricPrecision;
+        word-break: keep-all;
+    }
+}

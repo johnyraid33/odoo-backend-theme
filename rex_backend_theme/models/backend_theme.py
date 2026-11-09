@@ -119,7 +119,7 @@ class RexBackendTheme(models.AbstractModel):
                     'target': USER_VARIABLES,
                     'path': url,
                 })
-        self.env.transaction.invalidate_ormcache('assets')
+        self.env.registry.clear_cache('assets')
 
     @api.model
     def _refresh_user_variables(self):
@@ -127,7 +127,7 @@ class RexBackendTheme(models.AbstractModel):
         if not self.env['ir.asset'].sudo().with_context(active_test=False).search_count(
                 [('target', '=', USER_VARIABLES)], limit=1):
             return
-        get = self.env['ir.config_parameter'].sudo().get_str
+        get = self.env['ir.config_parameter'].sudo().get_param
         self._save_user_variables({key: get('rex_backend_theme.%s' % key) for key in DEFAULTS})
 
     @api.model
@@ -135,4 +135,4 @@ class RexBackendTheme(models.AbstractModel):
         urls = [self._custom_url(bundle) for bundle in BUNDLES]
         self.env['ir.asset'].sudo().with_context(active_test=False).search([('path', 'in', urls)]).unlink()
         self.env['ir.attachment'].sudo().search([('url', 'in', urls), ('type', '=', 'binary')]).unlink()
-        self.env.transaction.invalidate_ormcache('assets')
+        self.env.registry.clear_cache('assets')

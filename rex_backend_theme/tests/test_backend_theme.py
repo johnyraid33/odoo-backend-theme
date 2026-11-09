@@ -49,8 +49,8 @@ class TestThemeSettings(TransactionCase):
     def test_runtime_values_do_not_recompile(self):
         self._save(rx_density='compact', rx_sidebar_logo=True)
         params = self.env['ir.config_parameter']
-        self.assertEqual(params.get_str('rex_backend_theme.density'), 'compact')
-        self.assertTrue(params.get_bool('rex_backend_theme.sidebar_logo'))
+        self.assertEqual(params.get_param('rex_backend_theme.density'), 'compact')
+        self.assertEqual(params.get_param('rex_backend_theme.sidebar_logo'), 'True')
         self.assertFalse(self._custom_assets())
 
     def test_uninstall_cleanup(self):
@@ -135,8 +135,8 @@ class TestThemeSession(HttpCase):
 
     def test_session_info_carries_company_values(self):
         params = self.env['ir.config_parameter']
-        params.set_str('rex_backend_theme.density', 'compact')
-        params.set_bool('rex_backend_theme.sidebar_logo', True)
+        params.set_param('rex_backend_theme.density', 'compact')
+        params.set_param('rex_backend_theme.sidebar_logo', 'True')
         company = self.env.ref('base.user_admin').company_id
         self.authenticate('admin', 'admin')
         info = self.make_jsonrpc_request('/web/session/get_session_info')
@@ -147,7 +147,7 @@ class TestThemeSession(HttpCase):
         self.assertIn('rx_density', info['user_settings'])
 
     def test_unknown_density_falls_back(self):
-        self.env['ir.config_parameter'].set_str('rex_backend_theme.density', 'huge')
+        self.env['ir.config_parameter'].set_param('rex_backend_theme.density', 'huge')
         self.authenticate('admin', 'admin')
         info = self.make_jsonrpc_request('/web/session/get_session_info')
         self.assertEqual(info['rex_backend_theme']['density'], 'comfortable')

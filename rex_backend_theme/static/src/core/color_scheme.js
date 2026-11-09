@@ -1,4 +1,4 @@
-import { Component, proxy } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { getBundle } from "@web/core/assets";
 import { browser } from "@web/core/browser/browser";
 import { cookie } from "@web/core/browser/cookie";
@@ -103,9 +103,10 @@ registry.category("services").add("rex_backend_theme.color_scheme", colorSchemeS
 /** Light / Dark / System segmented control in the user menu. */
 export class ColorSchemeSwitcher extends Component {
     static template = "rex_backend_theme.ColorSchemeSwitcher";
+    static props = {};
 
     setup() {
-        this.state = proxy({ current: getColorScheme(), busy: false });
+        this.state = useState({ current: getColorScheme(), busy: false });
         this.options = [
             { value: "light", icon: "light_mode", label: _t("Light") },
             { value: "dark", icon: "dark_mode", label: _t("Dark") },

@@ -23,7 +23,7 @@
                             <span class="rx-ov-corner" t-att-style="'border-top-left-radius: ' + this.radiusOf(item[0])"/>
                         </t>
                         <t t-elif="this.props.preview === 'density'">
-                            <i t-if="item[0] === 'default'" class="oi rx-ov-icon" data-icon="business"/>
+                            <i t-if="item[0] === 'default'" class="rx-icon rx-ov-icon" data-icon="business"/>
                             <t t-else="">
                                 <span class="rx-ov-row"/><span class="rx-ov-row"/><span class="rx-ov-row"/>
                                 <span class="rx-ov-row"/>
@@ -40,7 +40,7 @@
                         </t>
                     </span>
                     <span class="rx-option-label">
-                        <i t-if="checked" class="oi" data-icon="check_circle" aria-hidden="true"/>
+                        <i t-if="checked" class="rx-icon" data-icon="check_circle" aria-hidden="true"/>
                         <t t-out="item[1]"/>
                     </span>
                 </button>

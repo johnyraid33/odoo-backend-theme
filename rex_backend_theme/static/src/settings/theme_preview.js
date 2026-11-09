@@ -1,4 +1,4 @@
-import { Component, useProps } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
@@ -11,7 +11,7 @@ import { previewTokens, styleOf } from "./theme_values";
  */
 export class ThemePreview extends Component {
     static template = "rex_backend_theme.ThemePreview";
-    props = useProps({ ...standardWidgetProps });
+    static props = { ...standardWidgetProps };
 
     get data() {
         return this.props.record.data;

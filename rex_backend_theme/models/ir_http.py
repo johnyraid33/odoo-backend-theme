@@ -1,5 +1,6 @@
 from odoo import models
 from odoo.http import request
+from odoo.tools import str2bool
 
 from .backend_theme import DEFAULT_DENSITY, DENSITIES
 
@@ -33,8 +34,8 @@ class IrHttp(models.AbstractModel):
     def _rx_theme_session_info(self):
         """Company-wide runtime values (the user's own ones are in user_settings)."""
         params = self.env['ir.config_parameter'].sudo()
-        density = params.get_str('rex_backend_theme.density')
-        logo = params.get_bool('rex_backend_theme.sidebar_logo')
+        density = params.get_param('rex_backend_theme.density')
+        logo = str2bool(params.get_param('rex_backend_theme.sidebar_logo') or 'False')
         companies = self.env.user.company_ids.with_context(bin_size=True) if logo else []
         return {
             'density': density if density in dict(DENSITIES) else DEFAULT_DENSITY,

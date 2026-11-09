@@ -1,6 +1,6 @@
 {
     'name': 'Rex Backend Theme',
-    'version': '20.0.0.4.0',
+    'version': '19.0.0.4.0',
     'category': 'Themes/Backend',
     'summary': 'A calm, neutral backend in the shadcn/ui style: sidebar navigation, '
                'light and dark schemes, configurable accent, palette and radius',
@@ -30,6 +30,7 @@
             ('before', 'web/static/src/scss/bootstrap_overridden.scss',
              'rex_backend_theme/static/src/scss/bootstrap_variables.scss'),
             'rex_backend_theme/static/src/scss/fonts.scss',
+            'rex_backend_theme/static/src/scss/icons.scss',
             'rex_backend_theme/static/src/scss/backend.scss',
             'rex_backend_theme/static/src/scss/layout.scss',
             'rex_backend_theme/static/src/core/**/*',

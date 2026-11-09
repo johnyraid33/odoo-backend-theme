@@ -10,11 +10,11 @@
     -->
     <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap">
         <!-- the interface font, fetched in parallel with the style bundle -->
-        <xpath expr="//t[@t-set='head']/script[1]" position="before">
+        <xpath expr="//t[@t-set='head_web']/script[1]" position="before">
             <link rel="preload" href="/rex_backend_theme/static/src/fonts/Geist-Variable.woff2"
                   as="font" type="font/woff2" crossorigin=""/>
         </xpath>
-        <xpath expr="//t[@t-set='head']/script[1]" position="after">
+        <xpath expr="//t[@t-set='head_web']/script[1]" position="after">
             <script type="text/javascript">
                 {
                     const info = odoo.__session_info__;
@@ -39,6 +39,14 @@
                     }
                 }
             </script>
+        </xpath>
+    </template>
+
+    <!-- Odoo 19's login page has no body class of its own: give it the one
+         Odoo 20 uses, so static/src/login/login.scss applies the same way. -->
+    <template id="login_layout" inherit_id="web.login_layout">
+        <xpath expr="//t[@t-set='body_classname']" position="attributes">
+            <attribute name="t-value">'bg-100 o_web_login'</attribute>
         </xpath>
     </template>
 </odoo>

@@ -5,6 +5,30 @@ model: left sidebar with the current app's menu, the action in one rounded panel
 cool neutral palette with an indigo accent, Geist font (shipped in the module),
 cards for lists and kanban columns, segmented status bar, line tabs.
 
+## Odoo 19 (this branch)
+
+The same theme as the `main` branch (Odoo 20), ported:
+
+- Owl 2: `useState`/`reactive` instead of `proxy`, `useRef` instead of
+  `signal.ref`, `static props` instead of `useProps`. Components read the
+  shell state through `useState(shell.state)`, and the sidebar renders again
+  on `MENUS:APP-CHANGED` like Odoo's NavBar (the menu service is not
+  reactive). `t-call` takes its variables from `t-set` in its body.
+  Inside a `t-foreach`, `this` is the rendering context: state that depends
+  on the component (checked swatch) is computed in JS.
+- Icons: Odoo 19 has Font Awesome and its own UI icons, not Material
+  Symbols. The module ships the same Material Symbols subset as Odoo 20
+  (`static/src/fonts`, Apache 2.0) with the `.rx-icon` class
+  (`scss/icons.scss`), so the templates and the icon map stay shared.
+- Python: `get_param` instead of `get_str`/`get_bool`,
+  `SELF_READABLE_FIELDS`/`SELF_WRITEABLE_FIELDS` instead of
+  `user_writeable`, `registry.clear_cache('assets')`.
+- Templates: the web client head is `head_web`; the login page gets the
+  `o_web_login` body class Odoo 20 has natively.
+- Stand: `ODOO_VERSION=19.0 ODOO_PORT=8190 docker compose -p rex-backend-theme-dev19 up -d`
+  in `dev/`, databases `theme19` and `theme19base`; `dev/run_tests.sh` and
+  the `rex-odoo-test:19.0` image target it.
+
 ## Shell
 
 The web client is a two-column grid: the sidebar next to Odoo's own
@@ -88,7 +112,7 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
   cards and the sidebar (`static/src/core/density.scss`).
 - **My Preferences > Appearance** (every internal user): colour scheme,
   density (company default, comfortable, compact) and sidebar mode. The
-  fields on `res.users` are `user_writeable` and stored in
+  fields on `res.users` are in `SELF_WRITEABLE_FIELDS` and stored in
   `res.users.settings`, so a user changes only their own.
 - **User menu > Theme**: light, dark or system, stored in `res.users.settings`.
   The dark styles are Odoo's `web.assets_web_dark` bundle compiled with

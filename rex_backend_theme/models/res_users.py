@@ -17,15 +17,23 @@ class ResUsers(models.Model):
 
     rx_color_scheme = fields.Selection(
         SCHEMES, string='Colour Scheme', compute='_compute_rx_appearance',
-        inverse='_inverse_rx_appearance', user_writeable=True,
+        inverse='_inverse_rx_appearance',
         help='System follows the light or dark setting of the device.')
     rx_sidebar_mode = fields.Selection(
         SIDEBAR_MODES, string='Sidebar', compute='_compute_rx_appearance',
-        inverse='_inverse_rx_appearance', user_writeable=True)
+        inverse='_inverse_rx_appearance')
     rx_density = fields.Selection(
         [('default', 'Company default')] + DENSITIES, string='Density',
-        compute='_compute_rx_appearance', inverse='_inverse_rx_appearance', user_writeable=True,
+        compute='_compute_rx_appearance', inverse='_inverse_rx_appearance',
         help='Spacing of lists, forms and the sidebar.')
+
+    @property
+    def SELF_READABLE_FIELDS(self):
+        return super().SELF_READABLE_FIELDS + list(APPEARANCE_DEFAULTS)
+
+    @property
+    def SELF_WRITEABLE_FIELDS(self):
+        return super().SELF_WRITEABLE_FIELDS + list(APPEARANCE_DEFAULTS)
 
     @api.depends('res_users_settings_ids')
     def _compute_rx_appearance(self):

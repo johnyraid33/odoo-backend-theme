@@ -1,10 +1,10 @@
-import { Component, proxy } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
 import { isMacOS } from "@web/core/browser/feature_detection";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { _t } from "@web/core/l10n/translation";
-import { SIZES } from "@web/core/ui/ui_utils";
+import { SIZES } from "@web/core/ui/ui_service";
 import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { session } from "@web/session";
@@ -31,16 +31,25 @@ function readCollapsed() {
 export class RexSidebar extends Component {
     static template = "rex_backend_theme.Sidebar";
     static components = { Dropdown, DropdownItem };
+    static props = {};
 
     setup() {
         this.menuService = useService("menu");
         this.actionService = useService("action");
-        this.ui = proxy(useService("ui"));
+        this.ui = useState(useService("ui"));
         this.shell = useService("rex_shell");
+        // read through useState so the sidebar renders again on changes
+        this.shellState = useState(this.shell.state);
         this.user = user;
-        this.state = proxy({ activeId: null, collapsed: readCollapsed(), appQuery: "" });
-        useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => this.syncActive());
-        useBus(this.env.bus, "MENUS:APP-CHANGED", () => this.syncActive());
+        this.state = useState({ activeId: null, collapsed: readCollapsed(), appQuery: "" });
+        // The menu service is not reactive: render again when the app or the
+        // action changes, as Odoo's NavBar does.
+        const update = () => {
+            this.syncActive();
+            this.render();
+        };
+        useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", update);
+        useBus(this.env.bus, "MENUS:APP-CHANGED", update);
     }
 
     // ------------------------------------------------------------ presentation
@@ -50,14 +59,14 @@ export class RexSidebar extends Component {
     }
 
     get isRail() {
-        return !this.isDrawer && (this.shell.state.mode === "rail" || this.ui.size < SIZES.LG);
+        return !this.isDrawer && (this.shellState.mode === "rail" || this.ui.size < SIZES.LG);
     }
 
     get rootClass() {
         return {
             "rx-rail": this.isRail,
             "rx-drawer": this.isDrawer,
-            "rx-drawer-open": this.isDrawer && this.shell.state.drawerOpen,
+            "rx-drawer-open": this.isDrawer && this.shellState.drawerOpen,
         };
     }
 
@@ -86,7 +95,7 @@ export class RexSidebar extends Component {
     }
 
     get pinnedMenus() {
-        return this.shell.state.pins
+        return this.shellState.pins
             .map((id) => this.menuService.getMenu(id))
             .filter((menu) => menu && (menu.actionID || menu.actionPath));
     }
@@ -116,6 +125,10 @@ export class RexSidebar extends Component {
             // Odoo's "alt" hotkeys are Ctrl on macOS
             launcherKey: isMacOS() ? "Ctrl H" : "Alt H",
         };
+    }
+
+    isPinned(menuId) {
+        return this.shellState.pins.includes(menuId);
     }
 
     icon(menu) {
@@ -184,7 +197,8 @@ export class RexSidebar extends Component {
     }
 
     toggleGroup(menu) {
-        this.state.collapsed[menu.id] = !this.isCollapsed(menu);
+        // a new object: Owl 2 does not observe keys that did not exist yet
+        this.state.collapsed = { ...this.state.collapsed, [menu.id]: !this.isCollapsed(menu) };
         try {
             browser.localStorage.setItem(COLLAPSED_KEY, JSON.stringify(this.state.collapsed));
         } catch {
@@ -223,6 +237,7 @@ export class RexSidebar extends Component {
         ev.preventDefault();
         ev.stopPropagation();
         this.shell.togglePin(menu.id);
+        this.render();
     }
 
     openLauncher() {

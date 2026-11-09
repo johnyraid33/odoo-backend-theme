@@ -1,4 +1,4 @@
-import { Component, t, useProps } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
@@ -15,11 +15,12 @@ const PREVIEWS = ["neutral", "radius", "density", "scheme", "sidebar"];
  */
 export class OptionCardsField extends Component {
     static template = "rex_backend_theme.OptionCardsField";
-    props = useProps({
+    static props = {
         ...standardFieldProps,
-        preview: t.string().optional(""),
-        label: t.string().optional(""),
-    });
+        preview: { type: String, optional: true },
+        label: { type: String, optional: true },
+    };
+    static defaultProps = { preview: "", label: "" };
 
     get items() {
         return this.props.record.fields[this.props.name].selection;

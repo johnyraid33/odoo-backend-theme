@@ -1,4 +1,4 @@
-import { Component, useProps } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
@@ -11,7 +11,7 @@ import { ACCENT_PRESETS, DEFAULT_ACCENT, HEX_RE, accentVariants, channelDistance
  */
 export class AccentField extends Component {
     static template = "rex_backend_theme.AccentField";
-    props = useProps({ ...standardFieldProps });
+    static props = { ...standardFieldProps };
 
     presets = ACCENT_PRESETS;
 
@@ -20,12 +20,14 @@ export class AccentField extends Component {
         return HEX_RE.test(value || "") ? value.toLowerCase() : DEFAULT_ACCENT;
     }
 
-    get preset() {
+    // not named `preset`: in Owl 2 templates `this` is the rendering context,
+    // where the loop variable `preset` would hide it
+    get currentPreset() {
         return this.presets.find((preset) => preset.color === this.value);
     }
 
     get valueName() {
-        return this.preset?.name || _t("Custom");
+        return this.currentPreset?.name || _t("Custom");
     }
 
     /** What the theme changes so the colour meets WCAG AA, if anything. */
@@ -55,7 +57,18 @@ export class AccentField extends Component {
 
     // one tab stop for the group: the checked swatch (the custom one when no preset is)
     tabIndex(preset) {
-        return preset === this.preset ? 0 : -1;
+        return preset === this.currentPreset ? 0 : -1;
+    }
+
+    /** The presets with their state, computed here rather than in the loop. */
+    get swatches() {
+        const value = this.value;
+        const current = this.currentPreset;
+        return this.presets.map((preset) => ({
+            ...preset,
+            checked: preset.color === value,
+            tabIndex: preset === current ? 0 : -1,
+        }));
     }
 
     select(color) {

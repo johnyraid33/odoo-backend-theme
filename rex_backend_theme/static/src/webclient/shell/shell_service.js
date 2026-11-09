@@ -1,4 +1,4 @@
-import { proxy } from "@odoo/owl";
+import { reactive } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
@@ -33,7 +33,7 @@ export const shellService = {
     dependencies: ["action", "hotkey"],
 
     start(env, { action, hotkey }) {
-        const state = proxy({
+        const state = reactive({
             mode: user.settings.rx_sidebar_mode === "rail" ? "rail" : "expanded",
             drawerOpen: false,
             launcherOpen: false,

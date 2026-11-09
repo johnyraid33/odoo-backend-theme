@@ -1,5 +1,6 @@
 import { isMacOS } from "@web/core/browser/feature_detection";
 import { _t } from "@web/core/l10n/translation";
+import { useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 import { NavBar } from "@web/webclient/navbar/navbar";
@@ -14,6 +15,7 @@ patch(NavBar.prototype, {
     setup() {
         super.setup(...arguments);
         this.rxShell = useService("rex_shell");
+        this.rxUi = useState(useService("ui"));
         this.rxCommand = useService("command");
         this.rxLabels = {
             search: _t("Search or jump to…"),
@@ -24,7 +26,7 @@ patch(NavBar.prototype, {
     },
 
     rxToggleSidebar() {
-        if (this.ui.isSmall) {
+        if (this.rxUi.isSmall) {
             this.rxShell.openDrawer();
         } else {
             this.rxShell.toggleRail();

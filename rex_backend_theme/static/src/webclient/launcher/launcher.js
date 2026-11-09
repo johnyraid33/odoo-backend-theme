@@ -1,4 +1,4 @@
-import { Component, onPatched, proxy, signal } from "@odoo/owl";
+import { Component, onPatched, useRef, useState } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
@@ -12,12 +12,14 @@ const COLUMNS = 6;
  */
 export class RexLauncher extends Component {
     static template = "rex_backend_theme.Launcher";
+    static props = {};
 
     setup() {
         this.shell = useService("rex_shell");
+        this.shellState = useState(this.shell.state);
         this.menuService = useService("menu");
-        this.state = proxy({ query: "", index: 0 });
-        this.input = signal.ref();
+        this.state = useState({ query: "", index: 0 });
+        this.input = useRef("input");
         this.labels = {
             title: _t("Apps"),
             search: _t("Search apps…"),
@@ -27,11 +29,11 @@ export class RexLauncher extends Component {
         };
         let wasOpen = false;
         onPatched(() => {
-            const open = this.shell.state.launcherOpen;
+            const open = this.shellState.launcherOpen;
             if (open && !wasOpen) {
                 this.state.query = "";
                 this.state.index = 0;
-                this.input()?.focus();
+                this.input.el?.focus();
             }
             wasOpen = open;
         });
@@ -44,7 +46,7 @@ export class RexLauncher extends Component {
     }
 
     get recents() {
-        return this.state.query ? [] : this.shell.state.recents.slice(0, 6);
+        return this.state.query ? [] : this.shellState.recents.slice(0, 6);
     }
 
     get currentApp() {

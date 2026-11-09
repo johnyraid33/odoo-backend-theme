@@ -1,4 +1,4 @@
-import { MEDIAS_BREAKPOINTS, SIZES } from "@web/core/ui/ui_utils";
+import { MEDIAS_BREAKPOINTS, SIZES } from "@web/core/ui/ui_service";
 
 // Odoo switches to its widest layout (chatter beside the form, wider kanban
 // columns) at the XXL window size, 1400px. The sidebar takes about 250px of

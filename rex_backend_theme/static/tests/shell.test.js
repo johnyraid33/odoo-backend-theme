@@ -105,8 +105,10 @@ test("a group folds and unfolds", async () => {
     await contains(".rx-apps-menu .o_app:contains(Sales)").click();
 
     await contains(".rx-group-label:contains(Configuration)").click();
+    await animationFrame();
     expect(".rx-item:contains(Settings)").toHaveCount(1);
     await contains(".rx-group-label:contains(Configuration)").click();
+    await animationFrame();
     expect(".rx-item:contains(Settings)").toHaveCount(0);
 });
 
@@ -119,6 +121,7 @@ test("pinning a menu lists it on top and saves it per user", async () => {
     expect(".rx-pinned").toHaveCount(0);
     const orders = queryAll(".rx-row").find((row) => row.textContent.includes("Orders"));
     await contains(orders.querySelector(".rx-pin")).click();
+    await animationFrame();
     expect(".rx-pinned .rx-item").toHaveText("Orders");
     expect.verifySteps([{ rx_sidebar_pins: "4" }]);
 });

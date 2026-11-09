@@ -25,7 +25,7 @@ class ResConfigSettings(models.TransientModel):
         string='Company Logo in the Sidebar', config_parameter=PARAM % 'sidebar_logo')
 
     def _rx_theme_values(self):
-        get = self.env['ir.config_parameter'].sudo().get_str
+        get = self.env['ir.config_parameter'].sudo().get_param
         return {key: get(PARAM % key) or DEFAULTS[key] for key in DEFAULTS}
 
     def set_values(self):

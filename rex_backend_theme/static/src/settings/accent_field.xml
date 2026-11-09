@@ -5,29 +5,28 @@
         <div class="rx-accent-field">
             <div class="rx-swatches" role="radiogroup" t-att-aria-label="this.labels.group"
                  t-on-keydown="(ev) => this.onKeydown(ev)">
-                <t t-foreach="this.presets" t-as="preset" t-key="preset.color">
-                    <t t-set="checked" t-value="preset.color === this.value"/>
+                <t t-foreach="this.swatches" t-as="preset" t-key="preset.color">
                     <button type="button" class="rx-swatch" role="radio"
-                            t-att-class="{ 'rx-checked': checked }"
+                            t-att-class="{ 'rx-checked': preset.checked }"
                             t-att-style="'--swatch: ' + preset.color"
                             t-att-data-color="preset.color"
                             t-att-title="preset.name" t-att-aria-label="preset.name"
-                            t-att-aria-checked="checked ? 'true' : 'false'"
-                            t-att-tabindex="this.tabIndex(preset)"
+                            t-att-aria-checked="preset.checked ? 'true' : 'false'"
+                            t-att-tabindex="preset.tabIndex"
                             t-att-disabled="this.props.readonly"
                             t-on-click="() => this.select(preset.color)">
-                        <i t-if="checked" class="oi" data-icon="check" aria-hidden="true"/>
+                        <i t-if="preset.checked" class="rx-icon" data-icon="check" aria-hidden="true"/>
                     </button>
                 </t>
                 <label class="rx-swatch rx-swatch-custom" role="radio"
-                       t-att-class="{ 'rx-checked': !this.preset }"
-                       t-att-style="!this.preset ? '--swatch: ' + this.value : ''"
+                       t-att-class="{ 'rx-checked': !this.currentPreset }"
+                       t-att-style="!this.currentPreset ? '--swatch: ' + this.value : ''"
                        t-att-title="this.labels.custom" t-att-aria-label="this.labels.custom"
-                       t-att-aria-checked="!this.preset ? 'true' : 'false'">
+                       t-att-aria-checked="!this.currentPreset ? 'true' : 'false'">
                     <input type="color" t-att-value="this.value" t-att-disabled="this.props.readonly"
-                           t-att-tabindex="!this.preset ? 0 : -1"
+                           t-att-tabindex="!this.currentPreset ? 0 : -1"
                            t-on-change="(ev) => this.select(ev.target.value)"/>
-                    <i class="oi" t-att-data-icon="this.preset ? 'colorize' : 'check'" aria-hidden="true"/>
+                    <i class="rx-icon" t-att-data-icon="this.currentPreset ? 'colorize' : 'check'" aria-hidden="true"/>
                 </label>
             </div>
             <div class="rx-accent-value">

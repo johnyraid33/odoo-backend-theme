@@ -59,7 +59,7 @@ SHOTS = [
     ('26_task_form', '/odoo/action-project.action_view_all_task', ''),
     ('27_stock_picking', '/odoo/action-stock.action_picking_tree_all', ''),
     ('30_login', '/web/login?db=' + DB, ''),
-    ('11_user_menu', '/odoo/action-sale.action_orders', CLICK % '.o_user_menu'),
+    ('11_user_menu', '/odoo/action-sale.action_orders', "(document.querySelector('.o_user_menu button') || document.querySelector('.o_user_menu')).click();"),
     ('12_theme_settings', '/odoo/settings',
      "document.querySelector('#rex_backend_theme')?.scrollIntoView({block: 'start'});"),
     # unsaved edits: the preview follows them
@@ -70,7 +70,7 @@ SHOTS = [
      "setTimeout(() => document.querySelector('#rx_radius_setting .rx-option-card[data-value=lg]')?.click(), 200);"
      "setTimeout(() => document.querySelector('#rx_density_setting .rx-option-card[data-value=compact]')?.click(), 600);"),
     ('17_preferences', '/odoo/action-sale.action_orders',
-     "document.querySelector('.o_user_menu button, .o_user_menu')?.click();"
+     "(document.querySelector('.o_user_menu button') || document.querySelector('.o_user_menu')).click();"
      "setTimeout(() => document.querySelector('[data-menu=preferences]')?.click(), 200);"
      "setTimeout(() => [...document.querySelectorAll('.modal .nav-link')]"
      ".find((a) => a.textContent.trim() === 'Appearance')?.click(), 1100);"),

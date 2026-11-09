@@ -12,7 +12,7 @@
                             t-att-title="option.label" t-att-aria-label="option.label"
                             t-att-data-scheme="option.value"
                             t-on-click="(ev) => this.select(option.value, ev)">
-                        <i class="oi" t-att-data-icon="option.icon"/>
+                        <i class="rx-icon" t-att-data-icon="option.icon"/>
                     </button>
                 </t>
             </div>
