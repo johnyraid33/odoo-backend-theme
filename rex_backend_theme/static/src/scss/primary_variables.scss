@@ -145,6 +145,9 @@ $o-control-panel-background-color: $rx-surface;
 
 // Tag and badge palette (o_tag_color_N): Odoo ships light pastels only. In the
 // dark scheme derive a deep background and a light text from each border hue.
+// Declared null first: Odoo's `!default` still applies in the light scheme.
+$o-colors-bg-subtle: null;
+$o-colors-text-emphasis: null;
 @if $rx-dark {
     $-rx-tag-hues: #8f8f8f, #d76a58, #cc7724, #c09910, #179dc5, #b271c6,
                    #af8563, #17a49d, #5d8ee4, #d06792, #4ca65a, #8f7ede;
@@ -154,6 +157,6 @@ $o-control-panel-background-color: $rx-surface;
         $-rx-tag-bg: append($-rx-tag-bg, mix($-hue, $rx-background, 24%), comma);
         $-rx-tag-fg: append($-rx-tag-fg, mix(#fff, $-hue, 45%), comma);
     }
-    $o-colors-bg-subtle: $-rx-tag-bg !global;
-    $o-colors-text-emphasis: $-rx-tag-fg !global;
+    $o-colors-bg-subtle: $-rx-tag-bg;
+    $o-colors-text-emphasis: $-rx-tag-fg;
 }

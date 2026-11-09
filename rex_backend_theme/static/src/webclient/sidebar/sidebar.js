@@ -1,43 +1,16 @@
 import { Component, proxy } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
+import { isMacOS } from "@web/core/browser/feature_detection";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
+import { _t } from "@web/core/l10n/translation";
+import { SIZES } from "@web/core/ui/ui_utils";
 import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { NavBar } from "@web/webclient/navbar/navbar";
+import { WebClient } from "@web/webclient/webclient";
+import { iconFor } from "../icons";
 
 const COLLAPSED_KEY = "rex_backend_theme.sidebar.collapsed";
-
-// Odoo menus carry no icon below the app level: pick one from the xmlid and
-// name. Every name must exist in Odoo's Material Symbols subset (oi data-icon).
-const ICONS = [
-    [/dashboard|overview/, "grid_view"],
-    [/report|analysis|analytic|statistic|forecast/, "bar_chart"],
-    [/config|setting/, "settings"],
-    [/pipeline|lead|opportunit/, "filter_alt"],
-    [/quotation/, "description"],
-    [/order/, "shopping_cart"],
-    [/invoice|bill|move|journal|accounting|refund/, "receipt_long"],
-    [/payment/, "payments"],
-    [/product|catalog|variant|attribute/, "package_2"],
-    [/customer|partner|contact|vendor|client/, "group"],
-    [/employee|department|hr_/, "badge"],
-    [/project/, "folder"],
-    [/task|to-do|todo/, "checklist"],
-    [/calendar|meeting|event/, "calendar_today"],
-    [/activit/, "schedule"],
-    [/team/, "handshake"],
-    [/user|compan/, "business"],
-    [/stock|inventory|warehouse|picking|deliver/, "local_shipping"],
-    [/message|discuss|channel|mail/, "forum"],
-    [/tag|stage|categor/, "sell"],
-];
-
-function iconFor(menu) {
-    const key = `${menu.xmlid || ""} ${menu.name || ""}`.toLowerCase();
-    const found = ICONS.find(([re]) => re.test(key));
-    return found ? found[1] : "article";
-}
 
 function readCollapsed() {
     try {
@@ -47,6 +20,13 @@ function readCollapsed() {
     }
 }
 
+/**
+ * The application sidebar: app switcher, pinned menus, the current app's menu
+ * tree and the user. Three presentations of one component:
+ * - expanded (lg and up, default),
+ * - rail, icons only with tooltips (user choice, and always on tablets),
+ * - drawer, off-canvas on phones, opened from the top bar.
+ */
 export class RexSidebar extends Component {
     static template = "rex_backend_theme.Sidebar";
     static components = { Dropdown, DropdownItem };
@@ -54,14 +34,45 @@ export class RexSidebar extends Component {
     setup() {
         this.menuService = useService("menu");
         this.actionService = useService("action");
+        this.ui = proxy(useService("ui"));
+        this.shell = useService("rex_shell");
         this.user = user;
-        this.state = proxy({ activeId: null, collapsed: readCollapsed() });
+        this.state = proxy({ activeId: null, collapsed: readCollapsed(), appQuery: "" });
         useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => this.syncActive());
         useBus(this.env.bus, "MENUS:APP-CHANGED", () => this.syncActive());
     }
 
+    // ------------------------------------------------------------ presentation
+
+    get isDrawer() {
+        return this.ui.isSmall;
+    }
+
+    get isRail() {
+        return !this.isDrawer && (this.shell.state.mode === "rail" || this.ui.size < SIZES.LG);
+    }
+
+    get rootClass() {
+        return {
+            "rx-rail": this.isRail,
+            "rx-drawer": this.isDrawer,
+            "rx-drawer-open": this.isDrawer && this.shell.state.drawerOpen,
+        };
+    }
+
+    tooltip(label) {
+        return this.isRail ? label : false;
+    }
+
+    // ------------------------------------------------------------ data
+
     get apps() {
         return this.menuService.getApps();
+    }
+
+    get filteredApps() {
+        const query = this.state.appQuery.trim().toLowerCase();
+        return query ? this.apps.filter((app) => app.name.toLowerCase().includes(query)) : this.apps;
     }
 
     get currentApp() {
@@ -73,17 +84,42 @@ export class RexSidebar extends Component {
         return (app && this.menuService.getMenuAsTree(app.id).childrenTree) || [];
     }
 
+    get pinnedMenus() {
+        return this.shell.state.pins
+            .map((id) => this.menuService.getMenu(id))
+            .filter((menu) => menu && (menu.actionID || menu.actionPath));
+    }
+
     get avatarUrl() {
         return `/web/image/res.users/${this.user.userId}/avatar_128`;
+    }
+
+    get labels() {
+        return {
+            pin: _t("Pin to the top"),
+            unpin: _t("Unpin"),
+            pinned: _t("Pinned"),
+            allApps: _t("All apps"),
+            searchApps: _t("Search apps…"),
+            close: _t("Close menu"),
+            // Odoo's "alt" hotkeys are Ctrl on macOS
+            launcherKey: isMacOS() ? "Ctrl H" : "Alt H",
+        };
     }
 
     icon(menu) {
         return iconFor(menu);
     }
 
+    appOf(menu) {
+        return this.apps.find((app) => app.id === menu.appID);
+    }
+
     href(menu) {
         return `/odoo/${menu.actionPath || "action-" + menu.actionID}`;
     }
+
+    // ------------------------------------------------------------ active item
 
     // The menu whose action opened the current breadcrumb root stays active
     // while the user drills into records or follows buttons.
@@ -91,16 +127,7 @@ export class RexSidebar extends Component {
         if (!this.currentApp) {
             return;
         }
-        const leaves = [];
-        const stack = [...this.sections];
-        while (stack.length) {
-            const menu = stack.shift();
-            if (menu.childrenTree?.length) {
-                stack.unshift(...menu.childrenTree);
-            } else {
-                leaves.push(menu);
-            }
-        }
+        const leaves = this.leaves(this.sections);
         const actionId = this.actionService.currentController?.action?.id;
         const match = actionId && leaves.find((menu) => menu.actionID === actionId);
         if (match) {
@@ -112,12 +139,28 @@ export class RexSidebar extends Component {
         }
     }
 
+    leaves(menus) {
+        const result = [];
+        const stack = [...menus];
+        while (stack.length) {
+            const menu = stack.shift();
+            if (menu.childrenTree?.length) {
+                stack.unshift(...menu.childrenTree);
+            } else {
+                result.push(menu);
+            }
+        }
+        return result;
+    }
+
     containsActive(menu) {
         if (menu.id === this.state.activeId) {
             return true;
         }
         return (menu.childrenTree || []).some((child) => this.containsActive(child));
     }
+
+    // ------------------------------------------------------------ groups
 
     isCollapsed(menu) {
         if (this.containsActive(menu)) {
@@ -129,7 +172,7 @@ export class RexSidebar extends Component {
         return /config|setting/.test(`${menu.xmlid || ""} ${menu.name || ""}`.toLowerCase());
     }
 
-    toggle(menu) {
+    toggleGroup(menu) {
         this.state.collapsed[menu.id] = !this.isCollapsed(menu);
         try {
             browser.localStorage.setItem(COLLAPSED_KEY, JSON.stringify(this.state.collapsed));
@@ -138,18 +181,68 @@ export class RexSidebar extends Component {
         }
     }
 
+    // ------------------------------------------------------------ actions
+
     onItemClick(ev, menu) {
         if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.button === 1) {
             return;
         }
         ev.preventDefault();
-        this.state.activeId = menu.id;
+        if (menu.appID === this.currentApp?.id) {
+            this.state.activeId = menu.id;
+        }
+        this.shell.closeDrawer();
         this.menuService.selectMenu(menu);
     }
 
     openApp(app) {
+        this.state.appQuery = "";
+        this.shell.closeDrawer();
         this.menuService.selectMenu(app);
+    }
+
+    onAppSearchKeydown(ev) {
+        if (ev.key === "Enter" && this.filteredApps.length) {
+            ev.preventDefault();
+            this.openApp(this.filteredApps[0]);
+        }
+    }
+
+    togglePin(ev, menu) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.shell.togglePin(menu.id);
+    }
+
+    openLauncher() {
+        this.state.appQuery = "";
+        this.shell.openLauncher();
+    }
+
+    /** Arrow keys move through the visible items, Home/End jump to the ends. */
+    onNavKeydown(ev) {
+        if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(ev.key)) {
+            return;
+        }
+        const items = [...ev.currentTarget.querySelectorAll(".rx-item, .rx-group-label")].filter(
+            (el) => el.offsetParent !== null
+        );
+        if (!items.length) {
+            return;
+        }
+        ev.preventDefault();
+        const index = items.indexOf(document.activeElement);
+        let next;
+        if (ev.key === "Home") {
+            next = 0;
+        } else if (ev.key === "End") {
+            next = items.length - 1;
+        } else {
+            const step = ev.key === "ArrowDown" ? 1 : -1;
+            next = index < 0 ? 0 : (index + step + items.length) % items.length;
+        }
+        items[next].focus();
     }
 }
 
-NavBar.components = { ...NavBar.components, RexSidebar };
+WebClient.components = { ...WebClient.components, RexSidebar };

@@ -2,35 +2,74 @@
 <templates xml:space="preserve">
 
     <t t-name="rex_backend_theme.Sidebar">
-        <aside class="rx-sidebar d-print-none" aria-label="Application menu">
+        <div t-if="this.isDrawer and this.shell.state.drawerOpen" class="rx-drawer-backdrop d-print-none"
+             t-on-click="() => this.shell.closeDrawer()"/>
+        <aside class="rx-sidebar d-print-none" t-att-class="this.rootClass" aria-label="Application menu"
+               t-att-aria-hidden="this.isDrawer and !this.shell.state.drawerOpen ? 'true' : 'false'">
             <!-- App switcher -->
-            <Dropdown position="'bottom-start'" menuClass="'rx-apps-menu'">
-                <button class="rx-app-switcher" title="Switch application">
-                    <img t-if="this.currentApp?.webIconData" class="rx-app-icon" t-att-src="this.currentApp.webIconData" alt=""/>
-                    <span class="rx-app-name" t-out="this.currentApp?.name or 'Odoo'"/>
-                    <i class="oi ms-auto rx-chevron" data-icon="expand_more" aria-hidden="true"/>
-                </button>
-                <t t-set-slot="content">
-                    <t t-foreach="this.apps" t-as="app" t-key="app.id">
-                        <DropdownItem
-                            class="{ 'rx-app-item': true, active: this.currentApp === app }"
-                            onSelected="() => this.openApp(app)"
-                            attrs="{ href: this.href(app), 'data-menu-xmlid': app.xmlid }">
-                            <img t-if="app.webIconData" class="rx-app-icon" t-att-src="app.webIconData" alt=""/>
-                            <span t-out="app.name"/>
+            <div class="rx-sidebar-head">
+                <Dropdown position="'bottom-start'" menuClass="'rx-apps-menu'" onOpened="() => this.state.appQuery = ''">
+                    <button class="rx-app-switcher" t-att-title="this.currentApp?.name"
+                            t-att-data-tooltip="this.tooltip(this.currentApp?.name)" data-tooltip-position="right">
+                        <img t-if="this.currentApp?.webIconData" class="rx-app-icon" t-att-src="this.currentApp.webIconData" alt=""/>
+                        <i t-else="" class="oi rx-app-icon rx-app-icon-fallback" data-icon="apps" aria-hidden="true"/>
+                        <span class="rx-app-name rx-label" t-out="this.currentApp?.name or 'Odoo'"/>
+                        <i class="oi ms-auto rx-chevron rx-label" data-icon="expand_more" aria-hidden="true"/>
+                    </button>
+                    <t t-set-slot="content">
+                        <div class="rx-apps-search">
+                            <i class="oi" data-icon="search" aria-hidden="true"/>
+                            <input type="text" class="o_input" t-att-placeholder="this.labels.searchApps"
+                                   t-att-value="this.state.appQuery"
+                                   t-on-input="(ev) => this.state.appQuery = ev.target.value"
+                                   t-on-keydown="(ev) => this.onAppSearchKeydown(ev)"
+                                   autofocus=""/>
+                        </div>
+                        <div class="rx-apps-list">
+                            <t t-foreach="this.filteredApps" t-as="app" t-key="app.id">
+                                <DropdownItem
+                                    class="{ 'rx-app-item': true, active: this.currentApp === app }"
+                                    onSelected="() => this.openApp(app)"
+                                    attrs="{ href: this.href(app), 'data-menu-xmlid': app.xmlid }">
+                                    <img t-if="app.webIconData" class="rx-app-icon" t-att-src="app.webIconData" alt=""/>
+                                    <span t-out="app.name"/>
+                                </DropdownItem>
+                            </t>
+                        </div>
+                        <div class="dropdown-divider"/>
+                        <DropdownItem class="'rx-app-item rx-all-apps'" onSelected="() => this.openLauncher()">
+                            <i class="oi" data-icon="apps" aria-hidden="true"/>
+                            <span t-out="this.labels.allApps"/>
+                            <kbd class="ms-auto" t-out="this.labels.launcherKey"/>
                         </DropdownItem>
                     </t>
-                </t>
-            </Dropdown>
+                </Dropdown>
+                <button t-if="this.isDrawer" class="rx-drawer-close btn btn-light" t-att-aria-label="this.labels.close"
+                        t-on-click="() => this.shell.closeDrawer()">
+                    <i class="oi" data-icon="close" aria-hidden="true"/>
+                </button>
+            </div>
 
-            <!-- Current app menu -->
-            <nav class="rx-nav">
+            <nav class="rx-nav" t-on-keydown="(ev) => this.onNavKeydown(ev)">
+                <!-- Pinned, across apps -->
+                <div t-if="this.pinnedMenus.length" class="rx-group rx-pinned">
+                    <div class="rx-group-title rx-label" t-out="this.labels.pinned"/>
+                    <t t-foreach="this.pinnedMenus" t-as="item" t-key="item.id">
+                        <t t-call="rex_backend_theme.Sidebar.Link" item="item" depth="0" pinned="true"/>
+                    </t>
+                </div>
+
+                <!-- Current app menu -->
                 <t t-foreach="this.sections" t-as="section" t-key="section.id">
                     <t t-if="section.childrenTree.length">
                         <div class="rx-group" t-att-class="{ 'rx-collapsed': this.isCollapsed(section) }">
-                            <button class="rx-group-label" t-on-click="() => this.toggle(section)" t-att-data-menu-xmlid="section.xmlid">
-                                <span t-out="section.name"/>
-                                <i class="oi ms-auto rx-chevron" data-icon="expand_more" aria-hidden="true"/>
+                            <button class="rx-group-label" t-on-click="() => this.toggleGroup(section)"
+                                    t-att-data-menu-xmlid="section.xmlid"
+                                    t-att-aria-expanded="this.isCollapsed(section) ? 'false' : 'true'"
+                                    t-att-data-tooltip="this.tooltip(section.name)" data-tooltip-position="right">
+                                <i class="oi rx-group-icon" t-att-data-icon="this.icon(section)" aria-hidden="true"/>
+                                <span class="rx-label" t-out="section.name"/>
+                                <i class="oi ms-auto rx-chevron rx-label" data-icon="expand_more" aria-hidden="true"/>
                             </button>
                             <div t-if="!this.isCollapsed(section)" class="rx-group-items">
                                 <t t-foreach="section.childrenTree" t-as="item" t-key="item.id">
@@ -46,9 +85,9 @@
             </nav>
 
             <!-- Current user -->
-            <div class="rx-user">
+            <div class="rx-user" t-att-data-tooltip="this.tooltip(this.user.name)" data-tooltip-position="right">
                 <img class="rx-user-avatar" t-att-src="this.avatarUrl" alt=""/>
-                <div class="rx-user-text">
+                <div class="rx-user-text rx-label">
                     <div class="rx-user-name" t-out="this.user.name"/>
                     <div class="rx-user-meta" t-out="this.user.activeCompany?.name or this.user.login"/>
                 </div>
@@ -58,25 +97,44 @@
 
     <t t-name="rex_backend_theme.Sidebar.Item">
         <t t-if="item.childrenTree.length">
-            <div class="rx-subheader" t-out="item.name"/>
+            <div class="rx-subheader rx-label" t-out="item.name"/>
             <t t-foreach="item.childrenTree" t-as="child" t-key="child.id">
                 <t t-call="rex_backend_theme.Sidebar.Item" item="child" depth="depth + 1"/>
             </t>
         </t>
-        <a t-else=""
-           class="rx-item"
-           t-att-class="{ active: item.id === this.state.activeId, 'rx-nested': depth gt 0 }"
-           t-att-href="this.href(item)"
-           t-att-data-menu-xmlid="item.xmlid"
-           t-on-click="(ev) => this.onItemClick(ev, item)">
-            <i class="oi rx-item-icon" t-att-data-icon="this.icon(item)" aria-hidden="true"/>
-            <span class="text-truncate" t-out="item.name"/>
-        </a>
+        <t t-else="" t-call="rex_backend_theme.Sidebar.Link" item="item" depth="depth" pinned="false"/>
     </t>
 
-    <t t-inherit="web.NavBar" t-inherit-mode="extension">
-        <xpath expr="//nav[hasclass('o_main_navbar')]" position="before">
-            <RexSidebar t-if="!this.ui.isSmall"/>
+    <t t-name="rex_backend_theme.Sidebar.Link">
+        <div class="rx-row">
+            <a class="rx-item"
+               t-att-class="{ active: !pinned and item.id === this.state.activeId, 'rx-nested': depth gt 0 }"
+               t-att-href="this.href(item)"
+               t-att-data-menu-xmlid="item.xmlid"
+               t-att-aria-current="!pinned and item.id === this.state.activeId ? 'page' : false"
+               t-att-data-tooltip="this.tooltip(item.name)" data-tooltip-position="right"
+               t-on-click="(ev) => this.onItemClick(ev, item)">
+                <i class="oi rx-item-icon" t-att-data-icon="this.icon(item)" aria-hidden="true"/>
+                <span class="rx-label text-truncate" t-out="item.name"/>
+                <img t-if="pinned and this.appOf(item)?.webIconData" class="rx-item-app rx-label"
+                     t-att-src="this.appOf(item).webIconData" alt=""/>
+            </a>
+            <button class="rx-pin rx-label" type="button"
+                    t-att-class="{ 'rx-pinned-on': this.shell.isPinned(item.id) }"
+                    t-att-title="this.shell.isPinned(item.id) ? this.labels.unpin : this.labels.pin"
+                    t-att-aria-label="this.shell.isPinned(item.id) ? this.labels.unpin : this.labels.pin"
+                    t-att-aria-pressed="this.shell.isPinned(item.id) ? 'true' : 'false'"
+                    t-on-click="(ev) => this.togglePin(ev, item)">
+                <i class="oi" data-icon="push_pin" aria-hidden="true"/>
+            </button>
+        </div>
+    </t>
+
+    <!-- The sidebar is a column of the web client grid, next to the navbar
+         and the action manager (see shell.scss). -->
+    <t t-inherit="web.WebClient" t-inherit-mode="extension">
+        <xpath expr="//NavBar" position="before">
+            <RexSidebar/>
         </xpath>
     </t>
 

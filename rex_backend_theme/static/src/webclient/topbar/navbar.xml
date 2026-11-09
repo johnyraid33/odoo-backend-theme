@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.NavBar" t-inherit-mode="extension">
+        <xpath expr="//nav[hasclass('o_main_navbar')]" position="attributes">
+            <attribute name="class" add="rx-topbar" separator=" "/>
+        </xpath>
+        <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="before">
+            <button type="button" class="rx-topbar-toggle btn btn-light"
+                    t-att-title="this.ui.isSmall ? this.rxLabels.menu : this.rxLabels.toggle"
+                    t-att-aria-label="this.ui.isSmall ? this.rxLabels.menu : this.rxLabels.toggle"
+                    t-on-click="() => this.rxToggleSidebar()">
+                <i class="oi" t-att-data-icon="this.ui.isSmall ? 'menu' : 'dock_to_left'" aria-hidden="true"/>
+            </button>
+        </xpath>
+        <xpath expr="//div[hasclass('o_navbar_breadcrumbs')]" position="after">
+            <button t-if="!this.ui.isSmall" type="button" class="rx-topbar-search" t-on-click="() => this.rxOpenSearch()">
+                <i class="oi" data-icon="search" aria-hidden="true"/>
+                <span class="rx-topbar-search-text" t-out="this.rxLabels.search"/>
+                <kbd t-out="this.rxLabels.shortcut"/>
+            </button>
+        </xpath>
+    </t>
+
+</templates>

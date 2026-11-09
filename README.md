@@ -5,11 +5,24 @@ model: left sidebar with the current app's menu, the action in one rounded panel
 cool neutral palette with an indigo accent, Geist font (shipped in the module),
 cards for lists and kanban columns, segmented status bar, line tabs.
 
-From the lg breakpoint (992px) the sidebar replaces the horizontal menu; below it
-the stock navbar is used. Website, portal and PDF reports are not affected.
+## Shell
 
-The sidebar (`static/src/webclient/sidebar`) is the only JS: an Owl 3 component
-added to the stock NavBar template. Odoo 19 runs Owl 2 and needs its own port.
+The web client is a two-column grid: the sidebar next to Odoo's own
+`.o_navbar` (the top bar) and `.o_action_manager`, which stay direct children
+of `body`, so Odoo's layout rules and other modules' selectors keep working.
+
+- **Sidebar**: app switcher with search, pinned menus (any app, saved per
+  user), the current app's menu with collapsible groups, keyboard navigation,
+  the user. Expanded or icon rail (top bar button or Cmd/Ctrl+B, saved per
+  user); always a rail on tablets; an off-canvas drawer on phones.
+- **Top bar**: sidebar toggle, "Search or jump to" opening Odoo's command
+  palette (recently opened records listed first), the systray. Odoo's apps
+  menu and sections stay in the DOM, hidden from md up.
+- **Launcher**: full-screen searchable app grid with recent records
+  (Alt+H, Ctrl+H on macOS, or "All apps" in the switcher).
+
+Website, portal and PDF reports are not affected. The JS targets Owl 3
+(Odoo 20); Odoo 19 runs Owl 2 and needs its own port.
 
 ## Stand
 
@@ -47,9 +60,13 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
 | `static/src/scss/secondary_variables.scss` | variables Odoo derives from the primary ones |
 | `static/src/scss/bootstrap_variables.scss` | Bootstrap variables (focus ring, dropdowns, modals, badges) |
 | `static/src/scss/backend.scss` | component layer on top of the stock classes |
-| `static/src/scss/layout.scss` | sidebar, panel, list and kanban cards (lg and up) |
+| `static/src/scss/layout.scss` | list and kanban columns as cards |
 | `static/src/core/color_scheme.*` | scheme service, live stylesheet swap, user menu switcher |
-| `static/src/webclient/sidebar/` | sidebar component: app switcher, menu tree, user |
+| `static/src/webclient/shell/` | shell state service, grid layout, palette recents |
+| `static/src/webclient/sidebar/` | sidebar component |
+| `static/src/webclient/topbar/` | NavBar patch: toggle and search |
+| `static/src/webclient/launcher/` | app launcher overlay |
+| `static/src/webclient/icons.js` | menu icons: curated by xmlid, then by pattern |
 | `static/src/fonts/` | Geist and Geist Mono, SIL OFL 1.1 |
 | `models/` | settings, `ir.http.color_scheme`, user preference, bundle customisation |
 | `tests/` | settings, injection guard, scheme selection |

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="rex_backend_theme.Launcher">
+        <div t-if="this.shell.state.launcherOpen" class="rx-launcher" role="dialog" aria-modal="true"
+             t-att-aria-label="this.labels.title" t-on-click="(ev) => this.onBackdropClick(ev)"
+             t-on-keydown="(ev) => this.onKeydown(ev)">
+            <div class="rx-launcher-panel">
+                <div class="rx-launcher-search">
+                    <i class="oi" data-icon="search" aria-hidden="true"/>
+                    <input t-ref="this.input" type="text" t-att-placeholder="this.labels.search"
+                           t-att-value="this.state.query" t-on-input="(ev) => this.onInput(ev)"
+                           aria-controls="rx-launcher-grid"/>
+                    <button type="button" class="btn btn-light" t-att-aria-label="this.labels.close"
+                            t-on-click="() => this.shell.closeLauncher()">
+                        <kbd>Esc</kbd>
+                    </button>
+                </div>
+                <div id="rx-launcher-grid" class="rx-launcher-grid" role="listbox">
+                    <t t-foreach="this.apps" t-as="app" t-key="app.id">
+                        <a class="rx-launcher-app" role="option" t-att-href="this.href(app)"
+                           t-att-data-menu-xmlid="app.xmlid"
+                           t-att-class="{ selected: app_index === this.state.index, current: app === this.currentApp }"
+                           t-att-aria-selected="app_index === this.state.index ? 'true' : 'false'"
+                           t-on-click="(ev) => this.onAppClick(ev, app)">
+                            <img t-if="app.webIconData" t-att-src="app.webIconData" alt=""/>
+                            <i t-else="" class="oi" data-icon="apps" aria-hidden="true"/>
+                            <span class="text-truncate" t-out="app.name"/>
+                        </a>
+                    </t>
+                    <div t-if="!this.apps.length" class="rx-launcher-empty" t-out="this.labels.empty"/>
+                </div>
+                <div t-if="this.recents.length" class="rx-launcher-recent">
+                    <div class="rx-launcher-section" t-out="this.labels.recent"/>
+                    <t t-foreach="this.recents" t-as="recent" t-key="recent.key">
+                        <a class="rx-launcher-record" t-att-href="recent.url" t-on-click="() => this.shell.closeLauncher()">
+                            <i class="oi" data-icon="history" aria-hidden="true"/>
+                            <span class="text-truncate" t-out="recent.name"/>
+                        </a>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

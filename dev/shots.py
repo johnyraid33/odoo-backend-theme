@@ -8,6 +8,7 @@ logs in as admin/admin and saves PNG files at 1920x1200, device scale 2.
 Each shot is (file name, Odoo path, JS run before the capture).
 """
 import base64
+import os
 import json
 import subprocess
 import sys
@@ -23,7 +24,9 @@ DARK = '--dark' in sys.argv
 ONLY = [a for a in sys.argv[4:] if not a.startswith('--')]
 CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 PORT = 9341
-WIDTH, HEIGHT = 1920, 1200
+WIDTH, HEIGHT = int(os.environ.get('W', 1920)), int(os.environ.get('H', 1200))
+MOBILE = WIDTH < 768
+SUFFIX = os.environ.get('SUFFIX', '')
 
 CLICK = "document.querySelector(%r)?.click();"
 SHOTS = [
@@ -39,6 +42,12 @@ SHOTS = [
     ('10_dialog', '/odoo/action-sale.action_orders/22',
      "[...document.querySelectorAll('.o_statusbar_buttons button')]"
      ".find(b => b.textContent.includes('Create Invoice'))?.click();"),
+    ('13_rail', '/odoo/action-sale.action_orders', CLICK % '.rx-topbar-toggle'),
+    ('14_launcher', '/odoo/action-sale.action_orders',
+     # Odoo's "alt" hotkeys are Ctrl on macOS
+     "const mac = /Mac/.test(navigator.platform);"
+     "document.dispatchEvent(new KeyboardEvent('keydown', {key: 'h', code: 'KeyH', altKey: !mac, ctrlKey: mac, bubbles: true}));"),
+    ('15_drawer', '/odoo/action-sale.action_orders', CLICK % '.rx-topbar-toggle'),
     ('11_user_menu', '/odoo/action-sale.action_orders', CLICK % '.o_user_menu'),
     ('12_theme_settings', '/odoo/settings',
      "document.querySelector('#rex_backend_theme')?.scrollIntoView({block: 'start'});"),
@@ -92,7 +101,7 @@ def main():
         tab.call('Network.enable')
         tab.call('Network.setCookie', name='session_id', value=session, domain=host, path='/')
         tab.call('Network.setCookie', name='color_scheme', value='dark' if DARK else 'light', domain=host, path='/')
-        tab.call('Emulation.setDeviceMetricsOverride', width=WIDTH, height=HEIGHT, deviceScaleFactor=2, mobile=False)
+        tab.call('Emulation.setDeviceMetricsOverride', width=WIDTH, height=HEIGHT, deviceScaleFactor=3 if MOBILE else 2, mobile=MOBILE)
         # with the "system" preference the web client follows the device scheme
         tab.call('Emulation.setEmulatedMedia', features=[
             {'name': 'prefers-color-scheme', 'value': 'dark' if DARK else 'light'}])
@@ -119,7 +128,7 @@ def main():
                 time.sleep(1.5)
             time.sleep(0.5)
             shot = tab.call('Page.captureScreenshot', format='png')
-            target = OUT / ('%s%s.png' % (name, '_dark' if DARK else ''))
+            target = OUT / ('%s%s%s.png' % (name, SUFFIX, '_dark' if DARK else ''))
             target.write_bytes(base64.b64decode(shot['data']))
             href = tab.call('Runtime.evaluate', expression='location.pathname', returnByValue=True)['result'].get('value')
             print('wrote', target, href)
