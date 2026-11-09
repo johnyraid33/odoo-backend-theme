@@ -1,0 +1,33 @@
+// Rex Backend Theme: pivot and graph views.
+
+.o_pivot {
+    font-variant-numeric: tabular-nums;
+
+    table {
+        border-color: $rx-border;
+        background-color: $rx-background;
+    }
+    th, td { border-color: $rx-border !important; }
+    thead th, .o_pivot_header_cell_closed, .o_pivot_header_cell_opened {
+        background-color: $rx-surface !important;
+        color: $rx-foreground;
+        font-weight: 500;
+    }
+    .o_pivot_measure_row { color: $rx-muted-foreground; font-weight: 500; }
+    tbody tr:hover td { background-color: rgba($rx-foreground, .025); }
+    .o_pivot_cell_value { font-weight: 400; }
+    tr .o_pivot_cell_value.o_cell_hover,
+    td.o_cell_hover { background-color: $rx-primary-subtle !important; }
+}
+
+@include media-breakpoint-up(md) {
+    .o_pivot_view .o_content .o_pivot,
+    .o_graph_view .o_content > .o_graph_renderer {
+        margin: 0 20px 20px;
+        padding: 16px;
+        border: 1px solid $rx-border;
+        border-radius: $rx-radius-panel;
+        background-color: $rx-background;
+        box-shadow: $rx-shadow-xs;
+    }
+}

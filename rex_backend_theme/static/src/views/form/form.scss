@@ -1,0 +1,56 @@
+// Rex Backend Theme: form view.
+
+.o_form_view {
+    // labels quieter than values: the eye lands on the data
+    .o_form_label,
+    .o_td_label .o_form_label,
+    .o_group .o_wrap_label .o_form_label {
+        color: $rx-muted-foreground;
+        font-weight: 500;
+    }
+    .oe_title .o_form_label, .o_horizontal_separator { color: $rx-muted-foreground; }
+
+    // statusbar row: same width and rhythm as the sheet below
+    .o_form_statusbar {
+        gap: 8px;
+        .o_statusbar_buttons { gap: 6px; }
+    }
+
+    // numbers line up in groups and one2many lists
+    .o_field_monetary, .o_field_float, .o_field_integer, .o_list_number {
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+// smart buttons: neutral cards; the value carries the weight, not the icon
+.o-form-buttonbox, .oe_button_box {
+    gap: 6px;
+
+    .oe_stat_button {
+        min-height: 40px;
+        padding: 4px 12px 4px 10px;
+        border: 1px solid $rx-border !important;
+        border-radius: $rx-radius-md !important;
+        background-color: $rx-background;
+        box-shadow: $rx-shadow-xs;
+        color: $rx-foreground;
+
+        .o_button_icon {
+            color: $rx-muted-foreground;
+            font-size: 18px;
+        }
+        .o_stat_value { color: $rx-foreground; font-weight: 600; }
+        .o_stat_text { color: $rx-muted-foreground; }
+        &:hover {
+            background-color: $rx-accent;
+            .o_button_icon { color: $rx-foreground; }
+        }
+    }
+}
+
+// chatter
+.o-mail-Chatter {
+    .o-mail-Chatter-topbar .btn { box-shadow: none; }
+    .o-mail-Message-author { font-weight: 600; }
+    .o-mail-Message-date, .o-mail-DateSection { color: $rx-muted-foreground; }
+}

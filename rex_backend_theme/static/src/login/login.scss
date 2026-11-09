@@ -1,0 +1,81 @@
+// Rex Backend Theme: the database login page (/web/login without website).
+// Every rule is scoped to body.o_web_login; with the website app installed
+// the login uses the website layout and is left to the website theme.
+
+body.o_web_login {
+    // the portal layout paints buttons and links with the company colour
+    // through these variables, with !important: give them the theme accent
+    --portal-primary-color: #{$rx-primary-text};
+    --portal-text-color: #{$rx-primary-foreground};
+
+    min-height: 100vh;
+    background-color: $rx-page !important;
+    color: $rx-foreground;
+    font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+
+    > .container, main > .container {
+        padding-top: 12vh !important;
+    }
+
+    .card.o_database_list, .card:has(.oe_login_form), .card:has(.oe_signup_form), .card:has(.oe_reset_password_form) {
+        max-width: 400px !important;
+        border: 1px solid $rx-border !important;
+        border-radius: $rx-radius-xl;
+        background-color: $rx-background !important;
+        box-shadow: $rx-shadow-md;
+
+        > .card-body { padding: 28px 32px 24px; }
+    }
+
+    label, .form-label, .col-form-label {
+        color: $rx-foreground;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .form-control, .input-group > .btn {
+        min-height: 40px;
+        border-color: $rx-input;
+        border-radius: $rx-radius-md;
+        box-shadow: $rx-shadow-xs;
+        font-size: 14px;
+
+        &:focus {
+            border-color: $rx-ring;
+            box-shadow: 0 0 0 3px rgba($rx-ring, .5);
+        }
+    }
+    .input-group {
+        > :not(:first-child) { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+        > :not(:last-child) { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+    }
+
+    .btn-primary {
+        min-height: 40px;
+        border: 0;
+        border-radius: $rx-radius-md;
+        background-color: $rx-primary;
+        color: $rx-primary-foreground;
+        font-weight: 500;
+        box-shadow: $rx-shadow-xs;
+
+        &:hover, &:focus, &:active { filter: brightness(.94); }
+    }
+    .btn-secondary, .btn-light, .btn-outline-secondary, .o_login_auth .btn {
+        border-color: $rx-input;
+        border-radius: $rx-radius-md;
+        background-color: $rx-background;
+        color: $rx-foreground;
+        &:hover { background-color: $rx-accent; }
+    }
+
+    a:not(.btn), .btn-link {
+        color: $rx-primary-text;
+        font-weight: 500;
+        text-decoration: none;
+        &:hover { text-decoration: underline; text-underline-offset: 4px; }
+    }
+    .text-primary { color: $rx-primary-text !important; }
+    .border-top, hr { border-color: $rx-border !important; }
+    .small, small { color: $rx-muted-foreground; }
+}

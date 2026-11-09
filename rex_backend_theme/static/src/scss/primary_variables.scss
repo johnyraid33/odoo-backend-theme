@@ -160,3 +160,6 @@ $o-colors-text-emphasis: null;
     $o-colors-bg-subtle: $-rx-tag-bg;
     $o-colors-text-emphasis: $-rx-tag-fg;
 }
+
+// XXL starts 250px later: the sidebar takes that width (see breakpoints.js).
+$grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1650px);

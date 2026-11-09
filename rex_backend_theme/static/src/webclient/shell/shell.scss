@@ -93,6 +93,7 @@ $rx-panel-border: 1px solid $rx-border;
         body:not(.rx-tour-running) & {
             .o_menu_brand, .o_menu_sections { display: none !important; }
         }
+        body.rx-tour-running & .rx-topbar-search { display: none; }
     }
     // tablets always show the rail: nothing to toggle
     @include media-breakpoint-only(md) {

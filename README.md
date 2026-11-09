@@ -30,12 +30,28 @@ primary buttons on the right), then a toolbar row (view tabs with labels when
 the header is wide enough, search, pager). Forms show the smart buttons in
 the toolbar row. Phones keep Odoo's own control panel.
 
+## Views
+
+- **Form**: quieter labels, neutral smart buttons, tabular figures. Odoo's
+  XXL breakpoint (chatter beside the form) moves from 1400px to 1650px of
+  window, the width the sidebar takes (`webclient/shell/breakpoints.js`).
+- **List / kanban**: cards on the panel, tabular figures, row hover and
+  selection in the theme colours.
+- **Calendar**: grid in a card, compact day headers, today and the now line
+  in the accent, events as a light tint of their colour with a solid bar.
+- **Pivot / graph**: in cards; a single-series chart uses the accent
+  (`views/graph`, loaded with the lazy graph bundle).
+- **Activity**: soft tints with a coloured edge instead of solid cells.
+- **Login** (`/web/login` without website): scoped to `body.o_web_login`, in
+  the frontend bundle with the token variables only.
+
 ## Compatibility with tours and other modules
 
 The sidebar's app switcher carries Odoo's `o_navbar_apps_menu` / `o_app`
 classes, so tours and modules that open an app through the apps menu work
 unchanged. While a tour runs, the stock section menus and brand are shown in
-the top bar again (`webclient/shell/tour_compat.js`). Run the tours of the
+the top bar again and the top bar search makes room for them
+(`webclient/shell/tour_compat.js`). Run the tours of the
 installed apps with `dev/run_tests.sh` (needs the `dev/Dockerfile.test`
 image, which adds a headless Chromium).
 
@@ -86,6 +102,9 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
 | `static/src/webclient/launcher/` | app launcher overlay |
 | `static/src/webclient/icons.js` | menu icons: curated by xmlid, then by pattern |
 | `static/src/views/control_panel/` | page header layout, labelled view tabs |
+| `static/src/views/{form,list,calendar,pivot,activity}/` | per-view styles |
+| `static/src/views/graph/` | single-series charts in the accent (lazy bundle) |
+| `static/src/login/` | database login page |
 | `static/src/fonts/` | Geist and Geist Mono, SIL OFL 1.1 |
 | `models/` | settings, `ir.http.color_scheme`, user preference, bundle customisation |
 | `tests/` | settings, injection guard, scheme selection |

@@ -1,0 +1,148 @@
+// Rex Backend Theme: calendar (the CloseCRM reference screen).
+//
+// Odoo colours events through CSS variables (--o-event-bg: the colour,
+// --fc-event-bg-color: a pastel) and today / the now line through --o-cw-bg;
+// the theme keeps the mechanism and changes the values: a light tint of the
+// event colour with a solid bar on the left, today and now in the accent.
+
+$-rx-event-tint: if($rx-dark, 22%, 13%);
+$-rx-event-ink: if($rx-dark, #fff, #000);
+$-rx-event-ink-mix: if($rx-dark, 45%, 55%);
+
+.o_calendar_container {
+    > .o_calendar_header {
+        padding: 2px 20px 10px !important;
+        background-color: $rx-surface;
+
+        .o_calendar_navigation_buttons .btn,
+        .o_calendar_button_today {
+            height: 32px;
+        }
+    }
+}
+
+.o_calendar_wrapper {
+    @include media-breakpoint-up(md) {
+        margin: 0 20px 20px;
+        border: 1px solid $rx-border;
+        border-radius: $rx-radius-panel;
+        overflow: hidden;
+        background-color: $rx-background;
+        box-shadow: $rx-shadow-xs;
+    }
+}
+
+.o_calendar_renderer {
+    --o-cw-border-color: #{$rx-border};
+    background-color: $rx-background;
+
+    .o_calendar_widget {
+        --fc-border-color: #{$rx-border};
+        --fc-non-business-color: #{rgba($rx-gray-100, if($rx-dark, .45, .6))};
+        --fc-timegrid-divider-background: none;
+        --fc-today-bg-color: transparent;
+
+        .fc-timeGridDay-view, .fc-timeGridWeek-view, .fc-dayGridMonth-view {
+            --o-cw-bg: #{$rx-primary};
+            --o-cw-color: #{$rx-primary-foreground};
+        }
+
+        // ---------------------------------------------------- day headers
+        .fc-col-header-cell {
+            padding: 10px 0 8px;
+            border-color: $rx-border;
+            font-weight: 500;
+
+            .fc-col-header-cell-cushion {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+                color: $rx-muted-foreground;
+                font-size: 11px;
+                letter-spacing: .06em;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+            .o_cw_day_number {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 32px;
+                height: 32px;
+                color: $rx-foreground;
+                font-size: 18px !important;
+                font-weight: 600;
+                letter-spacing: -.02em;
+                text-transform: none;
+            }
+            &.fc-day-today .o_cw_day_number {
+                border-radius: 50%;
+                box-shadow: $rx-shadow-sm;
+            }
+        }
+
+        // ---------------------------------------------------- grid
+        .fc-timegrid-slot-label-cushion {
+            color: $rx-muted-foreground;
+            font-size: 11px;
+            font-variant-numeric: tabular-nums;
+        }
+        .fc-timegrid-divider.fc-cell-shaded {
+            border-color: $rx-border;
+            background-color: $rx-border;
+            &::after { display: none; }
+        }
+        .fc-timegrid-now-indicator-line {
+            border-color: $rx-primary;
+            border-width: 2px 0 0;
+        }
+        .o_calendar_time_indicator_now { opacity: .25 !important; }
+
+        // ---------------------------------------------------- events
+        .fc-event:not(.o_event_dot) {
+            --rx-event-tint: color-mix(in srgb, var(--o-event-bg, #{$rx-primary}) #{$-rx-event-tint}, #{$rx-background});
+            --rx-event-ink: color-mix(in srgb, var(--o-event-bg, #{$rx-primary}) #{$-rx-event-ink-mix}, #{$-rx-event-ink});
+            --fc-event-bg-color: var(--rx-event-tint);
+            --fc-event-border-color: transparent;
+            --fc-event-text-color: var(--rx-event-ink);
+
+            border: 0;
+            border-left: 3px solid var(--o-event-bg, #{$rx-primary});
+            border-radius: $rx-radius-sm;
+            background-color: var(--rx-event-tint);
+            box-shadow: none;
+            color: var(--rx-event-ink);
+            font-size: 12px;
+            font-weight: 500;
+
+            .fc-bg { background-color: transparent !important; }
+            .fc-event-main, .o_event_title { color: inherit; }
+            &:hover { filter: saturate(1.15) brightness(if($rx-dark, 1.1, .98)); }
+        }
+        .fc-timegrid-event .fc-event-main { padding: 4px 6px; }
+        .fc-daygrid-event { margin-top: 2px; margin-bottom: 2px; padding: 1px 4px; }
+    }
+}
+
+// ---------------------------------------------------- side panel
+.o_calendar_sidepanel {
+    border-left: 1px solid $rx-border;
+    background-color: $rx-background;
+
+    .o_calendar_filter {
+        .o_cw_filter_label, h5, .o_calendar_filter_title {
+            color: $rx-muted-foreground;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+    }
+}
+
+// mini calendar and every date picker: today in the accent, not in red
+.o_datetime_picker .o_today > div {
+    background-color: $rx-primary;
+    color: $rx-primary-foreground;
+}

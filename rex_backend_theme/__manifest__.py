@@ -33,6 +33,8 @@
             'rex_backend_theme/static/src/core/**/*',
             'rex_backend_theme/static/src/webclient/**/*',
             'rex_backend_theme/static/src/views/**/*',
+            # graph JS patches the lazily loaded GraphRenderer
+            ('remove', 'rex_backend_theme/static/src/views/graph/**/*'),
         ],
         'web.assets_backend_lazy': [
             ('before', 'web/static/src/scss/primary_variables.scss',
@@ -45,6 +47,15 @@
              'rex_backend_theme/static/src/scss/secondary_variables.scss'),
             ('before', 'web/static/src/scss/bootstrap_overridden.scss',
              'rex_backend_theme/static/src/scss/bootstrap_variables.scss'),
+            'rex_backend_theme/static/src/views/graph/**/*',
+        ],
+        # The database login page: tokens (variables only, no CSS output) and
+        # rules scoped to body.o_web_login.
+        'web.assets_frontend': [
+            'rex_backend_theme/static/src/scss/user_variables.scss',
+            'rex_backend_theme/static/src/scss/tokens.scss',
+            'rex_backend_theme/static/src/scss/fonts.scss',
+            'rex_backend_theme/static/src/login/login.scss',
         ],
         # Dark scheme: the same tokens, compiled with $rx-dark: true.
         'web.assets_web_dark': [

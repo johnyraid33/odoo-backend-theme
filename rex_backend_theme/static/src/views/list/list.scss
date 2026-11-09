@@ -1,0 +1,18 @@
+// Rex Backend Theme: list view.
+
+.o_list_renderer .o_list_table {
+    font-variant-numeric: tabular-nums;
+
+    thead th {
+        height: 40px;
+        font-size: 12.5px;
+        letter-spacing: .01em;
+    }
+    tbody > tr.o_data_row {
+        > td { vertical-align: middle; }
+        &:hover > td { background-color: rgba($rx-foreground, if($rx-dark, .04, .025)); }
+        &.o_data_row_selected > td { background-color: $rx-primary-subtle; }
+    }
+    .o_list_record_selector .form-check-input { margin-top: 0; }
+    tfoot td { font-weight: 600; }
+}

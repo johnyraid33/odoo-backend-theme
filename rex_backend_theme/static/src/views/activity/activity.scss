@@ -1,0 +1,17 @@
+// Rex Backend Theme: activity view. Odoo fills the cells with solid red,
+// orange and green; soft tints keep the urgency readable without shouting.
+
+.o_activity_view {
+    .o_activity_summary_cell {
+        border-color: $rx-border;
+
+        @each $-state, $-color in (overdue: $rx-danger, today: $rx-warning, planned: $rx-success) {
+            &.#{$-state} {
+                background-color: mix($-color, $rx-background, if($rx-dark, 22%, 12%)) !important;
+                color: $rx-foreground !important;
+                box-shadow: inset 3px 0 0 $-color;
+            }
+        }
+    }
+    .o_activity_record { font-variant-numeric: tabular-nums; }
+}

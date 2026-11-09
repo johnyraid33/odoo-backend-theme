@@ -4,9 +4,10 @@ from odoo import api, models
 from odoo.exceptions import ValidationError
 
 USER_VARIABLES = '/rex_backend_theme/static/src/scss/user_variables.scss'
-# Every bundle that compiles the tokens. The dark bundles include these two,
-# so the replacement applies to them as well.
-BUNDLES = ('web.assets_backend', 'web.assets_backend_lazy')
+# Every bundle that compiles the tokens. The dark bundles include the first
+# two, so the replacement applies to them as well; the frontend bundle styles
+# the login page.
+BUNDLES = ('web.assets_backend', 'web.assets_backend_lazy', 'web.assets_frontend')
 
 ACCENT_RE = re.compile(r'^#[0-9a-fA-F]{6}$')
 NEUTRALS = [

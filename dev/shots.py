@@ -48,6 +48,17 @@ SHOTS = [
      "const mac = /Mac/.test(navigator.platform);"
      "document.dispatchEvent(new KeyboardEvent('keydown', {key: 'h', code: 'KeyH', altKey: !mac, ctrlKey: mac, bubbles: true}));"),
     ('15_drawer', '/odoo/action-sale.action_orders', CLICK % '.rx-topbar-toggle'),
+    ('20_calendar', '/odoo/action-calendar.action_calendar_event', ''),
+    ('21_pivot', '/odoo/action-sale.action_order_report_all?view_type=pivot', ''),
+    ('22_graph', '/odoo/action-sale.action_order_report_all?view_type=graph', ''),
+    ('23_activity', '/odoo/action-sale.action_orders?view_type=activity', ''),
+    ('24_many2one', '/odoo/action-sale.action_orders/new',
+     "document.querySelector('.o_field_widget[name=partner_id] input')?.click();"),
+    ('25_datepicker', '/odoo/action-sale.action_orders/new',
+     "const i = document.querySelector('.o_field_widget[name=validity_date] input'); i?.focus(); i?.click();"),
+    ('26_task_form', '/odoo/action-project.action_view_all_task', ''),
+    ('27_stock_picking', '/odoo/action-stock.action_picking_tree_all', ''),
+    ('30_login', '/web/login?db=' + DB, ''),
     ('11_user_menu', '/odoo/action-sale.action_orders', CLICK % '.o_user_menu'),
     ('12_theme_settings', '/odoo/settings',
      "document.querySelector('#rex_backend_theme')?.scrollIntoView({block: 'start'});"),
@@ -99,7 +110,8 @@ def main():
         tab = Tab(page['webSocketDebuggerUrl'])
         host = BASE.split('//', 1)[1].split(':')[0]
         tab.call('Network.enable')
-        tab.call('Network.setCookie', name='session_id', value=session, domain=host, path='/')
+        if not os.environ.get('NOLOGIN'):
+            tab.call('Network.setCookie', name='session_id', value=session, domain=host, path='/')
         tab.call('Network.setCookie', name='color_scheme', value='dark' if DARK else 'light', domain=host, path='/')
         tab.call('Emulation.setDeviceMetricsOverride', width=WIDTH, height=HEIGHT, deviceScaleFactor=3 if MOBILE else 2, mobile=MOBILE)
         # with the "system" preference the web client follows the device scheme
@@ -107,7 +119,7 @@ def main():
             {'name': 'prefers-color-scheme', 'value': 'dark' if DARK else 'light'}])
         tab.call('Page.enable')
         # the first load of the web client fetches and compiles its assets
-        tab.call('Page.navigate', url=BASE + '/odoo/action-base.action_res_users')
+        tab.call('Page.navigate', url=BASE + ('/web/login' if os.environ.get('NOLOGIN') else '/odoo/action-base.action_res_users'))
         time.sleep(12)
         for name, path, script in SHOTS:
             if ONLY and not any(o in name for o in ONLY):

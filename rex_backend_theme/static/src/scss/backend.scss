@@ -3,6 +3,11 @@
 // Only styles, no template changes: every rule targets classes the stock web
 // client already renders, so an Odoo update can at worst make a rule a no-op.
 
+// accent for JS (graph colours)
+:root {
+    --rx-primary: #{$rx-primary};
+}
+
 .o_web_client {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
