@@ -7,7 +7,7 @@
     'author': 'POLISHCHUK & SONS LTD',
     'website': 'https://github.com/johnyraid',
     'license': 'LGPL-3',
-    'depends': ['web', 'base_setup'],
+    'depends': ['web', 'web_tour', 'base_setup'],
     'data': [
         'views/webclient_templates.xml',
         'views/res_config_settings_views.xml',
@@ -32,6 +32,7 @@
             'rex_backend_theme/static/src/scss/layout.scss',
             'rex_backend_theme/static/src/core/**/*',
             'rex_backend_theme/static/src/webclient/**/*',
+            'rex_backend_theme/static/src/views/**/*',
         ],
         'web.assets_backend_lazy': [
             ('before', 'web/static/src/scss/primary_variables.scss',

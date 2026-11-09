@@ -87,8 +87,12 @@ $rx-panel-border: 1px solid $rx-border;
     }
 
     // the sidebar replaces the apps menu, the brand and the sections
+    // (shown again while a tour runs, see tour_compat.js)
     @include media-breakpoint-up(md) {
-        .o_navbar_apps_menu, .o_menu_sections, .o_menu_brand { display: none !important; }
+        .o_navbar_apps_menu { display: none !important; }
+        body:not(.rx-tour-running) & {
+            .o_menu_brand, .o_menu_sections { display: none !important; }
+        }
     }
     // tablets always show the rail: nothing to toggle
     @include media-breakpoint-only(md) {

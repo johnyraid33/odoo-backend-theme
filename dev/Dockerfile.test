@@ -1,0 +1,14 @@
+# Odoo with a headless Chromium, for tours and JS unit tests (HttpCase).
+# Ubuntu 24.04 (the odoo image) only ships chromium as a snap, so the browser
+# comes from Playwright, which has arm64 and amd64 builds.
+ARG ODOO_VERSION=20.0
+FROM odoo:${ODOO_VERSION}
+USER root
+ENV PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends python3-pip python3-websocket \
+    && pip3 install --break-system-packages --no-cache-dir playwright==1.48.0 \
+    && python3 -m playwright install --with-deps chromium \
+    && ln -sf "$(find /opt/pw-browsers -path '*chrome-linux/chrome' | head -1)" /usr/local/bin/chromium \
+    && rm -rf /var/lib/apt/lists/*
+USER odoo

@@ -7,7 +7,8 @@
         <aside class="rx-sidebar d-print-none" t-att-class="this.rootClass" aria-label="Application menu"
                t-att-aria-hidden="this.isDrawer and !this.shell.state.drawerOpen ? 'true' : 'false'">
             <!-- App switcher -->
-            <div class="rx-sidebar-head">
+            <!-- o_navbar_apps_menu / o_app: the selectors tours and other modules use to reach an app -->
+            <div class="rx-sidebar-head o_navbar_apps_menu">
                 <Dropdown position="'bottom-start'" menuClass="'rx-apps-menu'" onOpened="() => this.state.appQuery = ''">
                     <button class="rx-app-switcher" t-att-title="this.currentApp?.name"
                             t-att-data-tooltip="this.tooltip(this.currentApp?.name)" data-tooltip-position="right">
@@ -28,7 +29,7 @@
                         <div class="rx-apps-list">
                             <t t-foreach="this.filteredApps" t-as="app" t-key="app.id">
                                 <DropdownItem
-                                    class="{ 'rx-app-item': true, active: this.currentApp === app }"
+                                    class="{ 'rx-app-item': true, o_app: true, active: this.currentApp === app }"
                                     onSelected="() => this.openApp(app)"
                                     attrs="{ href: this.href(app), 'data-menu-xmlid': app.xmlid }">
                                     <img t-if="app.webIconData" class="rx-app-icon" t-att-src="app.webIconData" alt=""/>
@@ -63,8 +64,10 @@
                 <t t-foreach="this.sections" t-as="section" t-key="section.id">
                     <t t-if="section.childrenTree.length">
                         <div class="rx-group" t-att-class="{ 'rx-collapsed': this.isCollapsed(section) }">
+                            <!-- no data-menu-xmlid here: tours use button[data-menu-xmlid] to open
+                                 the stock section dropdowns, not to fold a sidebar group -->
                             <button class="rx-group-label" t-on-click="() => this.toggleGroup(section)"
-                                    t-att-data-menu-xmlid="section.xmlid"
+                                    t-att-data-rx-menu-xmlid="section.xmlid"
                                     t-att-aria-expanded="this.isCollapsed(section) ? 'false' : 'true'"
                                     t-att-data-tooltip="this.tooltip(section.name)" data-tooltip-position="right">
                                 <i class="oi rx-group-icon" t-att-data-icon="this.icon(section)" aria-hidden="true"/>

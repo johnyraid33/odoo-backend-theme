@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- Labels on the view switcher: a segmented control with names, not a
+         row of icons. Shown from xl up (control_panel.scss). -->
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension">
+        <xpath expr="//nav[hasclass('o_cp_switch_buttons')]//i" position="after">
+            <span class="rx-view-label" t-out="view.name"/>
+        </xpath>
+    </t>
+
+</templates>

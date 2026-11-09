@@ -41,14 +41,8 @@
     font-weight: 500;
     &:hover { text-decoration: underline; text-underline-offset: 4px; }
 }
-.btn-group > .btn-secondary + .btn-secondary,
-.o_cp_switch_buttons .btn + .btn {
+.btn-group > .btn-secondary + .btn-secondary {
     margin-left: -1px;
-}
-.o_cp_switch_buttons .btn.active {
-    background-color: $rx-accent;
-    color: $rx-foreground;
-    box-shadow: none;
 }
 
 // ------------------------------------------------------------------ links

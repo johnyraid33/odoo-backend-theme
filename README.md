@@ -21,6 +21,24 @@ of `body`, so Odoo's layout rules and other modules' selectors keep working.
 - **Launcher**: full-screen searchable app grid with recent records
   (Alt+H, Ctrl+H on macOS, or "All apps" in the switcher).
 
+## Page header
+
+From lg up Odoo's control panel is re-arranged by a CSS grid into a page
+header, without changing its DOM (modules extend it with xpaths, tours click
+it): title row (parent breadcrumbs, title, actions menu, save indicator,
+primary buttons on the right), then a toolbar row (view tabs with labels when
+the header is wide enough, search, pager). Forms show the smart buttons in
+the toolbar row. Phones keep Odoo's own control panel.
+
+## Compatibility with tours and other modules
+
+The sidebar's app switcher carries Odoo's `o_navbar_apps_menu` / `o_app`
+classes, so tours and modules that open an app through the apps menu work
+unchanged. While a tour runs, the stock section menus and brand are shown in
+the top bar again (`webclient/shell/tour_compat.js`). Run the tours of the
+installed apps with `dev/run_tests.sh` (needs the `dev/Dockerfile.test`
+image, which adds a headless Chromium).
+
 Website, portal and PDF reports are not affected. The JS targets Owl 3
 (Odoo 20); Odoo 19 runs Owl 2 and needs its own port.
 
@@ -67,6 +85,7 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
 | `static/src/webclient/topbar/` | NavBar patch: toggle and search |
 | `static/src/webclient/launcher/` | app launcher overlay |
 | `static/src/webclient/icons.js` | menu icons: curated by xmlid, then by pattern |
+| `static/src/views/control_panel/` | page header layout, labelled view tabs |
 | `static/src/fonts/` | Geist and Geist Mono, SIL OFL 1.1 |
 | `models/` | settings, `ir.http.color_scheme`, user preference, bundle customisation |
 | `tests/` | settings, injection guard, scheme selection |
@@ -80,3 +99,4 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
 | `dev/probe.py BASE DB PATH JS [preJS]` | evaluate JS in a logged-in page (`SCHEME=dark`, `W=900`) |
 | `dev/bundle_css.py BASE DB OUT [--dark]` | download the compiled CSS, to diff builds |
 | `dev/check_icons.py FONT [names]` | list or check Material Symbols ligatures in Odoo's subset |
+| `dev/run_tests.sh DB TAGS` | Odoo tests and tours in the Chromium image (`dev/Dockerfile.test`) |
