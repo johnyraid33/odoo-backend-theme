@@ -1,12 +1,23 @@
 {
     'name': 'Rex Backend Theme',
-    'version': '19.0.0.4.0',
+    'version': '19.0.1.0.0',
     'category': 'Themes/Backend',
-    'summary': 'A calm, neutral backend in the shadcn/ui style: sidebar navigation, '
-               'light and dark schemes, configurable accent, palette and radius',
+    'summary': 'Modern backend theme for Odoo Community: sidebar menu, app launcher, '
+               'dark mode, your accent colour, palette, radius and density',
+    'description': 'A calm, neutral backend in the shadcn/ui style for Odoo Community: '
+                   'a sidebar with the current app menu and pinned entries, an app '
+                   'launcher, a clear page header, light, dark and system schemes, '
+                   'an accent colour checked for WCAG AA contrast, palette, corner '
+                   'radius and density, for the company and for each user.',
     'author': 'POLISHCHUK & SONS LTD',
-    'website': 'https://github.com/johnyraid',
+    'maintainer': 'POLISHCHUK & SONS LTD',
+    'website': 'https://github.com/johnyraid33/odoo-backend-theme',
+    'support': 'info@rex.cy',
     'license': 'LGPL-3',
+    'images': [
+        'static/description/img/cover.png',
+        'static/description/img/main_screenshot.png',
+    ],
     'depends': ['web', 'web_tour', 'base_setup'],
     'data': [
         'views/webclient_templates.xml',

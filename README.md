@@ -1,9 +1,32 @@
-# Rex Backend Theme (prototype)
+# Rex Backend Theme
 
-A backend look for Odoo 20 after the CloseCRM dribbble shot, on the shadcn/ui token
-model: left sidebar with the current app's menu, the action in one rounded panel,
-cool neutral palette with an indigo accent, Geist font (shipped in the module),
-cards for lists and kanban columns, segmented status bar, line tabs.
+A calm, modern backend for Odoo Community 20.0 and 19.0, on the shadcn/ui token
+model: a left sidebar with the current app's menu and pinned entries, an app
+launcher, a page header, the action in one rounded panel, light, dark and
+system schemes, and an accent colour, palette, corner radius and density you
+choose. Geist font and icons ship with the module; nothing is loaded from
+outside servers.
+
+| Branch | Odoo | Module version |
+| --- | --- | --- |
+| `main` | development (Odoo 20) | `20.0.x` |
+| `20.0` | Odoo 20.0 | `20.0.x` |
+| `19.0` | Odoo 19.0 (Owl 2) | `19.0.x` |
+
+Licence: LGPL-3 (`LICENSE`). Geist under the SIL Open Font License,
+Material Symbols (19.0 branch) under Apache-2.0. User documentation:
+[`rex_backend_theme/doc/index.rst`](rex_backend_theme/doc/index.rst).
+Support: info@rex.cy or the issue tracker.
+
+## Install
+
+```bash
+git clone -b 19.0 https://github.com/johnyraid33/odoo-backend-theme.git
+odoo -d DATABASE --addons-path=odoo-backend-theme,ODOO/addons -i rex_backend_theme
+```
+
+Then **Settings > General Settings > Backend Theme** for the company look and
+**My Preferences > Appearance** for each user.
 
 ## Odoo 19 (this branch)
 
@@ -79,8 +102,8 @@ the top bar again and the top bar search makes room for them
 installed apps with `dev/run_tests.sh` (needs the `dev/Dockerfile.test`
 image, which adds a headless Chromium).
 
-Website, portal and PDF reports are not affected. The JS targets Owl 3
-(Odoo 20); Odoo 19 runs Owl 2 and needs its own port.
+Website, portal and PDF reports are not affected. The JS on `main` and
+`20.0` targets Owl 3 (Odoo 20); the `19.0` branch is the Owl 2 port.
 
 ## Stand
 

@@ -7,55 +7,67 @@
 <body>
 <!--
   Odoo Apps Store page. The store strips style and script tags: use Bootstrap 5
-  classes, inline styles and Font Awesome 4 icons only, keep the file ASCII
-  (HTML entities for anything else).
+  classes (tabs work through data-bs-toggle), inline styles and Font Awesome 4
+  icons only, keep the file ASCII (HTML entities for anything else).
+  The 19.0 branch differs only in the version lines.
 -->
-<section class="container" style="max-width: 1120px; font-family: 'Open Sans', Helvetica, Arial, sans-serif; color: #4f4e5c;">
+<section class="container" style="max-width: 1140px; font-family: 'Open Sans', Helvetica, Arial, sans-serif; color: #4f4e5c;">
 
   <!-- Hero -->
-  <div style="background: #0b0b0f; background-image: linear-gradient(135deg, #0b0b0f 0%, #1d1b3a 55%, #2b2a6b 100%); border-radius: 20px; padding: 56px 48px 48px; margin: 8px 0 40px; text-align: center;">
-    <div style="font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #a6a6b8; margin-bottom: 18px;">Odoo 20 &middot; Community &middot; LGPL-3</div>
-    <h2 style="font-size: 40px; line-height: 1.15; font-weight: 800; color: #ffffff; margin: 0 auto 18px; max-width: 800px; letter-spacing: -0.5px;">A calm, modern backend for Odoo</h2>
-    <p style="font-size: 18px; line-height: 1.6; color: #cfcfe0; margin: 0 auto; max-width: 760px;">A sidebar with your apps and menus, an app launcher, a clear page header, light and dark schemes and your own accent colour. Lists, forms, kanban, calendar and reports keep everything Odoo does; they simply read better.</p>
+  <div style="background: #0b0b0f; background-image: linear-gradient(135deg, #0b0b0f 0%, #1d1b3a 55%, #2b2a6b 100%); border-radius: 20px; padding: 56px 48px 48px; margin: 8px 0 32px; text-align: center;">
+    <div style="font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #a6a6b8; margin-bottom: 18px;">Odoo 19 Community &middot; Backend theme &middot; Free &middot; LGPL-3</div>
+    <h2 style="font-size: 42px; line-height: 1.15; font-weight: 800; color: #ffffff; margin: 0 auto 18px; max-width: 820px; letter-spacing: -0.5px;">A calm, modern backend for Odoo</h2>
+    <p style="font-size: 18px; line-height: 1.6; color: #cfcfe0; margin: 0 auto; max-width: 780px;">A sidebar with your apps and menus, an app launcher, a clear page header, light and dark schemes and your own accent colour. Lists, forms, kanban, calendar and reports keep everything Odoo does; they simply read better.</p>
     <div style="margin-top: 28px;">
       <span style="display: inline-block; margin: 4px; padding: 8px 16px; border-radius: 999px; font-size: 13px; color: #ecebf6; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);"><i class="fa fa-columns" style="color: #a5a7fb; margin-right: 6px;"></i>Sidebar &amp; app launcher</span>
       <span style="display: inline-block; margin: 4px; padding: 8px 16px; border-radius: 999px; font-size: 13px; color: #ecebf6; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);"><i class="fa fa-adjust" style="color: #a5a7fb; margin-right: 6px;"></i>Light, dark or system</span>
       <span style="display: inline-block; margin: 4px; padding: 8px 16px; border-radius: 999px; font-size: 13px; color: #ecebf6; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);"><i class="fa fa-paint-brush" style="color: #a5a7fb; margin-right: 6px;"></i>Your colours, contrast-checked</span>
+      <span style="display: inline-block; margin: 4px; padding: 8px 16px; border-radius: 999px; font-size: 13px; color: #ecebf6; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);"><i class="fa fa-mobile" style="color: #a5a7fb; margin-right: 6px;"></i>Desktop, tablet, phone</span>
       <span style="display: inline-block; margin: 4px; padding: 8px 16px; border-radius: 999px; font-size: 13px; color: #ecebf6; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);"><i class="fa fa-language" style="color: #a5a7fb; margin-right: 6px;"></i>English &middot; &#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072; &middot; &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</span>
     </div>
     <div style="margin-top: 36px;">
-      <img src="img/sales_list.png" alt="Sales orders in the Rex Backend Theme" style="max-width: 100%; border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,0.45);"/>
+      <img src="img/main_screenshot.png" alt="Sales orders in the Rex Backend Theme" style="max-width: 100%; border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,0.45);"/>
     </div>
   </div>
 
+  <!-- Numbers -->
+  <div class="row g-0 text-center" style="border: 1px solid #e4e4e9; border-radius: 14px; background: #f9f9fb; margin: 0 0 40px; padding: 18px 0;">
+    <div class="col-6 col-md-2" style="padding: 6px 0;"><div style="font-size: 26px; font-weight: 800; color: #17161c;">11</div><div style="font-size: 12px;">accent presets + any colour</div></div>
+    <div class="col-6 col-md-2" style="padding: 6px 0;"><div style="font-size: 26px; font-weight: 800; color: #17161c;">4</div><div style="font-size: 12px;">gray palettes</div></div>
+    <div class="col-6 col-md-2" style="padding: 6px 0;"><div style="font-size: 26px; font-weight: 800; color: #17161c;">4</div><div style="font-size: 12px;">corner radii</div></div>
+    <div class="col-6 col-md-2" style="padding: 6px 0;"><div style="font-size: 26px; font-weight: 800; color: #17161c;">3</div><div style="font-size: 12px;">colour schemes</div></div>
+    <div class="col-6 col-md-2" style="padding: 6px 0;"><div style="font-size: 26px; font-weight: 800; color: #17161c;">2</div><div style="font-size: 12px;">densities</div></div>
+    <div class="col-6 col-md-2" style="padding: 6px 0;"><div style="font-size: 26px; font-weight: 800; color: #17161c;">0</div><div style="font-size: 12px;">outside requests</div></div>
+  </div>
+
   <!-- Key features -->
-  <div class="row g-3" style="margin-bottom: 40px;">
+  <div class="row g-3" style="margin-bottom: 44px;">
     <div class="col-lg-4 col-md-6">
       <div style="height: 100%; border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px; background: #ffffff;">
         <div style="width: 42px; height: 42px; border-radius: 10px; background: #eeeefd; color: #5f62e7; text-align: center; line-height: 42px; font-size: 18px; margin-bottom: 14px;"><i class="fa fa-bars"></i></div>
         <div style="font-size: 16px; font-weight: 700; color: #17161c; margin-bottom: 6px;">A sidebar that knows your apps</div>
-        <div style="font-size: 14px; line-height: 1.6;">The current app's menu as folding groups, an app switcher with search, pinned menus across apps, icons-only mode (Ctrl/Cmd&nbsp;B) and full keyboard navigation.</div>
+        <div style="font-size: 14px; line-height: 1.6;">The current app's menu as folding groups with icons, an app switcher with search, menus pinned from any app, an icons-only mode and full keyboard navigation.</div>
       </div>
     </div>
     <div class="col-lg-4 col-md-6">
       <div style="height: 100%; border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px; background: #ffffff;">
         <div style="width: 42px; height: 42px; border-radius: 10px; background: #e5f6f3; color: #0b8176; text-align: center; line-height: 42px; font-size: 18px; margin-bottom: 14px;"><i class="fa fa-th"></i></div>
         <div style="font-size: 16px; font-weight: 700; color: #17161c; margin-bottom: 6px;">App launcher and quick search</div>
-        <div style="font-size: 14px; line-height: 1.6;">All apps on one screen (Alt&nbsp;H), typed search, arrow keys and Enter. Recently opened records come back in the launcher and in the command palette.</div>
+        <div style="font-size: 14px; line-height: 1.6;">All apps on one screen with typed search, arrow keys and Enter. Recently opened records come back in the launcher and at the top of the command palette.</div>
       </div>
     </div>
     <div class="col-lg-4 col-md-6">
       <div style="height: 100%; border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px; background: #ffffff;">
         <div style="width: 42px; height: 42px; border-radius: 10px; background: #fdeef0; color: #c4314f; text-align: center; line-height: 42px; font-size: 18px; margin-bottom: 14px;"><i class="fa fa-window-maximize"></i></div>
         <div style="font-size: 16px; font-weight: 700; color: #17161c; margin-bottom: 6px;">A clear page header</div>
-        <div style="font-size: 14px; line-height: 1.6;">Title and main actions on top, view tabs with labels, search and pager below. Built on Odoo's own control panel, so other modules' buttons still appear.</div>
+        <div style="font-size: 14px; line-height: 1.6;">Title and main actions on top, labelled view tabs, search and pager below. Built on Odoo's own control panel, so other modules' buttons still appear.</div>
       </div>
     </div>
     <div class="col-lg-4 col-md-6">
       <div style="height: 100%; border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px; background: #ffffff;">
         <div style="width: 42px; height: 42px; border-radius: 10px; background: #ececf1; color: #403f49; text-align: center; line-height: 42px; font-size: 18px; margin-bottom: 14px;"><i class="fa fa-moon-o"></i></div>
         <div style="font-size: 16px; font-weight: 700; color: #17161c; margin-bottom: 6px;">Light, dark or system</div>
-        <div style="font-size: 14px; line-height: 1.6;">Each user picks a scheme from the user menu; it switches in place, without a reload. "System" follows the device, day and night.</div>
+        <div style="font-size: 14px; line-height: 1.6;">Each user picks a scheme in the user menu; it switches in place, without a reload. "System" follows the device, day and night.</div>
       </div>
     </div>
     <div class="col-lg-4 col-md-6">
@@ -74,68 +86,278 @@
     </div>
   </div>
 
-  <!-- Screens -->
-  <h3 style="font-size: 26px; font-weight: 800; color: #17161c; text-align: center; margin: 0 0 8px;">Every view, considered</h3>
-  <p style="text-align: center; font-size: 15px; margin: 0 auto 28px; max-width: 640px;">Lists and kanban columns as cards, forms with a calm sheet, a calendar with tinted events, pivot and graph in the accent.</p>
-  <div class="row g-4" style="margin-bottom: 40px;">
-    <div class="col-md-6">
-      <img src="img/sale_form.png" alt="A sales order form" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
-      <div style="font-size: 13px; text-align: center; margin-top: 8px;">Form with chatter</div>
+  <!-- Tabs -->
+  <ul class="nav nav-tabs justify-content-center" role="tablist" style="margin-bottom: 32px; font-size: 15px;">
+    <li class="nav-item" role="presentation"><a class="nav-link active" id="rxt-tab-views" data-bs-toggle="tab" href="#rxt-views" role="tab" aria-controls="rxt-views" aria-selected="true"><i class="fa fa-eye" style="margin-right: 6px;"></i>Screens</a></li>
+    <li class="nav-item" role="presentation"><a class="nav-link" id="rxt-tab-dark" data-bs-toggle="tab" href="#rxt-dark" role="tab" aria-controls="rxt-dark" aria-selected="false"><i class="fa fa-moon-o" style="margin-right: 6px;"></i>Dark scheme</a></li>
+    <li class="nav-item" role="presentation"><a class="nav-link" id="rxt-tab-nav" data-bs-toggle="tab" href="#rxt-nav" role="tab" aria-controls="rxt-nav" aria-selected="false"><i class="fa fa-compass" style="margin-right: 6px;"></i>Navigation</a></li>
+    <li class="nav-item" role="presentation"><a class="nav-link" id="rxt-tab-custom" data-bs-toggle="tab" href="#rxt-custom" role="tab" aria-controls="rxt-custom" aria-selected="false"><i class="fa fa-sliders" style="margin-right: 6px;"></i>Customise</a></li>
+    <li class="nav-item" role="presentation"><a class="nav-link" id="rxt-tab-mobile" data-bs-toggle="tab" href="#rxt-mobile" role="tab" aria-controls="rxt-mobile" aria-selected="false"><i class="fa fa-mobile" style="margin-right: 6px;"></i>Phone</a></li>
+    <li class="nav-item" role="presentation"><a class="nav-link" id="rxt-tab-setup" data-bs-toggle="tab" href="#rxt-setup" role="tab" aria-controls="rxt-setup" aria-selected="false"><i class="fa fa-cogs" style="margin-right: 6px;"></i>Setup guide</a></li>
+    <li class="nav-item" role="presentation"><a class="nav-link" id="rxt-tab-faq" data-bs-toggle="tab" href="#rxt-faq" role="tab" aria-controls="rxt-faq" aria-selected="false"><i class="fa fa-question-circle" style="margin-right: 6px;"></i>FAQ</a></li>
+  </ul>
+
+  <div class="tab-content" style="margin-bottom: 44px;">
+
+    <!-- Screens -->
+    <div class="tab-pane fade show active" id="rxt-views" role="tabpanel" aria-labelledby="rxt-tab-views">
+      <h3 style="font-size: 26px; font-weight: 800; color: #17161c; text-align: center; margin: 0 0 8px;">Every view, considered</h3>
+      <p style="text-align: center; font-size: 15px; margin: 0 auto 28px; max-width: 680px;">Lists and kanban columns as cards, forms on a calm sheet, a calendar with tinted events, pivot and graph in your accent. Real Odoo screens with demo data.</p>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <img src="img/sale_form.png" alt="A sales order form" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>Form</b> &middot; status bar, actions as a toolbar, notebook tabs</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/crm_kanban.png" alt="The CRM pipeline" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>Kanban</b> &middot; columns as cards with progress bars</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/calendar.png" alt="The calendar week view" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>Calendar</b> &middot; tinted events, today and the now line in the accent</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/invoice_form.png" alt="A customer invoice" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>Invoice</b> &middot; tabular figures that line up</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/tasks.png" alt="Project tasks in a list" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>List</b> &middot; Project tasks with tags, priorities and avatars</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/activity.png" alt="The activity view" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>Activities</b> &middot; soft tints with a coloured edge</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/search_open.png" alt="Filters and group by open in the search panel" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>Search</b> &middot; filters, group by and favourites</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/contacts.png" alt="The contacts list" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>Contacts</b> &middot; a long list that stays easy to scan</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/dialog.png" alt="A wizard dialog" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>Dialogs</b> &middot; wizards and confirmations</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/login.png" alt="The database login page" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;"><b>Login</b> &middot; the database sign-in page matches the backend</div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-      <img src="img/calendar.png" alt="The calendar view" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
-      <div style="font-size: 13px; text-align: center; margin-top: 8px;">Calendar</div>
+
+    <!-- Dark -->
+    <div class="tab-pane fade" id="rxt-dark" role="tabpanel" aria-labelledby="rxt-tab-dark">
+      <h3 style="font-size: 26px; font-weight: 800; color: #17161c; text-align: center; margin: 0 0 8px;">A dark scheme made for long days</h3>
+      <p style="text-align: center; font-size: 15px; margin: 0 auto 28px; max-width: 700px;">The same design, inverted with care: deep neutral backgrounds, soft borders, a lighter accent for links. Each user chooses Light, Dark or System in the user menu, and the page switches without a reload.</p>
+      <div class="row g-4">
+        <div class="col-12">
+          <img src="img/sales_list_dark.png" alt="Sales orders in the dark scheme" style="width: 100%; border-radius: 12px; border: 1px solid #27262e;"/>
+        </div>
+        <div class="col-md-6">
+          <img src="img/crm_kanban_dark.png" alt="CRM pipeline in the dark scheme" style="width: 100%; border-radius: 12px; border: 1px solid #27262e;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;">CRM pipeline</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/sale_form_dark.png" alt="A sales order form in the dark scheme" style="width: 100%; border-radius: 12px; border: 1px solid #27262e;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;">Sales order</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/calendar_dark.png" alt="The calendar in the dark scheme" style="width: 100%; border-radius: 12px; border: 1px solid #27262e;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;">Calendar</div>
+        </div>
+        <div class="col-md-6">
+          <img src="img/launcher_dark.png" alt="The app launcher in the dark scheme" style="width: 100%; border-radius: 12px; border: 1px solid #27262e;"/>
+          <div style="font-size: 13px; text-align: center; margin-top: 8px;">App launcher</div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-      <img src="img/crm_kanban_dark.png" alt="CRM pipeline in the dark scheme" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
-      <div style="font-size: 13px; text-align: center; margin-top: 8px;">CRM pipeline, dark scheme</div>
+
+    <!-- Navigation -->
+    <div class="tab-pane fade" id="rxt-nav" role="tabpanel" aria-labelledby="rxt-tab-nav">
+      <h3 style="font-size: 26px; font-weight: 800; color: #17161c; text-align: center; margin: 0 0 8px;">Find anything in two keystrokes</h3>
+      <p style="text-align: center; font-size: 15px; margin: 0 auto 28px; max-width: 700px;">The sidebar shows where you are, the launcher shows everything, the command palette finds the rest.</p>
+      <div class="row g-4 align-items-center" style="margin-bottom: 24px;">
+        <div class="col-lg-7"><img src="img/launcher.png" alt="The app launcher" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/></div>
+        <div class="col-lg-5">
+          <div style="font-size: 18px; font-weight: 700; color: #17161c; margin-bottom: 8px;">App launcher</div>
+          <div style="font-size: 14px; line-height: 1.7;">Every app on one screen. Type to filter, move with the arrow keys, open with Enter, close with Escape. Recently opened records are listed below the apps. Open it with <b>All apps</b> in the switcher or <b>Alt&nbsp;H</b> (<b>Ctrl&nbsp;H</b> on macOS).</div>
+        </div>
+      </div>
+      <div class="row g-4 align-items-center" style="margin-bottom: 24px;">
+        <div class="col-lg-5 order-lg-1 order-2">
+          <div style="font-size: 18px; font-weight: 700; color: #17161c; margin-bottom: 8px;">App switcher and pins</div>
+          <div style="font-size: 14px; line-height: 1.7;">The app name at the top of the sidebar opens a searchable list of apps. Hover any menu entry and click the pin to keep it at the top of the sidebar, whichever app you are in. Pins are saved per user.</div>
+        </div>
+        <div class="col-lg-7 order-lg-2 order-1"><img src="img/apps_menu.png" alt="The app switcher open in the sidebar" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/></div>
+      </div>
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-7"><img src="img/rail.png" alt="The sidebar as an icon rail" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/></div>
+        <div class="col-lg-5">
+          <div style="font-size: 18px; font-weight: 700; color: #17161c; margin-bottom: 8px;">Icons only, when you need the room</div>
+          <div style="font-size: 14px; line-height: 1.7;">The button left of the search field, or <b>Ctrl&nbsp;B</b> (<b>Cmd&nbsp;B</b> on macOS), folds the sidebar into an icon rail with tooltips. The choice is remembered per user, and wide lists and forms gain the space.</div>
+        </div>
+      </div>
+      <div style="border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px 28px; background: #f9f9fb; margin-top: 32px;">
+        <div style="font-size: 18px; font-weight: 700; color: #17161c; margin-bottom: 12px;"><i class="fa fa-keyboard-o" style="margin-right: 8px; color: #5f62e7;"></i>Keyboard shortcuts</div>
+        <div class="table-responsive">
+          <table class="table table-sm" style="font-size: 14px; margin: 0;">
+            <thead><tr><th>Action</th><th>Windows / Linux</th><th>macOS</th></tr></thead>
+            <tbody>
+              <tr><td>App launcher</td><td>Alt + H</td><td>Ctrl + H</td></tr>
+              <tr><td>Sidebar: expanded / icons only</td><td>Ctrl + B</td><td>Cmd + B</td></tr>
+              <tr><td>Search or jump to (command palette)</td><td>Ctrl + K</td><td>Cmd + K</td></tr>
+              <tr><td>Move in the sidebar or the launcher</td><td colspan="2">Arrow keys, Home, End</td></tr>
+              <tr><td>Open the focused entry / close the launcher</td><td colspan="2">Enter / Escape</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-      <img src="img/launcher.png" alt="The app launcher" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
-      <div style="font-size: 13px; text-align: center; margin-top: 8px;">App launcher</div>
+
+    <!-- Customise -->
+    <div class="tab-pane fade" id="rxt-custom" role="tabpanel" aria-labelledby="rxt-tab-custom">
+      <h3 style="font-size: 26px; font-weight: 800; color: #17161c; text-align: center; margin: 0 0 8px;">Make it yours in a minute</h3>
+      <p style="text-align: center; font-size: 15px; margin: 0 auto 28px; max-width: 700px;">Administrators set the company look; every user sets their own scheme, density and sidebar.</p>
+      <div class="row g-4 align-items-center" style="margin-bottom: 28px;">
+        <div class="col-lg-7"><img src="img/theme_settings.png" alt="Backend Theme settings with a live preview" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/></div>
+        <div class="col-lg-5">
+          <div style="font-size: 18px; font-weight: 700; color: #17161c; margin-bottom: 8px;">Settings &rsaquo; Backend Theme</div>
+          <ul style="font-size: 14px; line-height: 1.8; padding-left: 18px; margin: 0;">
+            <li><b>Accent colour</b>: eleven presets, a colour picker or a hex value.</li>
+            <li><b>Neutral palette</b>: Zinc, Slate, Stone or Gray.</li>
+            <li><b>Corner radius</b>: Square, Small, Medium or Large.</li>
+            <li><b>Density</b>: the company default, Comfortable or Compact.</li>
+            <li><b>Company logo</b> at the top of the sidebar.</li>
+          </ul>
+          <div style="font-size: 14px; line-height: 1.7; margin-top: 10px;">The preview shows light and dark before you save. Saving compiles the styles once for everyone.</div>
+        </div>
+      </div>
+      <div class="row g-4 align-items-center" style="margin-bottom: 28px;">
+        <div class="col-lg-5 order-lg-1 order-2">
+          <div style="font-size: 18px; font-weight: 700; color: #17161c; margin-bottom: 8px;">Any colour stays readable</div>
+          <div style="font-size: 14px; line-height: 1.7;">A light accent such as amber would make white button text hard to read. The theme deepens the button colour only as much as WCAG&nbsp;AA (4.5:1) needs, or switches the text to dark, and derives link colours for light and dark cards. The settings tell you when a colour was adjusted.</div>
+        </div>
+        <div class="col-lg-7 order-lg-2 order-1"><img src="img/theme_edit.png" alt="Changing the accent, palette, radius and density with the preview following" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/></div>
+      </div>
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-7"><img src="img/preferences.png" alt="The Appearance tab in My Preferences" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/></div>
+        <div class="col-lg-5">
+          <div style="font-size: 18px; font-weight: 700; color: #17161c; margin-bottom: 8px;">My Preferences &rsaquo; Appearance</div>
+          <div style="font-size: 14px; line-height: 1.7;">Every internal user chooses the colour scheme (Light, Dark, System), the density (company default, Comfortable, Compact) and the sidebar (Expanded or Icons only). A user can change only their own preferences.</div>
+        </div>
+      </div>
     </div>
+
+    <!-- Phone -->
+    <div class="tab-pane fade" id="rxt-mobile" role="tabpanel" aria-labelledby="rxt-tab-mobile">
+      <h3 style="font-size: 26px; font-weight: 800; color: #17161c; text-align: center; margin: 0 0 8px;">At home on tablets and phones</h3>
+      <p style="text-align: center; font-size: 15px; margin: 0 auto 28px; max-width: 700px;">Below 992&nbsp;px the sidebar becomes an icon rail; on phones it slides in from the menu button, with the app switcher, pins and the full menu.</p>
+      <div class="row g-4 justify-content-center">
+        <div class="col-6 col-md-3"><img src="img/phone_list.png" alt="Sales orders on a phone" style="width: 100%; border-radius: 22px; border: 1px solid #e4e4e9;"/><div style="font-size: 13px; text-align: center; margin-top: 8px;">List</div></div>
+        <div class="col-6 col-md-3"><img src="img/phone_drawer.png" alt="The slide-in menu on a phone" style="width: 100%; border-radius: 22px; border: 1px solid #e4e4e9;"/><div style="font-size: 13px; text-align: center; margin-top: 8px;">Slide-in menu</div></div>
+        <div class="col-6 col-md-3"><img src="img/phone_form.png" alt="A sales order on a phone" style="width: 100%; border-radius: 22px; border: 1px solid #e4e4e9;"/><div style="font-size: 13px; text-align: center; margin-top: 8px;">Form</div></div>
+        <div class="col-6 col-md-3"><img src="img/phone_dark.png" alt="Sales orders on a phone in the dark scheme" style="width: 100%; border-radius: 22px; border: 1px solid #27262e;"/><div style="font-size: 13px; text-align: center; margin-top: 8px;">Dark scheme</div></div>
+      </div>
+    </div>
+
+    <!-- Setup -->
+    <div class="tab-pane fade" id="rxt-setup" role="tabpanel" aria-labelledby="rxt-tab-setup">
+      <h3 style="font-size: 26px; font-weight: 800; color: #17161c; text-align: center; margin: 0 0 28px;">Set up in three steps</h3>
+      <div class="row g-3" style="margin-bottom: 32px;">
+        <div class="col-md-4">
+          <div style="height: 100%; border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px; background: #ffffff;">
+            <div style="font-size: 32px; font-weight: 800; color: #5f62e7; line-height: 1;">1</div>
+            <div style="font-size: 16px; font-weight: 700; color: #17161c; margin: 10px 0 6px;">Install</div>
+            <div style="font-size: 14px; line-height: 1.6;">Put the <code>rex_backend_theme</code> folder in your addons path and restart Odoo. In <b>Apps</b>, click <b>Update Apps List</b>, remove the <i>Apps</i> filter, search <i>Rex Backend Theme</i> and install. The backend switches to the theme at once, for every user.</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div style="height: 100%; border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px; background: #ffffff;">
+            <div style="font-size: 32px; font-weight: 800; color: #5f62e7; line-height: 1;">2</div>
+            <div style="font-size: 16px; font-weight: 700; color: #17161c; margin: 10px 0 6px;">Set the company look</div>
+            <div style="font-size: 14px; line-height: 1.6;"><b>Settings &rsaquo; General Settings &rsaquo; Backend Theme</b>: accent, palette, radius, default density and the sidebar logo. Check the preview, then <b>Save</b>. Users see the new colours after a reload.</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div style="height: 100%; border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px; background: #ffffff;">
+            <div style="font-size: 32px; font-weight: 800; color: #5f62e7; line-height: 1;">3</div>
+            <div style="font-size: 16px; font-weight: 700; color: #17161c; margin: 10px 0 6px;">Let people choose</div>
+            <div style="font-size: 14px; line-height: 1.6;"><b>User menu &rsaquo; My Preferences &rsaquo; Appearance</b>: colour scheme, density and sidebar mode. The Light / Dark / System switch is also right in the user menu.</div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div style="height: 100%; border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px 28px; background: #f9f9fb;">
+            <div style="font-size: 16px; font-weight: 700; color: #17161c; margin-bottom: 10px;"><i class="fa fa-check-square-o" style="margin-right: 8px; color: #0b8176;"></i>Requirements</div>
+            <ul style="font-size: 14px; line-height: 1.8; margin: 0; padding-left: 18px;">
+              <li>Odoo 19.0 Community. For Odoo 20.0, choose version 20.0 of this module.</li>
+              <li>Depends only on <code>web</code>, <code>web_tour</code> and <code>base_setup</code>.</li>
+              <li>No Python packages, no outside services: fonts and icons ship with the module.</li>
+              <li>Multi-company and multi-language databases are supported.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div style="height: 100%; border: 1px solid #e4e4e9; border-radius: 14px; padding: 24px 28px; background: #f9f9fb;">
+            <div style="font-size: 16px; font-weight: 700; color: #17161c; margin-bottom: 10px;"><i class="fa fa-terminal" style="margin-right: 8px; color: #5f62e7;"></i>From the command line</div>
+            <pre style="font-size: 12.5px; background: #17161c; color: #e4e4e9; border-radius: 10px; padding: 14px 16px; margin: 0 0 10px; white-space: pre-wrap;">git clone -b 19.0 https://github.com/johnyraid33/odoo-backend-theme.git
+odoo -d DATABASE \
+  --addons-path=odoo-backend-theme,ODOO/addons \
+  -i rex_backend_theme</pre>
+            <div style="font-size: 13px; line-height: 1.6;">Use <code>-b 20.0</code> for Odoo 20. The complete guide is in the <b>Documentation</b> tab of this page.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="tab-pane fade" id="rxt-faq" role="tabpanel" aria-labelledby="rxt-tab-faq">
+      <h3 style="font-size: 26px; font-weight: 800; color: #17161c; text-align: center; margin: 0 0 28px;">Questions</h3>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div style="font-size: 15px; font-weight: 700; color: #17161c; margin-bottom: 6px;">Will my other modules still work?</div>
+          <div style="font-size: 14px; line-height: 1.7;">Yes. Odoo's navbar, control panel and their CSS classes stay in the page, so modules that extend them and their guided tours keep working. It was checked with the tests and tours of Sales, CRM, Invoicing, Inventory, Purchase, Project, Employees, Calendar and Contacts.</div>
+        </div>
+        <div class="col-md-6">
+          <div style="font-size: 15px; font-weight: 700; color: #17161c; margin-bottom: 6px;">Does it change my website or PDF reports?</div>
+          <div style="font-size: 14px; line-height: 1.7;">No. Only the backend and the database login page are styled. Website, portal and PDF reports keep their own look.</div>
+        </div>
+        <div class="col-md-6">
+          <div style="font-size: 15px; font-weight: 700; color: #17161c; margin-bottom: 6px;">Does it work with Odoo Enterprise?</div>
+          <div style="font-size: 14px; line-height: 1.7;">It is made for Community. Enterprise replaces the web client with its own home menu and navbar; do not install both. Uninstall any other backend theme first as well.</div>
+        </div>
+        <div class="col-md-6">
+          <div style="font-size: 15px; font-weight: 700; color: #17161c; margin-bottom: 6px;">How do I go back to the standard look?</div>
+          <div style="font-size: 14px; line-height: 1.7;">Uninstall the module. Odoo's own look returns, and the compiled customisation and the theme settings are removed with it.</div>
+        </div>
+        <div class="col-md-6">
+          <div style="font-size: 15px; font-weight: 700; color: #17161c; margin-bottom: 6px;">Can each user have their own colours?</div>
+          <div style="font-size: 14px; line-height: 1.7;">The accent, palette and radius are set for the whole database by an administrator. The colour scheme, density and sidebar mode are personal.</div>
+        </div>
+        <div class="col-md-6">
+          <div style="font-size: 15px; font-weight: 700; color: #17161c; margin-bottom: 6px;">Does it collect data or call outside servers?</div>
+          <div style="font-size: 14px; line-height: 1.7;">No. It sends nothing anywhere and loads nothing from outside: the Geist font and the icons are part of the module.</div>
+        </div>
+        <div class="col-md-6">
+          <div style="font-size: 15px; font-weight: 700; color: #17161c; margin-bottom: 6px;">Which languages are included?</div>
+          <div style="font-size: 14px; line-height: 1.7;">English, Ukrainian and Russian. The font covers Latin and Cyrillic; other languages can be added with a standard <code>.po</code> file.</div>
+        </div>
+        <div class="col-md-6">
+          <div style="font-size: 15px; font-weight: 700; color: #17161c; margin-bottom: 6px;">Is it accessible?</div>
+          <div style="font-size: 14px; line-height: 1.7;">Text, buttons and links meet WCAG&nbsp;AA contrast in light and dark for every preset; the sidebar, launcher and settings work with the keyboard and have visible focus rings.</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Settings -->
-  <div class="row g-4 align-items-center" style="margin-bottom: 40px;">
-    <div class="col-lg-5">
-      <h3 style="font-size: 26px; font-weight: 800; color: #17161c; margin: 0 0 12px;">Make it yours in a minute</h3>
-      <p style="font-size: 15px; line-height: 1.7; margin: 0 0 12px;">Settings &rsaquo; General Settings &rsaquo; <b>Backend Theme</b>: pick one of eleven accents or your own colour, a gray palette, the corner radius and the default density. The preview shows the result in light and dark before you save.</p>
-      <p style="font-size: 15px; line-height: 1.7; margin: 0;">Saving compiles the styles once for everyone; the theme never sends requests to outside servers, the fonts ship with the module.</p>
-    </div>
-    <div class="col-lg-7">
-      <img src="img/theme_settings.png" alt="Backend Theme settings with a live preview" style="width: 100%; border-radius: 12px; border: 1px solid #e4e4e9;"/>
-    </div>
-  </div>
-
-  <!-- Compatibility -->
-  <div style="border: 1px solid #e4e4e9; border-radius: 14px; padding: 28px 32px; background: #f9f9fb; margin-bottom: 40px;">
-    <h3 style="font-size: 20px; font-weight: 800; color: #17161c; margin: 0 0 14px;">Built to live with other modules</h3>
-    <ul style="font-size: 14px; line-height: 1.8; margin: 0; padding-left: 20px;">
-      <li>Odoo's navbar, control panel and their CSS classes stay in place: modules that extend them, and their guided tours, keep working.</li>
-      <li>Checked with the tours and tests of Sales, CRM, Invoicing, Inventory, Purchase, Project, Employees, Calendar, Contacts and more.</li>
-      <li>Tablet layout with an icon rail, phone layout with a slide-in menu.</li>
-      <li>Uninstalling restores Odoo's own look; settings customisations are removed with the module.</li>
-    </ul>
-  </div>
-
-  <!-- Setup -->
-  <div class="row g-3" style="margin-bottom: 48px;">
-    <div class="col-md-4">
-      <div style="font-size: 32px; font-weight: 800; color: #5f62e7;">1</div>
-      <div style="font-size: 15px; font-weight: 700; color: #17161c;">Install</div>
-      <div style="font-size: 14px; line-height: 1.6;">The backend switches to the theme at once, in light, for every user.</div>
-    </div>
-    <div class="col-md-4">
-      <div style="font-size: 32px; font-weight: 800; color: #5f62e7;">2</div>
-      <div style="font-size: 15px; font-weight: 700; color: #17161c;">Set your colours</div>
-      <div style="font-size: 14px; line-height: 1.6;">Settings &rsaquo; Backend Theme: accent, palette, radius, density, logo.</div>
-    </div>
-    <div class="col-md-4">
-      <div style="font-size: 32px; font-weight: 800; color: #5f62e7;">3</div>
-      <div style="font-size: 15px; font-weight: 700; color: #17161c;">Let people choose</div>
-      <div style="font-size: 14px; line-height: 1.6;">My Preferences &rsaquo; Appearance: scheme, density and sidebar mode per user.</div>
-    </div>
+  <!-- Support -->
+  <div style="border-radius: 16px; padding: 32px; background: #17161c; color: #cfcfe0; text-align: center; margin-bottom: 24px;">
+    <div style="font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 8px;">Questions or a bug?</div>
+    <div style="font-size: 15px; line-height: 1.7;">Write to <a href="mailto:info@rex.cy" style="color: #a5a7fb;">info@rex.cy</a> or open an issue on <a href="https://github.com/johnyraid33/odoo-backend-theme/issues" style="color: #a5a7fb;">GitHub</a>.</div>
   </div>
 
   <div style="text-align: center; font-size: 13px; color: #6e6d79; margin-bottom: 24px;">Rex Backend Theme by POLISHCHUK &amp; SONS LTD &middot; LGPL-3 &middot; Geist font under the SIL Open Font License</div>
