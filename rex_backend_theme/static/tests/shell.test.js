@@ -86,6 +86,10 @@ test("the sidebar shows the current app's menu as groups", async () => {
     expect(".rx-group.rx-collapsed .rx-group-label:contains(Configuration)").toHaveCount(1);
     // the app opened on its first entry, which is marked as the current page
     expect(".rx-item[aria-current=page]").toHaveText("Quotations");
+    // the "Orders" group and its "Orders" entry would both be a cart: each gets its own
+    const icons = queryAll(".rx-nav .rx-group-icon, .rx-nav .rx-item-icon").map((el) => el.dataset.icon);
+    expect(icons.length).toBeGreaterThan(3);
+    expect(new Set(icons).size).toBe(icons.length);
 });
 
 test("clicking an item opens its action and becomes the active item", async () => {

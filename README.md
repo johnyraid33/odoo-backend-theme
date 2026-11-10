@@ -138,7 +138,7 @@ python3 compare.py                    # side-by-side images in shots/compare (ne
 | `static/src/webclient/sidebar/` | sidebar component |
 | `static/src/webclient/topbar/` | NavBar patch: toggle and search |
 | `static/src/webclient/launcher/` | app launcher overlay |
-| `static/src/webclient/icons.js` | menu icons: curated by xmlid, then by pattern |
+| `static/src/webclient/icons.js` | menu icons: curated by xmlid, then by pattern; `assignIcons` keeps them distinct within the sidebar (related icon first, then a neutral pool) |
 | `static/src/views/control_panel/` | page header layout, labelled view tabs |
 | `static/src/views/{form,list,calendar,pivot,activity}/` | per-view styles |
 | `static/src/views/graph/` | single-series charts in the accent (lazy bundle) |

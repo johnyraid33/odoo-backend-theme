@@ -92,7 +92,8 @@ Using the shell
 ===============
 
 Sidebar
-    The current app's menu as groups; configuration groups start folded. The
+    The current app's menu as groups; configuration groups start folded.
+    Every entry has an icon of its own, also for menus of other modules. The
     app switcher at the top lists every app with a search field. Hover an
     entry and click the pin to keep it at the top of the sidebar in every
     app; pins are saved per user.

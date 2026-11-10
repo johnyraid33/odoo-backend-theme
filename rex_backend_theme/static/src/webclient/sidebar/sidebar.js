@@ -9,7 +9,7 @@ import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { session } from "@web/session";
 import { WebClient } from "@web/webclient/webclient";
-import { iconFor } from "../icons";
+import { assignIcons, iconFor } from "../icons";
 
 const COLLAPSED_KEY = "rex_backend_theme.sidebar.collapsed";
 
@@ -118,8 +118,25 @@ export class RexSidebar extends Component {
         };
     }
 
+    /**
+     * One icon per entry, none repeated in what the sidebar shows together:
+     * the current app's groups and items, then pinned entries of other apps.
+     * Sub-headers inside a group render no icon and take none.
+     */
+    get iconMap() {
+        const key = `${this.currentApp?.id}|${this.shell.state.pins.join(",")}`;
+        if (this._iconKey !== key) {
+            this._iconKey = key;
+            this._iconMap = assignIcons(
+                [...this.sections, ...this.pinnedMenus],
+                (menu, depth) => depth === 0 || !menu.childrenTree?.length
+            );
+        }
+        return this._iconMap;
+    }
+
     icon(menu) {
-        return iconFor(menu);
+        return this.iconMap.get(menu.id) || iconFor(menu);
     }
 
     appOf(menu) {
